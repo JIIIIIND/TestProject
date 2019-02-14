@@ -34,21 +34,6 @@ public class CarAI : MonoBehaviour {
         {
             Gizmos.DrawRay(transform.position, transform.forward * raycastHit.distance);
             Gizmos.DrawWireCube(transform.position + transform.forward * raycastHit.distance, transform.lossyScale);
-
-            if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale / 2, Quaternion.Euler(0, angle, 0) * transform.forward, out raycastHit, Quaternion.identity, rayRange))
-            {
-                Gizmos.DrawRay(transform.position, transform.forward * raycastHit.distance);
-                Gizmos.DrawWireCube(transform.position + transform.forward * raycastHit.distance, transform.lossyScale);
-            }
-            else
-                Gizmos.DrawRay(transform.position, Quaternion.Euler(0, angle, 0) * transform.forward * rayRange);
-            if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale / 2, Quaternion.Euler(0, -angle, 0) * transform.forward, out raycastHit, Quaternion.identity, rayRange))
-            {
-                Gizmos.DrawRay(transform.position, transform.forward * raycastHit.distance);
-                Gizmos.DrawWireCube(transform.position + transform.forward * raycastHit.distance, transform.lossyScale);
-            }
-            else
-                Gizmos.DrawRay(transform.position, Quaternion.Euler(0, -angle, 0) * transform.forward * rayRange);
         }
         else
             Gizmos.DrawRay(transform.position, transform.forward * rayRange);
@@ -56,30 +41,25 @@ public class CarAI : MonoBehaviour {
     }
     private void ShootRay()
     {
-        
-        //if (Physics.Raycast(rayPosition.transform.position, rayPosition.transform.TransformDirection(Vector3.forward), out raycastHit, rayRange))
         if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale/2, transform.forward, out raycastHit, Quaternion.identity, rayRange))
         {
             SpeedDown(speedRate);
             Debug.DrawRay(rayPosition.transform.position, transform.forward * raycastHit.distance, Color.yellow);
             Debug.Log(raycastHit.collider + " :" + raycastHit.distance);
             RotationBody(raycastHit, speedValue);
-            //SpeedDown(speedValue);
-            /*
-            if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale / 2, Quaternion.Euler(0, angle, 0) * transform.forward, out raycastHit, Quaternion.identity, rayRange))
-            {
-                RotationBody(raycastHit, speedValue, Quaternion.Euler(0, -angle, 0) * transform.forward);
-            }
-            else if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale / 2, Quaternion.Euler(0, -angle, 0) * transform.forward, out raycastHit, Quaternion.identity, rayRange))
-            {
-                RotationBody(raycastHit, speedValue, Quaternion.Euler(0, angle, 0) * transform.forward);
-            }
-            */
         }
         else
         {
             Debug.DrawRay(transform.position, transform.forward * rayRange, Color.blue);
             SpeedUP(speedValue, speedRate);
+            if (Physics.Raycast(transform.forward * raycastHit.distance, transform.right, out raycastHit, rayRange * 1.5f))
+            {
+                RotationBody(raycastHit, speedValue, Quaternion.Euler(0, -angle, 0) * transform.forward);
+            }
+            else if (Physics.Raycast(transform.forward * raycastHit.distance, -transform.right, out raycastHit, rayRange * 1.5f))
+            {
+                RotationBody(raycastHit, speedValue, Quaternion.Euler(0, angle, 0) * transform.forward);
+            }
         }
     }
     
@@ -89,7 +69,6 @@ public class CarAI : MonoBehaviour {
         Debug.DrawRay(hit.transform.position, reflect, Color.red);
         SpeedUP(value / 2);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(reflect), rotationValue * Time.deltaTime);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.FromToRotation(transform.TransformDirection(Vector3.forward), reflect), rotationValue);
     }
 
     private void RotationBody(RaycastHit hit, float value, Vector3 direction)

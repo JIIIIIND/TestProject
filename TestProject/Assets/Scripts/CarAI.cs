@@ -45,7 +45,7 @@ public class CarAI : MonoBehaviour {
         {
             SpeedDown(speedRate);
             Debug.DrawRay(rayPosition.transform.position, transform.forward * raycastHit.distance, Color.yellow);
-            Debug.Log(raycastHit.collider + " :" + raycastHit.distance);
+            //Debug.Log(raycastHit.collider + " :" + raycastHit.distance);
             RotationBody(raycastHit, speedValue);
         }
         else

@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 23543420537403550}
   - component: {fileID: 65652728637288490}
   - component: {fileID: 54245483912828482}
-  - component: {fileID: 114550828985719748}
+  - component: {fileID: 114827570569988172}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -851,7 +851,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114550828985719748
+--- !u!114 &114827570569988172
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -859,17 +859,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1995061958924586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc19c257150810f4f8488be64958e136, type: 3}
+  m_Script: {fileID: 11500000, guid: c2e75487135516a4fa826052a79c26ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rayRange: 1
   shootTime: 0
-  speedValue: 2
+  speedValue: 1
   rotationValue: 50
   angle: 0
   speedRate: 0.05
   speedMax: 5
-  speedMin: 1.2
+  speedMin: 1
   rayPosition: {fileID: 1123980181285306}
 --- !u!136 &136614199734292494
 CapsuleCollider:

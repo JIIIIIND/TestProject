@@ -14,8 +14,9 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField] private float maxSpeed;
 
 
-    void Start() {
-
+    void Start()
+    {
+        
     }
 
     private void RotationBody(Vector3 target)

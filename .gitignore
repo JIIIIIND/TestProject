@@ -1,31 +1,32 @@
-###########################################
-# Unity folders & files
-**/Library/
-**/obj/
-**/Temp/
-**/.vs/
-**/Packages/manifest.json
+=============== 
+Unity generated
+===============
+Temp/
+Library/
 
-###########################################
-# Solution and Project files
-*.csproj
+=====================================
+Visual Studio / MonoDevelop generated
+=====================================
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+/*.csproj
+*.pidb
+*.suo
+/*.sln
+*.user
 *.unityproj
-*.sln
+*.booproj
+*.vs/
 
-##########################################
-# Source Files
-
-
-############################################
-# Package files
-*.7z
-*.gz
-*.rar
-*.tar
-*.zip
-
-###########################################
-# Logs and databases
-*.log
-.DS_Stores*
+============
+OS generated
+============
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db

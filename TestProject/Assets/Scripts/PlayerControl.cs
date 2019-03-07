@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-    public float speedRate;
+	private float gripTime;
 
-    private float speedValue;
-    private float currentTime;
+	public Vector3 rightInitPosition;
+	public Vector3 rightMovingPosition;
+	public bool rightDirection;
+	
+	private Vector3 leftInitPosition;
+	private Vector3 leftMovingPosition;
+	private bool leftDirection;
 
-    [SerializeField] private float rotationAngle;
-    [SerializeField] private float cognitionTime;
-    [SerializeField] private float maxSpeed;
+	[SerializeField] private SteamVR_Controller leftController;
+	[SerializeField] private SteamVR_Controller rightController;
 
-
-    void Start()
+	void Start()
     {
         
     }
@@ -35,7 +38,6 @@ public class PlayerControl : MonoBehaviour {
         //
         //이동은 Coroutine으로 지속적으로 속도가 감소하면서 이동함
         //새로운 Coroutine이 호출되기 전에 이전 Coroutine은 제거하고 호출
-
     }
 
     private void MoveBackward()
@@ -62,9 +64,103 @@ public class PlayerControl : MonoBehaviour {
         //음수인 경우에 후진, 0이 될 때 까지 지속적으로 증가
         yield return null;
     }
+	
+	public void CalculateRightPoint(Vector3 currentPos)
+	{
+		float curDirection = currentPos.x - rightMovingPosition.x;
+		
+		if (curDirection > 0)
+		{
+			if (rightDirection)
+				SetRightMovingPosition(currentPos);
+			else
+			{
+				SetRightInitPosition(rightMovingPosition);
+				SetRightMovingPosition(currentPos);
+				rightDirection = true;
+			}
+		}
+		else if (curDirection < 0)
+		{
+			if (rightDirection)
+			{
+				SetRightInitPosition(rightMovingPosition);
+				SetRightMovingPosition(currentPos);
+				rightDirection = false;
+			}
+			else
+				SetRightMovingPosition(currentPos);
+		}
+		else
+			SetRightInitPosition(rightMovingPosition);
+			
+	}
+
+	public void CalculateLeftPoint(Vector3 currentPos)
+	{
+		float curDirection = currentPos.x - leftMovingPosition.x;
+		if (curDirection > 0)
+		{
+			if (leftDirection)
+				SetLeftMovingPosition(currentPos);
+			else
+				SetLeftInitPosition(leftMovingPosition);
+		}
+		else if (curDirection < 0)
+		{
+			if (leftDirection)
+				SetLeftInitPosition(leftMovingPosition);
+			else
+				SetLeftMovingPosition(currentPos);
+		}
+		else
+			SetLeftInitPosition(leftMovingPosition);
+	}
+
+	public void MakeMoveVector()
+	{
+		Vector3 rightWheel;
+		Vector3 leftWheel;
+
+		if (rightDirection == true)
+		{
+			rightWheel = rightInitPosition - rightMovingPosition;
+			Debug.Log("전진");
+		}
+		else
+		{
+			rightWheel = rightMovingPosition - rightInitPosition;
+			Debug.Log("후진");
+		}
+		
+		if (leftDirection == true)
+			leftWheel = leftInitPosition - leftMovingPosition;
+		else
+			leftWheel = leftMovingPosition - leftInitPosition;
+
+		//MoveToward(rightWheel, leftWheel);
+	}
+
+	public void SetLeftInitPosition(Vector3 pos)
+	{
+		leftInitPosition = pos;
+		leftMovingPosition = pos;
+		gripTime = 0;
+	}
+	public void SetRightInitPosition(Vector3 pos)
+	{
+		rightInitPosition = pos;
+		rightMovingPosition = pos;
+		gripTime = 0;
+	}
+
+	public void SetLeftMovingPosition(Vector3 pos)
+	{ leftMovingPosition = pos; }
+	public void SetRightMovingPosition(Vector3 pos)
+	{ rightMovingPosition = pos;}
 
 	void Update ()
     {
-        //
+		gripTime += Time.deltaTime;
     }
 }

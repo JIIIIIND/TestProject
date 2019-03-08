@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\CarAI.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\ViveInputManager.cs" />
     <Compile Include="Assets\Scripts\WheelControl.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />

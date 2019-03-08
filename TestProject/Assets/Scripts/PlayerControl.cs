@@ -31,19 +31,13 @@ public class PlayerControl : MonoBehaviour {
 
     private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
     {
-        //컨트롤러 쥔 상태로 뒤에서 앞으로
+        //컨트롤러 쥔 상태로 뒤에서 앞으로, 앞에서 뒤로
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
         RotationBody(targetVector);
         //targetVector의 크기가 속도 결정
         //
         //이동은 Coroutine으로 지속적으로 속도가 감소하면서 이동함
         //새로운 Coroutine이 호출되기 전에 이전 Coroutine은 제거하고 호출
-    }
-
-    private void MoveBackward()
-    {
-        //컨트롤러 쥔 상태로 앞에서 뒤로
-        //MoveToward와 유사한 동작 할 것으로 예상됨
     }
 
     private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
@@ -68,77 +62,111 @@ public class PlayerControl : MonoBehaviour {
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.x - rightMovingPosition.x;
-		
-		if (curDirection > 0)
-		{
-			if (rightDirection)
-				SetRightMovingPosition(currentPos);
-			else
-			{
-				SetRightInitPosition(rightMovingPosition);
-				SetRightMovingPosition(currentPos);
-				rightDirection = true;
-			}
-		}
-		else if (curDirection < 0)
-		{
-			if (rightDirection)
-			{
-				SetRightInitPosition(rightMovingPosition);
-				SetRightMovingPosition(currentPos);
-				rightDirection = false;
-			}
-			else
-				SetRightMovingPosition(currentPos);
-		}
-		else
-			SetRightInitPosition(rightMovingPosition);
-			
-	}
 
+        if (curDirection > 0)
+        {
+            if (rightDirection)
+            {
+                Debug.Log("curDirection > 0");
+                SetRightMovingPosition(currentPos);
+            }
+            else
+            {
+                Debug.Log("curDirection > 0 && Direction Change");
+                SetRightInitPosition(rightMovingPosition);
+                SetRightMovingPosition(currentPos);
+                rightDirection = true;
+            }
+        }
+        else if (curDirection < 0)
+        {
+            if (rightDirection)
+            {
+                Debug.Log("curDirection < 0 && Direction Change");
+                SetRightInitPosition(rightMovingPosition);
+                SetRightMovingPosition(currentPos);
+                rightDirection = false;
+            }
+            else
+            {
+                Debug.Log("curDirection < 0");
+                SetRightMovingPosition(currentPos);
+            }
+        }
+        else
+        {
+            Debug.Log("curDirection = 0");
+            SetRightInitPosition(rightMovingPosition);
+        }
+	}
 	public void CalculateLeftPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.x - leftMovingPosition.x;
-		if (curDirection > 0)
-		{
-			if (leftDirection)
-				SetLeftMovingPosition(currentPos);
-			else
-				SetLeftInitPosition(leftMovingPosition);
-		}
-		else if (curDirection < 0)
-		{
-			if (leftDirection)
-				SetLeftInitPosition(leftMovingPosition);
-			else
-				SetLeftMovingPosition(currentPos);
-		}
-		else
-			SetLeftInitPosition(leftMovingPosition);
+        if (curDirection > 0)
+        {
+            if (leftDirection)
+            {
+                Debug.Log("Left: curDirection > 0");
+                SetLeftMovingPosition(currentPos);
+            }
+            else
+            {
+                Debug.Log("Left: curDirection > 0 && Direction Change");
+                SetLeftInitPosition(leftMovingPosition);
+                SetLeftMovingPosition(currentPos);
+                leftDirection = true;
+            }
+        }
+        else if (curDirection < 0)
+        {
+            if (leftDirection)
+            {
+                Debug.Log("Left: curDirection < 0 && Direction Change");
+                SetLeftInitPosition(leftMovingPosition);
+                SetLeftMovingPosition(currentPos);
+                leftDirection = false;
+            }
+            else
+            {
+                Debug.Log("Left: curDirection < 0");
+                SetLeftMovingPosition(currentPos);
+            }
+        }
+        else
+        {
+            Debug.Log("Left: curDirection = 0");
+            SetLeftInitPosition(leftMovingPosition);
+        }
 	}
 
-	public void MakeMoveVector()
-	{
-		Vector3 rightWheel;
-		Vector3 leftWheel;
+    public void MakeMoveVector()
+    {
+        Vector3 rightWheel;
+        Vector3 leftWheel;
 
-		if (rightDirection == true)
-		{
-			rightWheel = rightInitPosition - rightMovingPosition;
-			Debug.Log("전진");
-		}
+        if (rightDirection == true)
+        {
+            rightWheel = rightInitPosition - rightMovingPosition;
+            Debug.Log("전진");
+        }
+        else
+        {
+            rightWheel = rightMovingPosition - rightInitPosition;
+            Debug.Log("후진");
+        }
+
+        if (leftDirection == true)
+        {
+            Debug.Log("전진");
+            leftWheel = leftInitPosition - leftMovingPosition;
+        }
 		else
-		{
-			rightWheel = rightMovingPosition - rightInitPosition;
-			Debug.Log("후진");
-		}
+        {
+            Debug.Log("후진");
+            leftWheel = leftMovingPosition - leftInitPosition;
+        }
 		
-		if (leftDirection == true)
-			leftWheel = leftInitPosition - leftMovingPosition;
-		else
-			leftWheel = leftMovingPosition - leftInitPosition;
-
-		//MoveToward(rightWheel, leftWheel);
+		MoveToward(rightWheel, leftWheel);
 	}
 
 	public void SetLeftInitPosition(Vector3 pos)

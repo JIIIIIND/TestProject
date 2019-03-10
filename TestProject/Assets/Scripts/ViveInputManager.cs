@@ -44,10 +44,14 @@ public class ViveInputManager : MonoBehaviour {
 				Debug.Log("Grip Down");
 				playerControl.SetLeftInitPosition(leftTrackedObject.transform.position);
 			}
-
-			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
 			{
-				Debug.Log("Trigger Down");
+				playerControl.CalculateLeftPoint(leftTrackedObject.transform.position);
+				Debug.Log("Griping");
+			}
+			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+			{
+				Debug.Log("Grip Up");
 			}
 		}
 		playerControl.MakeMoveVector();

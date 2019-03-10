@@ -6,9 +6,11 @@ public class PlayerControl : MonoBehaviour {
 
 	private float gripTime;
 
-	public Vector3 rightInitPosition;
-	public Vector3 rightMovingPosition;
-	public bool rightDirection;
+	[SerializeField] private float rotationSpeed;
+
+	[SerializeField] private Vector3 rightInitPosition;
+	[SerializeField] private Vector3 rightMovingPosition;
+	[SerializeField] private bool rightDirection;
 	
 	private Vector3 leftInitPosition;
 	private Vector3 leftMovingPosition;
@@ -17,16 +19,26 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private SteamVR_Controller leftController;
 	[SerializeField] private SteamVR_Controller rightController;
 
+	private Vector3 result;
 	void Start()
     {
         
     }
 
-    private void RotationBody(Vector3 target)
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.cyan;
+
+		Gizmos.DrawRay(this.transform.position, result * 10000);
+	}
+
+	private void RotationBody(Vector3 target)
     {
-        //target이 향하는 방향으로 회전
-        //회전 속도는 target의 크기로 결정
-        //회전은 Slerp나 Coroutine을 사용하여 서서히 회전
+		//target이 향하는 방향으로 회전
+		//회전 속도는 target의 크기로 결정
+		//회전은 Slerp나 Coroutine을 사용하여 서서히 회전
+		this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
+
     }
 
     private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
@@ -42,13 +54,54 @@ public class PlayerControl : MonoBehaviour {
 
     private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
     {
-        Vector3 result = Vector3.forward;
-        //result에 오른쪽과 왼쪽 바퀴의 벡터를 연산하여 나온 값 할당
-        //매개변수 값이 나타내는 것은 컨트롤러를 쥐고 이동한 값이다.
-        //해당되는 값의 끝 점을 서로 이은 벡터와 수직인 벡터가 result가 된다.
-        //rightWheel과 leftWheel은 각각 최대 값이 정해져 있어야 한다.
+        
+		//result에 오른쪽과 왼쪽 바퀴의 벡터를 연산하여 나온 값 할당
+		//매개변수 값이 나타내는 것은 컨트롤러를 쥐고 이동한 값이다.
+		//해당되는 값의 끝 점을 서로 이은 벡터와 수직인 벡터가 result가 된다.
+		//rightWheel과 leftWheel은 각각 최대 값이 정해져 있어야 한다.
 
-        return result;
+		bool forward;
+		if (rightWheel.magnitude > leftWheel.magnitude)
+		{
+			forward = rightDirection;
+			result = leftWheel - rightWheel;
+		}
+		else
+		{
+			forward = leftDirection;
+			result = rightWheel - leftWheel;
+		}
+		
+		if(forward)
+		{
+			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
+			if(rightWheel.magnitude > leftWheel.magnitude)
+			{
+				result = Quaternion.Euler(0, 90, 0) * result;
+				Debug.Log("전진 오른쪽");
+			}
+			else
+			{
+				result = Quaternion.Euler(0, -90, 0) * result;
+				Debug.Log("전진 왼쪽");
+			}
+		}
+		else
+		{
+			//오른쪽이 크면 반시계, 왼쪽이 크면 시계
+			if(rightWheel.magnitude > leftWheel.magnitude)
+			{
+				result = Quaternion.Euler(0, -90, 0) * result;
+				Debug.Log("후진 오른쪽");
+			}
+			else
+			{
+				result = Quaternion.Euler(0, 90, 0) * result;
+				Debug.Log("후진 왼쪽");
+			}
+		}
+		
+		return result;
     }
 
     IEnumerator CalculateMove(float speedValue)
@@ -62,17 +115,17 @@ public class PlayerControl : MonoBehaviour {
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.x - rightMovingPosition.x;
-
+		Debug.Log("Rotation: " + this.transform.rotation.y);
         if (curDirection > 0)
         {
             if (rightDirection)
             {
-                Debug.Log("curDirection > 0");
+                //Debug.Log("curDirection > 0");
                 SetRightMovingPosition(currentPos);
             }
             else
             {
-                Debug.Log("curDirection > 0 && Direction Change");
+                //Debug.Log("curDirection > 0 && Direction Change");
                 SetRightInitPosition(rightMovingPosition);
                 SetRightMovingPosition(currentPos);
                 rightDirection = true;
@@ -82,20 +135,20 @@ public class PlayerControl : MonoBehaviour {
         {
             if (rightDirection)
             {
-                Debug.Log("curDirection < 0 && Direction Change");
+                //Debug.Log("curDirection < 0 && Direction Change");
                 SetRightInitPosition(rightMovingPosition);
                 SetRightMovingPosition(currentPos);
                 rightDirection = false;
             }
             else
             {
-                Debug.Log("curDirection < 0");
+                //Debug.Log("curDirection < 0");
                 SetRightMovingPosition(currentPos);
             }
         }
         else
         {
-            Debug.Log("curDirection = 0");
+            //Debug.Log("curDirection = 0");
             SetRightInitPosition(rightMovingPosition);
         }
 	}
@@ -144,28 +197,16 @@ public class PlayerControl : MonoBehaviour {
         Vector3 rightWheel;
         Vector3 leftWheel;
 
-        if (rightDirection == true)
-        {
-            rightWheel = rightInitPosition - rightMovingPosition;
-            Debug.Log("전진");
-        }
-        else
-        {
-            rightWheel = rightMovingPosition - rightInitPosition;
-            Debug.Log("후진");
-        }
+		float initYPosition = rightInitPosition.y;
 
-        if (leftDirection == true)
-        {
-            Debug.Log("전진");
-            leftWheel = leftInitPosition - leftMovingPosition;
-        }
-		else
-        {
-            Debug.Log("후진");
-            leftWheel = leftMovingPosition - leftInitPosition;
-        }
+		rightMovingPosition.y = initYPosition;
+		leftInitPosition.y = initYPosition;
+		leftMovingPosition.y = initYPosition;
+
+		rightWheel = rightMovingPosition - rightInitPosition;
 		
+		leftWheel = leftMovingPosition - leftInitPosition;
+
 		MoveToward(rightWheel, leftWheel);
 	}
 

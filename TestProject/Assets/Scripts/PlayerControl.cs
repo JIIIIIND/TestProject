@@ -6,6 +6,9 @@ public class PlayerControl : MonoBehaviour {
 
 	private float gripTime;
 
+	[SerializeField] private Transform rightInitPos;
+	[SerializeField] private Transform leftInitPos;
+
 	[SerializeField] private float rotationSpeed;
 
 	[SerializeField] private Vector3 rightInitPosition;
@@ -20,6 +23,14 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private SteamVR_Controller rightController;
 
 	private Vector3 result;
+
+	private void Awake()
+	{
+		rightInitPosition = rightInitPos.position;
+		rightMovingPosition = rightInitPos.position;
+		leftInitPosition = leftInitPos.position;
+		leftMovingPosition = leftInitPos.position;
+	}
 	void Start()
     {
         

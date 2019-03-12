@@ -27,10 +27,10 @@ public class PlayerControl : MonoBehaviour {
 	private void Awake()
 	{
 		rightInitPosition = rightInitPos.position;
-		rightMovingPosition = rightInitPos.position;
+        rightMovingPosition = rightInitPos.position + new Vector3(1, 0, 0);
 		leftInitPosition = leftInitPos.position;
-		leftMovingPosition = leftInitPos.position;
-	}
+		leftMovingPosition = leftInitPos.position + new Vector3(1, 0, 0);
+    }
 	void Start()
     {
         
@@ -40,8 +40,11 @@ public class PlayerControl : MonoBehaviour {
 	{
 		Gizmos.color = Color.cyan;
 
-		Gizmos.DrawRay(this.transform.position, result * 10000);
-	}
+		Gizmos.DrawRay(this.transform.position, result);
+
+        Gizmos.DrawRay(rightInitPosition, rightMovingPosition - rightInitPosition);
+        Gizmos.DrawRay(leftInitPosition, leftMovingPosition - leftInitPosition);
+    }
 
 	private void RotationBody(Vector3 target)
     {
@@ -83,6 +86,7 @@ public class PlayerControl : MonoBehaviour {
 			result = rightWheel - leftWheel;
 		}
 		
+        /*
 		if(forward)
 		{
 			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
@@ -111,7 +115,7 @@ public class PlayerControl : MonoBehaviour {
 				Debug.Log("후진 왼쪽");
 			}
 		}
-		
+		*/
 		return result;
     }
 
@@ -242,5 +246,16 @@ public class PlayerControl : MonoBehaviour {
 	void Update ()
     {
 		gripTime += Time.deltaTime;
+
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SetRightMovingPosition(rightMovingPosition + new Vector3(1, 0, 0));
+            MakeMoveVector();
+        }
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            SetLeftMovingPosition(leftMovingPosition + new Vector3(1, 0, 0));
+            MakeMoveVector();
+        }
     }
 }

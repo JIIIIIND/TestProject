@@ -6,18 +6,18 @@ public class PlayerControl : MonoBehaviour {
 
 	private float gripTime;
 
-	[SerializeField] private Transform rightInitPos;
-	[SerializeField] private Transform leftInitPos;
+	[SerializeField] private Transform rightInitTransform;
+	[SerializeField] private Transform leftInitTransform;
 
 	[SerializeField] private float rotationSpeed;
 
 	[SerializeField] private Vector3 rightInitPosition;
 	[SerializeField] private Vector3 rightMovingPosition;
 	[SerializeField] private bool rightDirection;
-	
-	private Vector3 leftInitPosition;
-	private Vector3 leftMovingPosition;
-	private bool leftDirection;
+
+	[SerializeField] private Vector3 leftInitPosition;
+	[SerializeField] private Vector3 leftMovingPosition;
+	[SerializeField] private bool leftDirection;
 
 	[SerializeField] private SteamVR_Controller leftController;
 	[SerializeField] private SteamVR_Controller rightController;
@@ -26,10 +26,11 @@ public class PlayerControl : MonoBehaviour {
 
 	private void Awake()
 	{
-		rightInitPosition = rightInitPos.position;
-        rightMovingPosition = rightInitPos.position + new Vector3(1, 0, 0);
-		leftInitPosition = leftInitPos.position;
-		leftMovingPosition = leftInitPos.position + new Vector3(1, 0, 0);
+		rightInitPosition = rightInitTransform.localPosition;
+        rightMovingPosition = rightInitTransform.localPosition + new Vector3(0, 0, 0.1f);
+
+		leftInitPosition = leftInitTransform.localPosition;
+		leftMovingPosition = leftInitTransform.localPosition + new Vector3(0, 0, 0.1f);
     }
 	void Start()
     {
@@ -42,8 +43,8 @@ public class PlayerControl : MonoBehaviour {
 
 		Gizmos.DrawRay(this.transform.position, result);
 
-        Gizmos.DrawRay(rightInitPosition, rightMovingPosition - rightInitPosition);
-        Gizmos.DrawRay(leftInitPosition, leftMovingPosition - leftInitPosition);
+		//Gizmos.DrawRay(leftInitTransform.TransformPoint(leftInitPosition), leftMovingPosition - leftInitPosition);
+		//Gizmos.DrawRay(rightInitTransform.TransformPoint(rightInitPosition), rightMovingPosition - rightInitPosition);
     }
 
 	private void RotationBody(Vector3 target)
@@ -59,6 +60,7 @@ public class PlayerControl : MonoBehaviour {
     {
         //컨트롤러 쥔 상태로 뒤에서 앞으로, 앞에서 뒤로
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
+		
         RotationBody(targetVector);
         //targetVector의 크기가 속도 결정
         //
@@ -75,19 +77,25 @@ public class PlayerControl : MonoBehaviour {
 		//rightWheel과 leftWheel은 각각 최대 값이 정해져 있어야 한다.
 
 		bool forward;
+		
+		float initZPosition = rightInitPosition.z;
+
+		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
+		Vector3 leftModifiedMovingPoint = leftModifiedInitPoint + leftWheel;
+
 		if (rightWheel.magnitude > leftWheel.magnitude)
 		{
 			forward = rightDirection;
-			result = leftWheel - rightWheel;
+			result = leftModifiedMovingPoint - rightMovingPosition;
 		}
 		else
 		{
 			forward = leftDirection;
-			result = rightWheel - leftWheel;
+			result = rightMovingPosition - leftModifiedMovingPoint;
 		}
-		
-        /*
-		if(forward)
+		result = this.transform.TransformVector(result);
+
+		if (forward)
 		{
 			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
 			if(rightWheel.magnitude > leftWheel.magnitude)
@@ -106,16 +114,16 @@ public class PlayerControl : MonoBehaviour {
 			//오른쪽이 크면 반시계, 왼쪽이 크면 시계
 			if(rightWheel.magnitude > leftWheel.magnitude)
 			{
-				result = Quaternion.Euler(0, -90, 0) * result;
+				result = Quaternion.Euler(0, 90, 0) * result;
 				Debug.Log("후진 오른쪽");
 			}
 			else
 			{
-				result = Quaternion.Euler(0, 90, 0) * result;
+				result = Quaternion.Euler(0, -90, 0) * result;
 				Debug.Log("후진 왼쪽");
 			}
 		}
-		*/
+		
 		return result;
     }
 
@@ -129,8 +137,8 @@ public class PlayerControl : MonoBehaviour {
 	
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
-		float curDirection = currentPos.x - rightMovingPosition.x;
-		Debug.Log("Rotation: " + this.transform.rotation.y);
+		float curDirection = currentPos.z - rightMovingPosition.z;
+		
         if (curDirection > 0)
         {
             if (rightDirection)
@@ -169,7 +177,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 	public void CalculateLeftPoint(Vector3 currentPos)
 	{
-		float curDirection = currentPos.x - leftMovingPosition.x;
+		float curDirection = currentPos.z - leftMovingPosition.z;
         if (curDirection > 0)
         {
             if (leftDirection)
@@ -243,19 +251,16 @@ public class PlayerControl : MonoBehaviour {
 	public void SetRightMovingPosition(Vector3 pos)
 	{ rightMovingPosition = pos;}
 
+	public void PositionInitiate()
+	{
+		rightInitPosition = rightInitTransform.localPosition;
+		rightMovingPosition = rightInitTransform.localPosition;
+
+		leftInitPosition = leftInitTransform.localPosition;
+		leftMovingPosition = leftInitTransform.localPosition;
+	}
 	void Update ()
     {
-		gripTime += Time.deltaTime;
-
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SetRightMovingPosition(rightMovingPosition + new Vector3(1, 0, 0));
-            MakeMoveVector();
-        }
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            SetLeftMovingPosition(leftMovingPosition + new Vector3(1, 0, 0));
-            MakeMoveVector();
-        }
+		
     }
 }

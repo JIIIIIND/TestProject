@@ -10,6 +10,8 @@ public class ViveInputManager : MonoBehaviour {
 
 	private SteamVR_Controller.Device mDevice;
 
+	private bool isControllerGrip;
+
 	void Start ()
 	{}
 	
@@ -22,15 +24,19 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
 			{
 				Debug.Log("Grip Down");
-				playerControl.SetRightInitPosition(rightTrackedObject.transform.position);
+				isControllerGrip = true;
+				playerControl.PositionInitiate();
+				playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
 			{
-				playerControl.CalculateRightPoint(rightTrackedObject.transform.position);
+				isControllerGrip = true;
+				playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
 				Debug.Log("Griping");
 			}
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
+				isControllerGrip = false;
 				Debug.Log("Grip Up");
 			}
 		}
@@ -42,20 +48,25 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
 			{
 				Debug.Log("Grip Down");
-				playerControl.SetLeftInitPosition(leftTrackedObject.transform.position);
+				isControllerGrip = true;
+				playerControl.PositionInitiate();
+				playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
 			{
-				playerControl.CalculateLeftPoint(leftTrackedObject.transform.position);
+				isControllerGrip = true;
+				playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
 				Debug.Log("Griping");
 			}
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
+				isControllerGrip = false;
 				Debug.Log("Grip Up");
 			}
 		}
-		playerControl.MakeMoveVector();
-
+		if(isControllerGrip == true)
+			playerControl.MakeMoveVector();
+		isControllerGrip = false;
 	}
 
 }

@@ -23,6 +23,8 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private SteamVR_Controller rightController;
 
 	private Vector3 result;
+	private bool isForward;
+	private IEnumerator gripMovement;
 
 	private void Awake()
 	{
@@ -62,6 +64,14 @@ public class PlayerControl : MonoBehaviour {
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
 		
         RotationBody(targetVector);
+		
+		if(gripMovement != null)
+		{
+			StopCoroutine(gripMovement);
+		}
+		gripMovement = CalculateMove(targetVector.magnitude);
+		StartCoroutine(gripMovement);
+		
         //targetVector의 크기가 속도 결정
         //
         //이동은 Coroutine으로 지속적으로 속도가 감소하면서 이동함
@@ -70,7 +80,6 @@ public class PlayerControl : MonoBehaviour {
 
     private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
     {
-        
 		//result에 오른쪽과 왼쪽 바퀴의 벡터를 연산하여 나온 값 할당
 		//매개변수 값이 나타내는 것은 컨트롤러를 쥐고 이동한 값이다.
 		//해당되는 값의 끝 점을 서로 이은 벡터와 수직인 벡터가 result가 된다.
@@ -123,16 +132,25 @@ public class PlayerControl : MonoBehaviour {
 				Debug.Log("후진 왼쪽");
 			}
 		}
-		
+
+		isForward = forward;
+
 		return result;
     }
 
     IEnumerator CalculateMove(float speedValue)
     {
-        //speedValue가 양수나 음수에 따라 동작 다르게
-        //양수인 경우 전진, 0이 될 때 까지 지속적으로 감소
-        //음수인 경우에 후진, 0이 될 때 까지 지속적으로 증가
-        yield return null;
+		//양수인 경우 전진, 0이 될 때 까지 지속적으로 감소
+		//음수인 경우에 후진, 0이 될 때 까지 지속적으로 증가
+		while (true)
+		{
+			if (isForward)
+				this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
+			else
+				this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
+
+			yield return null;
+		}
     }
 	
 	public void CalculateRightPoint(Vector3 currentPos)
@@ -259,6 +277,8 @@ public class PlayerControl : MonoBehaviour {
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition;
 	}
+
+	public IEnumerator GetGripMovement() { return gripMovement; }
 	void Update ()
     {
 		

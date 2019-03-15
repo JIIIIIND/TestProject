@@ -10,7 +10,7 @@ public class ViveInputManager : MonoBehaviour {
 
 	private SteamVR_Controller.Device mDevice;
 
-	private bool isControllerGrip;
+	[SerializeField] private bool isControllerGrip;
 
 	void Start ()
 	{}
@@ -64,8 +64,14 @@ public class ViveInputManager : MonoBehaviour {
 				Debug.Log("Grip Up");
 			}
 		}
-		if(isControllerGrip == true)
+		if (isControllerGrip == true)
 			playerControl.MakeMoveVector();
+		else
+		{
+			if(playerControl.GetGripMovement() != null)
+				playerControl.StopCoroutine(playerControl.GetGripMovement());
+		}
+			
 		isControllerGrip = false;
 	}
 

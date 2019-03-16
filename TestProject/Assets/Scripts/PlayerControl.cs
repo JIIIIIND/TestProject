@@ -89,8 +89,13 @@ public class PlayerControl : MonoBehaviour {
 		
 		float initZPosition = rightInitPosition.z;
 
+		Debug.Log("right Vector: " + rightWheel.magnitude);
+		Debug.Log("before midified : " + leftWheel.magnitude);
+
 		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
 		Vector3 leftModifiedMovingPoint = leftModifiedInitPoint + leftWheel;
+
+		Debug.Log("after midified : " + (leftModifiedMovingPoint - leftModifiedInitPoint).magnitude);
 
 		if (rightWheel.magnitude > leftWheel.magnitude)
 		{
@@ -200,12 +205,12 @@ public class PlayerControl : MonoBehaviour {
         {
             if (leftDirection)
             {
-                Debug.Log("Left: curDirection > 0");
+                //Debug.Log("Left: curDirection > 0");
                 SetLeftMovingPosition(currentPos);
             }
             else
             {
-                Debug.Log("Left: curDirection > 0 && Direction Change");
+                //Debug.Log("Left: curDirection > 0 && Direction Change");
                 SetLeftInitPosition(leftMovingPosition);
                 SetLeftMovingPosition(currentPos);
                 leftDirection = true;
@@ -215,20 +220,20 @@ public class PlayerControl : MonoBehaviour {
         {
             if (leftDirection)
             {
-                Debug.Log("Left: curDirection < 0 && Direction Change");
+                //Debug.Log("Left: curDirection < 0 && Direction Change");
                 SetLeftInitPosition(leftMovingPosition);
                 SetLeftMovingPosition(currentPos);
                 leftDirection = false;
             }
             else
             {
-                Debug.Log("Left: curDirection < 0");
+                //Debug.Log("Left: curDirection < 0");
                 SetLeftMovingPosition(currentPos);
             }
         }
         else
         {
-            Debug.Log("Left: curDirection = 0");
+            //Debug.Log("Left: curDirection = 0");
             SetLeftInitPosition(leftMovingPosition);
         }
 	}

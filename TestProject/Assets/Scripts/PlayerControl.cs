@@ -89,24 +89,21 @@ public class PlayerControl : MonoBehaviour {
 		
 		float initZPosition = rightInitPosition.z;
 
-		Debug.Log("right Vector: " + rightWheel.magnitude);
-		Debug.Log("before midified : " + leftWheel.magnitude);
-
 		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
 		Vector3 leftModifiedMovingPoint = leftModifiedInitPoint + leftWheel;
-
-		Debug.Log("after midified : " + (leftModifiedMovingPoint - leftModifiedInitPoint).magnitude);
 
 		if (rightWheel.magnitude > leftWheel.magnitude)
 		{
 			forward = rightDirection;
 			result = leftModifiedMovingPoint - rightMovingPosition;
+            Debug.Log("right is big: " + result.magnitude);
 		}
 		else
 		{
 			forward = leftDirection;
 			result = rightMovingPosition - leftModifiedMovingPoint;
-		}
+            Debug.Log("left is big: " + result.magnitude);
+        }
 		result = this.transform.TransformVector(result);
 
 		if (forward)
@@ -286,6 +283,21 @@ public class PlayerControl : MonoBehaviour {
 	public IEnumerator GetGripMovement() { return gripMovement; }
 	void Update ()
     {
-		
+		if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            MoveToward(this.transform.TransformDirection(Vector3.forward * 0.1f), Vector3.zero);
+        }
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            MoveToward(Vector3.zero, this.transform.TransformDirection(Vector3.forward * 0.1f));
+        }
+        if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+        {
+            MoveToward(this.transform.TransformDirection(Vector3.forward * 0.1f), this.transform.TransformDirection(Vector3.forward * 0.1f));
+        }
+        if(!(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow)))
+        {
+            StopCoroutine(gripMovement);
+        }
     }
 }

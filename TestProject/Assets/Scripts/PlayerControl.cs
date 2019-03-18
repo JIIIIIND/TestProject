@@ -86,7 +86,8 @@ public class PlayerControl : MonoBehaviour {
 		//rightWheel과 leftWheel은 각각 최대 값이 정해져 있어야 한다.
 
 		bool forward;
-		
+
+        /*
 		float initZPosition = rightInitPosition.z;
 
 		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
@@ -135,7 +136,51 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		isForward = forward;
+    */
+
+        Vector3 right = rightInitTransform.position + this.transform.TransformDirection(Vector3.forward * rightWheel.magnitude);
+        if (rightDirection == false)
+            right = rightInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * rightWheel.magnitude);
+        Vector3 left = leftInitTransform.position + this.transform.TransformDirection(Vector3.forward * leftWheel.magnitude);
+        if (leftDirection == false)
+            left = leftInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * leftWheel.magnitude);
+
+        if (rightWheel.magnitude > leftWheel.magnitude)
+        {
+            forward = rightDirection;
+            result = left - right;
+        }
+        else
+        {
+            forward = leftDirection;
+            result = right - left;
+        }
+        result = this.transform.TransformVector(result);
+
+        if (forward)
+        {
+            if(rightWheel.magnitude > leftWheel.magnitude)
+            {
+                result = Quaternion.Euler(0, 90, 0) * result;
+            }
+            else
+            {
+                result = Quaternion.Euler(0, -90, 0) * result;
+            }
+        }
+        else
+        {
+            if(rightWheel.magnitude > leftWheel.magnitude)
+            {
+                result = Quaternion.Euler(0, 90, 0) * result;
+            }
+            else
+            {
+                result = Quaternion.Euler(0, -90, 0) * result;
+            }
+        }
+
+        isForward = forward;
 
 		return result;
     }

@@ -87,7 +87,7 @@ public class PlayerControl : MonoBehaviour {
 
 		bool forward;
 
-        /*
+		///*
 		float initZPosition = rightInitPosition.z;
 
 		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
@@ -105,8 +105,9 @@ public class PlayerControl : MonoBehaviour {
 			result = rightMovingPosition - leftModifiedMovingPoint;
             Debug.Log("left is big: " + result.magnitude);
         }
+		Debug.DrawRay(this.transform.position, result, Color.red);
 		result = this.transform.TransformVector(result);
-
+		Debug.DrawRay(this.transform.position, result, Color.blue);
 		if (forward)
 		{
 			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
@@ -136,16 +137,21 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-    */
+    //*/
+		/*
+		//Vector3 right = rightInitTransform.position + this.transform.TransformDirection(Vector3.forward * rightWheel.magnitude);
+		Vector3 right = rightInitTransform.position + (Vector3.forward * rightWheel.magnitude);
+		//if (rightDirection == false)
+		//right = rightInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * rightWheel.magnitude);
+		//Vector3 left = leftInitTransform.position + this.transform.TransformDirection(Vector3.forward * leftWheel.magnitude);
+		Vector3 left = leftInitTransform.position + (Vector3.forward * leftWheel.magnitude);
+		//if (leftDirection == false)
+		//left = leftInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * leftWheel.magnitude);
 
-        Vector3 right = rightInitTransform.position + this.transform.TransformDirection(Vector3.forward * rightWheel.magnitude);
-        if (rightDirection == false)
-            right = rightInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * rightWheel.magnitude);
-        Vector3 left = leftInitTransform.position + this.transform.TransformDirection(Vector3.forward * leftWheel.magnitude);
-        if (leftDirection == false)
-            left = leftInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * leftWheel.magnitude);
+		Debug.DrawRay(this.transform.position, right, Color.yellow);
+		Debug.DrawRay(this.transform.position, left, Color.green);
 
-        if (rightWheel.magnitude > leftWheel.magnitude)
+		if (rightWheel.magnitude > leftWheel.magnitude)
         {
             forward = rightDirection;
             result = left - right;
@@ -156,16 +162,16 @@ public class PlayerControl : MonoBehaviour {
             result = right - left;
         }
         result = this.transform.TransformVector(result);
-
+		Debug.DrawRay(this.transform.position, result, Color.blue);
         if (forward)
         {
             if(rightWheel.magnitude > leftWheel.magnitude)
             {
-                result = Quaternion.Euler(0, 90, 0) * result;
+                result = Quaternion.Euler(0, -90, 0) * result;
             }
             else
             {
-                result = Quaternion.Euler(0, -90, 0) * result;
+                result = Quaternion.Euler(0, 90, 0) * result;
             }
         }
         else
@@ -179,7 +185,7 @@ public class PlayerControl : MonoBehaviour {
                 result = Quaternion.Euler(0, -90, 0) * result;
             }
         }
-
+		*/
         isForward = forward;
 
 		return result;
@@ -328,6 +334,7 @@ public class PlayerControl : MonoBehaviour {
 	public IEnumerator GetGripMovement() { return gripMovement; }
 	void Update ()
     {
+		/*
 		if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             MoveToward(this.transform.TransformDirection(Vector3.forward * 0.1f), Vector3.zero);
@@ -344,5 +351,6 @@ public class PlayerControl : MonoBehaviour {
         {
             StopCoroutine(gripMovement);
         }
+		*/
     }
 }

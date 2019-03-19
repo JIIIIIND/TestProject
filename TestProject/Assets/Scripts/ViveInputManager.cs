@@ -64,6 +64,7 @@ public class ViveInputManager : MonoBehaviour {
 				Debug.Log("Grip Up");
 			}
 		}
+		
 		if (isControllerGrip == true)
 			playerControl.MakeMoveVector();
 		else
@@ -71,7 +72,8 @@ public class ViveInputManager : MonoBehaviour {
 			if(playerControl.GetGripMovement() != null)
 				playerControl.StopCoroutine(playerControl.GetGripMovement());
 		}
-			
+		
+		//playerControl.MakeMoveVector();
 		isControllerGrip = false;
 	}
 

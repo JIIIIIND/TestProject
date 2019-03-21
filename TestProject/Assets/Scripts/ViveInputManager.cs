@@ -24,9 +24,18 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
 			{
 				Debug.Log("Grip Down");
+				if(playerControl.GetMainMovement() != null)
+				{
+					Debug.Log("breaking");
+					playerControl.StopCoroutine(playerControl.GetEnumerator());
+					playerControl.StopCoroutine(playerControl.GetMainMovement());
+				}
+
 				isControllerGrip = true;
 				playerControl.RightPositionInitiate();
 				playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
+
+				playerControl.StartTimeCoroutine(false);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
 			{
@@ -37,6 +46,8 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
 				isControllerGrip = false;
+				playerControl.StartMoving(false);
+
 				playerControl.RightPositionInitiate();
 				Debug.Log("Grip Up");
 			}
@@ -49,9 +60,20 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
 			{
 				Debug.Log("Grip Down");
+
+				if (playerControl.GetMainMovement() != null)
+				{
+					Debug.Log("breaking");
+					playerControl.StopCoroutine(playerControl.GetEnumerator());
+					playerControl.StopCoroutine(playerControl.GetMainMovement());
+				}
+					
+
 				isControllerGrip = true;
 				playerControl.LeftPositionInitiate();
 				playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
+
+				playerControl.StartTimeCoroutine(true);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
 			{
@@ -62,6 +84,8 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
 				isControllerGrip = false;
+				playerControl.StartMoving(true);
+
 				playerControl.LeftPositionInitiate();
 				Debug.Log("Grip Up");
 			}

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-	private float leftGripTime;
-	private float rightGripTime;
+	[SerializeField] private float leftGripTime;
+	[SerializeField] private float rightGripTime;
 
 	[SerializeField] private Transform rightInitTransform;
 	[SerializeField] private Transform leftInitTransform;
@@ -23,12 +23,16 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private SteamVR_Controller leftController;
 	[SerializeField] private SteamVR_Controller rightController;
 
+	[SerializeField] private float timeRate;
+
 	private Vector3 result;
 	private bool isForward;
 
 	private IEnumerator gripMovement;
+	private IEnumerator mainMovement;
 	private IEnumerator leftGripCounter;
 	private IEnumerator rightGripCounter;
+	private IEnumerator enumerator;
 
 	private void Awake()
 	{
@@ -196,8 +200,6 @@ public class PlayerControl : MonoBehaviour {
 
     IEnumerator CalculateMove(float speedValue)
     {
-		//양수인 경우 전진, 0이 될 때 까지 지속적으로 감소
-		//음수인 경우에 후진, 0이 될 때 까지 지속적으로 증가
 		while (true)
 		{
 			if (isForward)
@@ -209,11 +211,44 @@ public class PlayerControl : MonoBehaviour {
 		}
     }
 
+	public void StartMoving(bool isLeft)
+	{
+		if (mainMovement != null)
+		{
+			Debug.Log("breaking_inside");
+			StopCoroutine(enumerator);
+			StopCoroutine(mainMovement);
+		}
+		
+		if (isLeft)
+			mainMovement = SpeedControl(leftGripTime, result);
+		else
+			mainMovement = SpeedControl(rightGripTime, result);
+		StartCoroutine(mainMovement);
+		RotationBody(result);
+	}
+
 	IEnumerator SpeedControl(float timeValue, Vector3 direction)
 	{
-
-		yield return null;
+		float speedValue = direction.magnitude;
+		float angleVariable = 0.0f;
+		
+		while(speedValue > 0)
+		{
+			if(enumerator != null)
+				StopCoroutine(enumerator);
+			
+			speedValue *= Mathf.Cos(angleVariable) * (timeValue * timeRate);
+			enumerator = CalculateMove(speedValue);
+			StartCoroutine(enumerator);
+			angleVariable -= (timeValue * timeRate);
+			//값 수정 필요함. time과 속도 간에 비율 수정 필요
+			if (angleVariable > (Mathf.PI / 2))
+				angleVariable = (Mathf.PI / 2);
+			yield return new WaitForSeconds(0.5f);
+		}
 	}
+
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.z - rightMovingPosition.z;
@@ -312,17 +347,58 @@ public class PlayerControl : MonoBehaviour {
 		MoveToward(rightWheel, leftWheel);
 	}
 
+	private IEnumerator TimeCounter(bool isLeft)
+	{
+		while(true)
+		{
+			if (isLeft)
+				leftGripTime += Time.deltaTime;
+			else
+				rightGripTime += Time.deltaTime;
+			yield return null;
+		}
+	}
+	public void StartTimeCoroutine(bool isLeft)
+	{
+		if(isLeft)
+		{
+			if (leftGripCounter == null)
+				leftGripCounter = TimeCounter(true);
+			StartCoroutine(leftGripCounter);
+		}
+		else
+		{
+			if (rightGripCounter == null)
+				rightGripCounter = TimeCounter(false);
+			StartCoroutine(rightGripCounter);
+		}
+	}
+
 	public void SetLeftInitPosition(Vector3 pos)
 	{
 		leftInitPosition = pos;
 		leftMovingPosition = pos;
-		leftGripTime = 0;
+
+		if (leftGripCounter != null)
+		{
+			StopCoroutine(leftGripCounter);
+			leftGripTime = 0;
+			leftGripCounter = TimeCounter(true);
+			StartCoroutine(leftGripCounter);
+		}
 	}
 	public void SetRightInitPosition(Vector3 pos)
 	{
 		rightInitPosition = pos;
 		rightMovingPosition = pos;
-		rightGripTime = 0;
+
+		if(rightGripCounter != null)
+		{
+			StopCoroutine(rightGripCounter);
+			rightGripTime = 0;
+			rightGripCounter = TimeCounter(false);
+			StartCoroutine(rightGripCounter);
+		}
 	}
 
 	public void SetLeftMovingPosition(Vector3 pos)
@@ -334,15 +410,25 @@ public class PlayerControl : MonoBehaviour {
 	{
 		rightInitPosition = rightInitTransform.localPosition;
 		rightMovingPosition = rightInitTransform.localPosition;
-	}
 
+		if(rightGripCounter != null)
+			StopCoroutine(rightGripCounter);
+	}
 	public void LeftPositionInitiate()
 	{
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition;
+
+		if(leftGripCounter != null)
+			StopCoroutine(leftGripCounter);
 	}
 
 	public IEnumerator GetGripMovement() { return gripMovement; }
+	public IEnumerator GetLeftGripCounter() { return leftGripCounter; }
+	public IEnumerator GetRightGripCounter() { return rightGripCounter; }
+	public IEnumerator GetMainMovement() { return mainMovement; }
+	public IEnumerator GetEnumerator() { return enumerator; }
+
 	void Update ()
     {
 

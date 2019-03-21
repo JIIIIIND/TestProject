@@ -25,7 +25,7 @@ public class ViveInputManager : MonoBehaviour {
 			{
 				Debug.Log("Grip Down");
 				isControllerGrip = true;
-				playerControl.PositionInitiate();
+				playerControl.RightPositionInitiate();
 				playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
@@ -37,6 +37,7 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
 				isControllerGrip = false;
+				playerControl.RightPositionInitiate();
 				Debug.Log("Grip Up");
 			}
 		}
@@ -49,7 +50,7 @@ public class ViveInputManager : MonoBehaviour {
 			{
 				Debug.Log("Grip Down");
 				isControllerGrip = true;
-				playerControl.PositionInitiate();
+				playerControl.LeftPositionInitiate();
 				playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
 			}
 			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
@@ -61,6 +62,7 @@ public class ViveInputManager : MonoBehaviour {
 			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
 				isControllerGrip = false;
+				playerControl.LeftPositionInitiate();
 				Debug.Log("Grip Up");
 			}
 		}

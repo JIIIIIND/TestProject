@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-	private float gripTime;
+	private float leftGripTime;
+	private float rightGripTime;
 
 	[SerializeField] private Transform rightInitTransform;
 	[SerializeField] private Transform leftInitTransform;
@@ -24,7 +25,10 @@ public class PlayerControl : MonoBehaviour {
 
 	private Vector3 result;
 	private bool isForward;
+
 	private IEnumerator gripMovement;
+	private IEnumerator leftGripCounter;
+	private IEnumerator rightGripCounter;
 
 	private void Awake()
 	{
@@ -45,15 +49,14 @@ public class PlayerControl : MonoBehaviour {
 
 		Gizmos.DrawRay(this.transform.position, result);
 
-		//Gizmos.DrawRay(leftInitTransform.TransformPoint(leftInitPosition), leftMovingPosition - leftInitPosition);
-		//Gizmos.DrawRay(rightInitTransform.TransformPoint(rightInitPosition), rightMovingPosition - rightInitPosition);
+		Gizmos.DrawRay(leftInitTransform.TransformPoint(leftInitPosition), leftMovingPosition - leftInitPosition);
+		Gizmos.DrawRay(rightInitTransform.TransformPoint(rightInitPosition), rightMovingPosition - rightInitPosition);
     }
 
 	private void RotationBody(Vector3 target)
     {
 		//target이 향하는 방향으로 회전
 		//회전 속도는 target의 크기로 결정
-		//회전은 Slerp나 Coroutine을 사용하여 서서히 회전
 		this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
 
     }
@@ -98,16 +101,16 @@ public class PlayerControl : MonoBehaviour {
 			forward = rightDirection;
 			result = leftModifiedMovingPoint - rightMovingPosition;
             Debug.Log("right is big: " + result.magnitude);
+			Debug.Log("left is " + leftWheel.magnitude + "right is " + rightWheel.magnitude);
 		}
 		else
 		{
 			forward = leftDirection;
 			result = rightMovingPosition - leftModifiedMovingPoint;
             Debug.Log("left is big: " + result.magnitude);
+			Debug.Log("left is " + leftWheel.magnitude + "right is " + rightWheel.magnitude);
         }
-		Debug.DrawRay(this.transform.position, result, Color.red);
 		result = this.transform.TransformVector(result);
-		Debug.DrawRay(this.transform.position, result, Color.blue);
 		if (forward)
 		{
 			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
@@ -205,7 +208,12 @@ public class PlayerControl : MonoBehaviour {
 			yield return null;
 		}
     }
-	
+
+	IEnumerator SpeedControl(float timeValue, Vector3 direction)
+	{
+
+		yield return null;
+	}
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.z - rightMovingPosition.z;
@@ -308,13 +316,13 @@ public class PlayerControl : MonoBehaviour {
 	{
 		leftInitPosition = pos;
 		leftMovingPosition = pos;
-		gripTime = 0;
+		leftGripTime = 0;
 	}
 	public void SetRightInitPosition(Vector3 pos)
 	{
 		rightInitPosition = pos;
 		rightMovingPosition = pos;
-		gripTime = 0;
+		rightGripTime = 0;
 	}
 
 	public void SetLeftMovingPosition(Vector3 pos)
@@ -322,11 +330,14 @@ public class PlayerControl : MonoBehaviour {
 	public void SetRightMovingPosition(Vector3 pos)
 	{ rightMovingPosition = pos;}
 
-	public void PositionInitiate()
+	public void RightPositionInitiate()
 	{
 		rightInitPosition = rightInitTransform.localPosition;
 		rightMovingPosition = rightInitTransform.localPosition;
+	}
 
+	public void LeftPositionInitiate()
+	{
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition;
 	}
@@ -334,6 +345,7 @@ public class PlayerControl : MonoBehaviour {
 	public IEnumerator GetGripMovement() { return gripMovement; }
 	void Update ()
     {
+
 		/*
 		if(Input.GetKeyDown(KeyCode.RightArrow))
         {

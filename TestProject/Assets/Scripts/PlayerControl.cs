@@ -241,7 +241,7 @@ public class PlayerControl : MonoBehaviour {
 			speedValue *= Mathf.Cos(angleVariable) * (timeValue * timeRate);
 			enumerator = CalculateMove(speedValue);
 			StartCoroutine(enumerator);
-			angleVariable -= (timeValue * timeRate);
+			angleVariable += (timeValue * timeRate);
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))
 				angleVariable = (Mathf.PI / 2);

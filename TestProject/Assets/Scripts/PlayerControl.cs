@@ -24,6 +24,7 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private SteamVR_Controller rightController;
 
 	[SerializeField] private float timeRate;
+	[SerializeField] private float speedRate;
 
 	private Vector3 result;
 	private bool isForward;
@@ -104,15 +105,11 @@ public class PlayerControl : MonoBehaviour {
 		{
 			forward = rightDirection;
 			result = leftModifiedMovingPoint - rightMovingPosition;
-            Debug.Log("right is big: " + result.magnitude);
-			Debug.Log("left is " + leftWheel.magnitude + "right is " + rightWheel.magnitude);
 		}
 		else
 		{
 			forward = leftDirection;
 			result = rightMovingPosition - leftModifiedMovingPoint;
-            Debug.Log("left is big: " + result.magnitude);
-			Debug.Log("left is " + leftWheel.magnitude + "right is " + rightWheel.magnitude);
         }
 		result = this.transform.TransformVector(result);
 		if (forward)
@@ -195,6 +192,12 @@ public class PlayerControl : MonoBehaviour {
 		*/
         isForward = forward;
 
+		if (result.magnitude < speedRate)
+		{
+			result *= 3;
+			Debug.Log(result.magnitude);
+		}
+
 		return result;
     }
 
@@ -219,13 +222,13 @@ public class PlayerControl : MonoBehaviour {
 			StopCoroutine(enumerator);
 			StopCoroutine(mainMovement);
 		}
-		
+		RotationBody(result);
 		if (isLeft)
 			mainMovement = SpeedControl(leftGripTime, result);
 		else
 			mainMovement = SpeedControl(rightGripTime, result);
 		StartCoroutine(mainMovement);
-		RotationBody(result);
+		
 	}
 
 	IEnumerator SpeedControl(float timeValue, Vector3 direction)
@@ -237,10 +240,12 @@ public class PlayerControl : MonoBehaviour {
 		{
 			if(enumerator != null)
 				StopCoroutine(enumerator);
-			
+
 			speedValue *= Mathf.Cos(angleVariable) * (timeValue * timeRate);
+			
 			enumerator = CalculateMove(speedValue);
 			StartCoroutine(enumerator);
+			
 			angleVariable += (timeValue * timeRate);
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))

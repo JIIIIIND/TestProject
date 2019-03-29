@@ -88,11 +88,19 @@ public class ViveInputManager : MonoBehaviour {
 				Debug.Log("Grip Up");
 			}
 		}
+		
+		if (isControllerGrip == true)
+			playerControl.MakeMoveVector();
+		else
+		{
+			if(playerControl.GetGripMovement() != null)
+				playerControl.StopCoroutine(playerControl.GetGripMovement());
+		}
 
 		if ((int)rightTrackedObject.index != -1)
 		{
 			mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
-			if(mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
 			{
 				playerControl.RightPositionInitiate();
 			}
@@ -105,15 +113,6 @@ public class ViveInputManager : MonoBehaviour {
 				playerControl.LeftPositionInitiate();
 			}
 		}
-
-		if (isControllerGrip == true)
-			playerControl.MakeMoveVector();
-		else
-		{
-			if(playerControl.GetGripMovement() != null)
-				playerControl.StopCoroutine(playerControl.GetGripMovement());
-		}
-		
 		//playerControl.MakeMoveVector();
 		isControllerGrip = false;
 	}

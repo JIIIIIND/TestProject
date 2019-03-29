@@ -26,6 +26,8 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float timeRate;
 	[SerializeField] private float speedRate;
 
+	[SerializeField] private WheelControl wheelControl;
+
 	private Vector3 result;
 	private bool isForward;
 
@@ -222,11 +224,19 @@ public class PlayerControl : MonoBehaviour {
 			StopCoroutine(enumerator);
 			StopCoroutine(mainMovement);
 		}
-		RotationBody(result);
 		if (isLeft)
+		{
+			if(leftGripTime > 0.2f)
+				result = result * ((timeRate) / leftGripTime);
+			
 			mainMovement = SpeedControl(leftGripTime, result);
+		}
 		else
+		{
+			if (rightGripTime > 0.2f)
+				result = result * ((timeRate) / rightGripTime);
 			mainMovement = SpeedControl(rightGripTime, result);
+		}
 		StartCoroutine(mainMovement);
 		
 	}
@@ -241,16 +251,16 @@ public class PlayerControl : MonoBehaviour {
 			if(enumerator != null)
 				StopCoroutine(enumerator);
 
-			speedValue *= Mathf.Cos(angleVariable) * (timeValue * timeRate);
+			speedValue *= Mathf.Cos(angleVariable);
 			
 			enumerator = CalculateMove(speedValue);
 			StartCoroutine(enumerator);
-			
-			angleVariable += (timeValue * timeRate);
+			RotationBody(result);
+			angleVariable += ((Mathf.PI / 2)/10) * Time.deltaTime;
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))
 				angleVariable = (Mathf.PI / 2);
-			yield return new WaitForSeconds(0.5f);
+			yield return null;
 		}
 	}
 
@@ -436,7 +446,23 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update ()
     {
-
+		Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
+		if(Input.GetKey(KeyCode.LeftArrow))
+		{
+			wheelControl.BrakeWheel(Wheel.LEFT);
+		}
+		if(Input.GetKey(KeyCode.RightArrow))
+		{
+			wheelControl.BrakeWheel(Wheel.RIGHT);
+		}
+		if (Input.GetKeyUp(KeyCode.LeftArrow))
+		{
+			wheelControl.InitBrakeTorque(Wheel.LEFT);
+		}
+		if (Input.GetKeyUp(KeyCode.RightArrow))
+		{
+			wheelControl.InitBrakeTorque(Wheel.RIGHT);
+		}
 		/*
 		if(Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -455,5 +481,5 @@ public class PlayerControl : MonoBehaviour {
             StopCoroutine(gripMovement);
         }
 		*/
-    }
+	}
 }

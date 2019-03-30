@@ -43,7 +43,7 @@ public class WheelControl : MonoBehaviour {
 		else
 			wheelCollider = rightWheel;
 
-		wheelCollider.brakeTorque += brakeRate;
+		wheelCollider.brakeTorque = brakeRate;
 	}
 
 	public void InitBrakeTorque(Wheel wheel)

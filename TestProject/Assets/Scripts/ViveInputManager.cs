@@ -27,8 +27,8 @@ public class ViveInputManager : MonoBehaviour {
 				if(playerControl.GetMainMovement() != null)
 				{
 					Debug.Log("breaking");
-					playerControl.StopCoroutine(playerControl.GetEnumerator());
-					playerControl.StopCoroutine(playerControl.GetMainMovement());
+					//playerControl.StopCoroutine(playerControl.GetEnumerator());
+					//playerControl.StopCoroutine(playerControl.GetMainMovement());
 				}
 
 				isControllerGrip = true;
@@ -63,8 +63,8 @@ public class ViveInputManager : MonoBehaviour {
 				if (playerControl.GetMainMovement() != null)
 				{
 					Debug.Log("breaking");
-					playerControl.StopCoroutine(playerControl.GetEnumerator());
-					playerControl.StopCoroutine(playerControl.GetMainMovement());
+					//playerControl.StopCoroutine(playerControl.GetEnumerator());
+					//playerControl.StopCoroutine(playerControl.GetMainMovement());
 				}
 					
 

@@ -256,7 +256,7 @@ public class PlayerControl : MonoBehaviour {
 			enumerator = CalculateMove(speedValue);
 			StartCoroutine(enumerator);
 			RotationBody(result);
-			angleVariable += ((Mathf.PI / 2)/10) * Time.deltaTime;
+			angleVariable += ((Mathf.PI / 2)/5) * Time.deltaTime;
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))
 				angleVariable = (Mathf.PI / 2);
@@ -446,7 +446,6 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update ()
     {
-		Debug.Log(GetComponent<Rigidbody>().velocity.magnitude);
 		if(Input.GetKey(KeyCode.LeftArrow))
 		{
 			wheelControl.BrakeWheel(Wheel.LEFT);

@@ -27,9 +27,16 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float speedRate;
 
 	[SerializeField] private WheelControl wheelControl;
+	
+	[SerializeField] private float roadSaveTime;
+	private Vector3 lastRoadPosition;
+	private Quaternion lastRoadRotation;
+	private float currentTime;
 
 	private Vector3 result;
 	private bool isForward;
+
+	public float collisionRayLength;
 
 	private IEnumerator gripMovement;
 	private IEnumerator mainMovement;
@@ -47,7 +54,6 @@ public class PlayerControl : MonoBehaviour {
     }
 	void Start()
     {
-        
     }
 
 	private void OnDrawGizmos()
@@ -58,7 +64,43 @@ public class PlayerControl : MonoBehaviour {
 
 		Gizmos.DrawRay(leftInitTransform.TransformPoint(leftInitPosition), leftMovingPosition - leftInitPosition);
 		Gizmos.DrawRay(rightInitTransform.TransformPoint(rightInitPosition), rightMovingPosition - rightInitPosition);
-    }
+
+		Ray ray = new Ray(this.transform.position, this.transform.TransformVector(new Vector3(1, 1, 0)) * collisionRayLength);
+		Gizmos.DrawRay(ray);
+		
+	}
+
+	public bool IsFlip()
+	{
+		RaycastHit hit;
+
+		if (Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(1, 1, 0)), collisionRayLength, 1>>0))
+		{
+			return true;
+		}
+		if (Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(-1, 1, 0)), collisionRayLength, 1>>0))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public void TransformInit()
+	{
+		Debug.Log("Flip and relocated");
+		this.GetComponent<Rigidbody>().Sleep();
+		this.GetComponent<Rigidbody>().isKinematic = true;
+		this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+		this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+		this.transform.position = lastRoadPosition;
+		this.transform.rotation = lastRoadRotation;
+		this.GetComponent<Rigidbody>().WakeUp();
+		this.GetComponent<Rigidbody>().isKinematic = false;
+		/*
+		this.transform.position = lastRoadPosition.position;
+		this.transform.rotation = lastRoadPosition.rotation;
+		*/
+	}
 
 	private void RotationBody(Vector3 target)
     {
@@ -446,6 +488,22 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update ()
     {
+		currentTime += Time.deltaTime;
+		if (roadSaveTime < currentTime)
+		{
+			RaycastHit hit;
+			if(Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(0,-1.5f,0)),out hit))
+			{
+				if(hit.collider.tag == "Road")
+				{
+					Debug.Log("Save road position");
+					lastRoadPosition = hit.point + new Vector3(0,5,0);
+					lastRoadRotation = this.transform.rotation;
+				}
+			}
+			currentTime = 0;
+		}
+		
 		if(Input.GetKey(KeyCode.LeftArrow))
 		{
 			wheelControl.BrakeWheel(Wheel.LEFT);

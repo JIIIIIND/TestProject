@@ -32,11 +32,11 @@ public class CarAI : MonoBehaviour {
         Vector3 vector = transform.forward;
         if (Physics.BoxCast(rayPosition.transform.position, transform.lossyScale / 2, transform.forward, out raycastHit, Quaternion.identity, rayRange))
         {
-            Gizmos.DrawRay(transform.position, transform.forward * raycastHit.distance);
-            Gizmos.DrawWireCube(transform.position + transform.forward * raycastHit.distance, transform.lossyScale);
+            Gizmos.DrawRay(rayPosition.transform.position, transform.forward * raycastHit.distance);
+            Gizmos.DrawWireCube(rayPosition.transform.position + transform.forward * raycastHit.distance, transform.lossyScale);
         }
         else
-            Gizmos.DrawRay(transform.position, transform.forward * rayRange);
+            Gizmos.DrawRay(rayPosition.transform.position, transform.forward * rayRange);
         
     }
     private void ShootRay()
@@ -50,7 +50,7 @@ public class CarAI : MonoBehaviour {
         }
         else
         {
-            Debug.DrawRay(transform.position, transform.forward * rayRange, Color.blue);
+            Debug.DrawRay(rayPosition.transform.position, transform.forward * rayRange, Color.blue);
             SpeedUP(speedValue, speedRate);
             if (Physics.Raycast(transform.forward * raycastHit.distance, transform.right, out raycastHit, rayRange * 1.5f))
             {

@@ -9,27 +9,61 @@ public class WheelControl : MonoBehaviour {
 
 	[SerializeField] private float brakeRate;
 
-	[SerializeField] private WheelCollider leftWheel;
-	[SerializeField] private WheelCollider rightWheel;
+    [SerializeField] private GameObject leftWheel;
+    [SerializeField] private GameObject rightWheel;
 
-	//메인이 되는 함수의 회전/속도 관련 값에 접근하여 값에 따라 바퀴를 회전시킴
-	//속도나 회전 값이 0이라면 바퀴는 회전하지 않고 멈춰있는 상태 유지
+	[SerializeField] private WheelCollider leftWheelCollider;
+	[SerializeField] private WheelCollider rightWheelCollider;
 
-	void Start() {
+    private IEnumerator leftWheelRotate;
+    private IEnumerator rightWheelRotate;
+
+    //메인이 되는 함수의 회전/속도 관련 값에 접근하여 값에 따라 바퀴를 회전시킴
+    //속도나 회전 값이 0이라면 바퀴는 회전하지 않고 멈춰있는 상태 유지
+
+    void Start() {
 
 	}
 
-	private void RotationWheel()
+	public void RotationWheel(Wheel wheel, float speed)
 	{
+        if(wheel == Wheel.LEFT)
+        {
+            if (leftWheelRotate != null)
+                StopCoroutine(leftWheelRotate);
+            leftWheelRotate = RotateWheel(leftWheel, speed * 10);
 
+            StartCoroutine(leftWheelRotate);
+        }
+        else
+        {
+            if (rightWheelRotate != null)
+                StopCoroutine(rightWheelRotate);
+            rightWheelRotate = RotateWheel(rightWheel, speed * 10);
+
+            StartCoroutine(rightWheelRotate);
+        }
 	}
 
-	private void effectPlay()
-	{
+    IEnumerator RotateWheel(GameObject wheel, float rotateSpeed)
+    {
+        float angle = 0.0f;
+        if(rotateSpeed < 0)
+        {
+            angle += Mathf.PI;
+            rotateSpeed *= -1;
+        }
+        while(rotateSpeed != 0)
+        {
+            angle += Mathf.Cos(Mathf.PI / 10) * Time.deltaTime;
+            rotateSpeed *= Mathf.Cos(angle);
 
-	}
-
-	private void groundEffectPlay()
+            wheel.transform.rotation *= Quaternion.Euler(new Vector3(rotateSpeed, 0, 0));
+            yield return null;
+        }
+    }
+	
+	private void brakeEffectPlay()
 	{
 
 	}
@@ -39,9 +73,9 @@ public class WheelControl : MonoBehaviour {
 		WheelCollider wheelCollider;
 
 		if (wheel == Wheel.LEFT)
-			wheelCollider = leftWheel;
+			wheelCollider = leftWheelCollider;
 		else
-			wheelCollider = rightWheel;
+			wheelCollider = rightWheelCollider;
 
 		wheelCollider.brakeTorque = brakeRate;
 	}
@@ -51,9 +85,9 @@ public class WheelControl : MonoBehaviour {
 		WheelCollider wheelCollider;
 
 		if (wheel == Wheel.LEFT)
-			wheelCollider = leftWheel;
+			wheelCollider = leftWheelCollider;
 		else
-			wheelCollider = rightWheel;
+			wheelCollider = rightWheelCollider;
 
 		wheelCollider.brakeTorque = 0.0f;
 	}

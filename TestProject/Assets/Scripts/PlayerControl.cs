@@ -72,8 +72,6 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
-		RaycastHit hit;
-
 		if (Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(1, 1, 0)), collisionRayLength, 1>>0))
 		{
 			return true;
@@ -250,10 +248,18 @@ public class PlayerControl : MonoBehaviour {
 		while (true)
 		{
 			if (isForward)
-				this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-			else
-				this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-
+            {
+                this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
+                wheelControl.RotationWheel(Wheel.LEFT, speedValue);
+                wheelControl.RotationWheel(Wheel.RIGHT, speedValue);
+            }
+            else
+            {
+                this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
+                wheelControl.RotationWheel(Wheel.LEFT, -speedValue);
+                wheelControl.RotationWheel(Wheel.RIGHT, -speedValue);
+            }
+			
 			yield return null;
 		}
     }

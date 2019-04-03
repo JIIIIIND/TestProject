@@ -114,8 +114,18 @@ public class PlayerControl : MonoBehaviour {
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
 		
         RotationBody(targetVector);
-		
-		if(gripMovement != null)
+
+		if(leftDirection)
+			wheelControl.RotationWheel(Wheel.LEFT, leftWheel.magnitude);
+		else
+			wheelControl.RotationWheel(Wheel.LEFT, -leftWheel.magnitude);
+
+		if (rightDirection)
+			wheelControl.RotationWheel(Wheel.RIGHT, rightWheel.magnitude);
+		else
+			wheelControl.RotationWheel(Wheel.RIGHT, -rightWheel.magnitude);
+
+		if (gripMovement != null)
 		{
 			StopCoroutine(gripMovement);
 		}
@@ -250,14 +260,10 @@ public class PlayerControl : MonoBehaviour {
 			if (isForward)
             {
                 this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-                wheelControl.RotationWheel(Wheel.LEFT, speedValue);
-                wheelControl.RotationWheel(Wheel.RIGHT, speedValue);
             }
             else
             {
                 this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-                wheelControl.RotationWheel(Wheel.LEFT, -speedValue);
-                wheelControl.RotationWheel(Wheel.RIGHT, -speedValue);
             }
 			
 			yield return null;
@@ -278,12 +284,22 @@ public class PlayerControl : MonoBehaviour {
 				result = result * ((timeRate) / leftGripTime);
 			
 			mainMovement = SpeedControl(leftGripTime, result);
+
+			if(leftDirection)
+				wheelControl.RotationWheel(Wheel.LEFT, result.magnitude);
+			else
+				wheelControl.RotationWheel(Wheel.LEFT, -result.magnitude);
 		}
 		else
 		{
 			if (rightGripTime > 0.2f)
 				result = result * ((timeRate) / rightGripTime);
 			mainMovement = SpeedControl(rightGripTime, result);
+
+			if (rightDirection)
+				wheelControl.RotationWheel(Wheel.RIGHT, result.magnitude);
+			else
+				wheelControl.RotationWheel(Wheel.RIGHT, -result.magnitude);
 		}
 		StartCoroutine(mainMovement);
 		

@@ -31,7 +31,7 @@ public class WheelControl : MonoBehaviour {
         {
             if (leftWheelRotate != null)
                 StopCoroutine(leftWheelRotate);
-            leftWheelRotate = RotateWheel(leftWheel, speed * 10);
+            leftWheelRotate = RotateWheel(leftWheel, speed * 100);
 
             StartCoroutine(leftWheelRotate);
         }
@@ -39,7 +39,7 @@ public class WheelControl : MonoBehaviour {
         {
             if (rightWheelRotate != null)
                 StopCoroutine(rightWheelRotate);
-            rightWheelRotate = RotateWheel(rightWheel, speed * 10);
+            rightWheelRotate = RotateWheel(rightWheel, speed * 100);
 
             StartCoroutine(rightWheelRotate);
         }
@@ -48,17 +48,18 @@ public class WheelControl : MonoBehaviour {
     IEnumerator RotateWheel(GameObject wheel, float rotateSpeed)
     {
         float angle = 0.0f;
-        if(rotateSpeed < 0)
-        {
-            angle += Mathf.PI;
-            rotateSpeed *= -1;
-        }
+        
         while(rotateSpeed != 0)
         {
             angle += Mathf.Cos(Mathf.PI / 10) * Time.deltaTime;
-            rotateSpeed *= Mathf.Cos(angle);
-
-            wheel.transform.rotation *= Quaternion.Euler(new Vector3(rotateSpeed, 0, 0));
+			//rotateSpeed *= Mathf.Sin(angle);
+			if (angle > (Mathf.PI / 2))
+			{
+				angle = Mathf.PI / 2;
+				rotateSpeed = 0;
+			}
+			
+            wheel.transform.rotation *= Quaternion.Euler(new Vector3(0, rotateSpeed * Mathf.Cos(angle), 0));
             yield return null;
         }
     }

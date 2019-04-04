@@ -19,10 +19,7 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private Vector3 leftInitPosition;
 	[SerializeField] private Vector3 leftMovingPosition;
 	[SerializeField] private bool leftDirection;
-
-	[SerializeField] private SteamVR_Controller leftController;
-	[SerializeField] private SteamVR_Controller rightController;
-
+    
 	[SerializeField] private float timeRate;
 	[SerializeField] private float speedRate;
 
@@ -51,6 +48,8 @@ public class PlayerControl : MonoBehaviour {
 
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition + new Vector3(0, 0, 0.1f);
+
+
     }
 	void Start()
     {
@@ -561,4 +560,14 @@ public class PlayerControl : MonoBehaviour {
         }
 		*/
 	}
+    public SteamVR_TrackedObject GetLeftTrackedObject()
+    {
+        return leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
+    }
+
+    public SteamVR_TrackedObject GetRightTrackedObject()
+    {
+        return rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
+    }
+
 }

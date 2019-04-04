@@ -13,124 +13,139 @@ public class ViveInputManager : MonoBehaviour {
 	[SerializeField] private bool isControllerGrip;
 
 	void Start ()
-	{}
+	{
+        InitPlayerController();
+    }
 	
 	void Update () {
-		if((int)rightTrackedObject.index != -1)
-		{
-			mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
+        if(rightTrackedObject != null)
+        {
+            if ((int)rightTrackedObject.index != -1)
+            {
+                mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
 
-			//Debug.Log(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip));
-			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
-			{
-				Debug.Log("Grip Down");
-				if(playerControl.GetMainMovement() != null)
-				{
-					Debug.Log("breaking");
-					//playerControl.StopCoroutine(playerControl.GetEnumerator());
-					//playerControl.StopCoroutine(playerControl.GetMainMovement());
-				}
+                //Debug.Log(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip));
+                if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    Debug.Log("Grip Down");
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking");
+                        //playerControl.StopCoroutine(playerControl.GetEnumerator());
+                        //playerControl.StopCoroutine(playerControl.GetMainMovement());
+                    }
 
-				isControllerGrip = true;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.RightPositionInitiate();
-					playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
+                    isControllerGrip = true;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.RightPositionInitiate();
+                        playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
 
-					playerControl.StartTimeCoroutine(false);
-				}
-				else
-				{
-					playerControl.RightPositionInitiate();
-				}
-			}
-			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
-			{
-				isControllerGrip = true;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
-					Debug.Log("Griping");
-				}
-				else
-				{
-					playerControl.RightPositionInitiate();
-				}
-			}
-			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-			{
-				isControllerGrip = false;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.StartMoving(false);
-				}
-				else
-				{
-					playerControl.RightPositionInitiate();
-				}
-					
-				Debug.Log("Grip Up");
-			}
-		}
+                        playerControl.StartTimeCoroutine(false);
+                    }
+                    else
+                    {
+                        playerControl.RightPositionInitiate();
+                    }
+                }
+                if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    isControllerGrip = true;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
+                        Debug.Log("Griping");
+                    }
+                    else
+                    {
+                        playerControl.RightPositionInitiate();
+                    }
+                }
+                if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    isControllerGrip = false;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.StartMoving(false);
+                    }
+                    else
+                    {
+                        playerControl.RightPositionInitiate();
+                    }
 
-		if ((int)leftTrackedObject.index != -1)
-		{
-			mDevice = SteamVR_Controller.Input((int)leftTrackedObject.index);
-			
-			if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
-			{
-				Debug.Log("Grip Down");
+                    Debug.Log("Grip Up");
+                }
+            }
+        }
+        else
+        {
+            InitPlayerController();
+        }
+		if(leftTrackedObject != null)
+        {
+            if ((int)leftTrackedObject.index != -1)
+            {
+                mDevice = SteamVR_Controller.Input((int)leftTrackedObject.index);
 
-				if (playerControl.GetMainMovement() != null)
-				{
-					Debug.Log("breaking");
-					//playerControl.StopCoroutine(playerControl.GetEnumerator());
-					//playerControl.StopCoroutine(playerControl.GetMainMovement());
-				}
-					
+                if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    Debug.Log("Grip Down");
 
-				isControllerGrip = true;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.LeftPositionInitiate();
-					playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking");
+                        //playerControl.StopCoroutine(playerControl.GetEnumerator());
+                        //playerControl.StopCoroutine(playerControl.GetMainMovement());
+                    }
 
-					playerControl.StartTimeCoroutine(true);
-				}
-				else
-				{
-					playerControl.LeftPositionInitiate();
-				}
-					
-			}
-			if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
-			{
-				isControllerGrip = true;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
-					Debug.Log("Griping");
-				}
-				else
-				{
-					playerControl.LeftPositionInitiate();
-				}
-			}
-			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-			{
-				isControllerGrip = false;
-				if (playerControl.IsFlip() != true)
-				{
-					playerControl.StartMoving(true);
 
-					Debug.Log("Grip Up");
-				}
-				else
-				{
-					playerControl.LeftPositionInitiate();
-				}
-			}
-		}
+                    isControllerGrip = true;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.LeftPositionInitiate();
+                        playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
+
+                        playerControl.StartTimeCoroutine(true);
+                    }
+                    else
+                    {
+                        playerControl.LeftPositionInitiate();
+                    }
+
+                }
+                if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    isControllerGrip = true;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
+                        Debug.Log("Griping");
+                    }
+                    else
+                    {
+                        playerControl.LeftPositionInitiate();
+                    }
+                }
+                if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    isControllerGrip = false;
+                    if (playerControl.IsFlip() != true)
+                    {
+                        playerControl.StartMoving(true);
+
+                        Debug.Log("Grip Up");
+                    }
+                    else
+                    {
+                        playerControl.LeftPositionInitiate();
+                    }
+                }
+            }
+        }
+        else
+        {
+            InitPlayerController();
+        }
 		
 		if (isControllerGrip == true)
 			playerControl.MakeMoveVector();
@@ -140,22 +155,32 @@ public class ViveInputManager : MonoBehaviour {
 				playerControl.StopCoroutine(playerControl.GetGripMovement());
 		}
 
-		if ((int)rightTrackedObject.index != -1)
-		{
-			mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
-			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-			{
-				playerControl.RightPositionInitiate();
-			}
-		}
-		if ((int)leftTrackedObject.index != -1)
-		{
-			mDevice = SteamVR_Controller.Input((int)leftTrackedObject.index);
-			if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-			{
-				playerControl.LeftPositionInitiate();
-			}
-		}
+        if (rightTrackedObject != null)
+        {
+            if ((int)rightTrackedObject.index != -1)
+            {
+                mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
+                if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    playerControl.RightPositionInitiate();
+                }
+            }
+        }
+        else
+            InitPlayerController();
+        if (leftTrackedObject != null)
+        {
+            if ((int)leftTrackedObject.index != -1)
+            {
+                mDevice = SteamVR_Controller.Input((int)leftTrackedObject.index);
+                if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+                {
+                    playerControl.LeftPositionInitiate();
+                }
+            }
+        }
+        else
+            InitPlayerController();
 		//playerControl.MakeMoveVector();
 		isControllerGrip = false;
 		if(playerControl.IsFlip() == true)
@@ -166,5 +191,17 @@ public class ViveInputManager : MonoBehaviour {
 		}
 			
 	}
-
+    private void InitPlayerController()
+    {
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
+            leftTrackedObject = playerControl.GetLeftTrackedObject();
+            rightTrackedObject = playerControl.GetRightTrackedObject();
+        }
+        else
+        {
+            Debug.Log("player is missing");
+        }
+    }
 }

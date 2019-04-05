@@ -61,11 +61,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\QA_InterrogationRoom\Scripts\QADoor_InterrogationRoom.cs" />
     <Compile Include="Assets\race-track-lake\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\Scripts\CarAI.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+    <Compile Include="Assets\Scripts\VIveGameInput.cs" />
     <Compile Include="Assets\Scripts\ViveInputManager.cs" />
+    <Compile Include="Assets\Scripts\ViveUIController.cs" />
     <Compile Include="Assets\Scripts\WheelControl.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
@@ -175,6 +178,8 @@
     <None Include="Assets\race-track-lake\readmore.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
     <None Include="Assets\race-track-lake\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
+    <None Include="Assets\QA_InterrogationRoom\ReadMe.txt" />
+    <None Include="Assets\QA_InterrogationRoom\Shaders\QA_LightBeam.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
     <None Include="Assets\SteamVR\readme.txt" />

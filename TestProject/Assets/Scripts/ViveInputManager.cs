@@ -195,6 +195,7 @@ public class ViveInputManager : MonoBehaviour {
     {
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
+			Debug.Log("init");
             playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
             leftTrackedObject = playerControl.GetLeftTrackedObject();
             rightTrackedObject = playerControl.GetRightTrackedObject();

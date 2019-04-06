@@ -5,12 +5,14 @@ using UnityEngine;
 public class UIInitialize : MonoBehaviour {
 
     public Vector3 initializeVector;
+    private Vector3 playerInitPos;
     [SerializeField] private GameObject player;
     
 	// Use this for initialization
 	void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerInitPos = player.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -21,9 +23,10 @@ public class UIInitialize : MonoBehaviour {
         Quaternion angle = Quaternion.LookRotation(direction.normalized);
         this.transform.rotation = angle;
 
-        Vector3 forwardVector = player.transform.TransformDirection(Vector3.forward);
+        Vector3 difference = player.transform.position - playerInitPos;
 
-        this.transform.position = forwardVector * initializeVector.normalized.magnitude;
-        this.transform.position.Set(this.transform.position.x, this.transform.position.y + 7, this.transform.position.z);
-	}
+        GetComponent<RectTransform>().transform.position = player.transform.TransformVector(initializeVector);
+        GetComponent<RectTransform>().transform.position += difference;
+
+    }
 }

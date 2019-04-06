@@ -4,6 +4,7 @@
 //
 //=============================================================================
 
+using System;
 using UnityEngine;
 using Valve.VR;
 
@@ -161,7 +162,7 @@ public class SteamVR : System.IDisposable
 		return null;
 	}
 
-	string GetStringProperty(ETrackedDeviceProperty prop)
+	public string GetStringProperty(ETrackedDeviceProperty prop)
 	{
 		var error = ETrackedPropertyError.TrackedProp_Success;
 		var capactiy = hmd.GetStringTrackedDeviceProperty(OpenVR.k_unTrackedDeviceIndex_Hmd, prop, null, 0, ref error);

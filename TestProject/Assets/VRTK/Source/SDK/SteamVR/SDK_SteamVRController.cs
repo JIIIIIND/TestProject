@@ -890,7 +890,7 @@ namespace VRTK
 
         protected virtual string GetModelNumber(uint index)
         {
-            return (SteamVR.instance != null ? SteamVR.instance.GetStringProperty(ETrackedDeviceProperty.Prop_ModelNumber_String, index) : "").ToLower();
+            return (SteamVR.instance != null ? SteamVR.instance.GetStringProperty(ETrackedDeviceProperty.Prop_ModelNumber_String) : "").ToLower();
         }
 #endif
     }

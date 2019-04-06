@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour {
     private float count = 0;
 
     void Start () {
-
-        Exit();
+        
 	}
 	public void Exit()
     {

@@ -8,8 +8,10 @@ public class UIController : MonoBehaviour {
     [SerializeField] private GameObject GameMenu;
     [SerializeField] private GameObject StoryUI;
     [SerializeField] private GameObject TreatmentUI;
+    [SerializeField] private GameObject Stages;
 
     [SerializeField] private GameObject[] stages;
+    
     private int currentStage;
 
     void Start () {
@@ -42,15 +44,16 @@ public class UIController : MonoBehaviour {
 
     public void NextStage()
     {
-        if (currentStage < stages.Length)
+        if (currentStage < stages.Length-1)
         {
             currentStage++;
+
+            UpdateStageImage(true);
         }
         else
         {
             Debug.Log("this is last stage");
         }
-        UpdateStageImage();
     }
 
     public void PreviousStage()
@@ -58,21 +61,25 @@ public class UIController : MonoBehaviour {
         if(currentStage > 0)
         {
             currentStage--;
+
+            UpdateStageImage(false);
         }
         else
         {
             Debug.Log("this is first stage");
         }
-        UpdateStageImage();
     }
 
-    private void UpdateStageImage()
+    private void UpdateStageImage(bool isNext)
     {
         float imageSize = stages[currentStage].GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
-        Vector3 parentTransform = stages[currentStage].GetComponentInParent<RectTransform>().localPosition;
+        Vector3 parentTransform = Stages.GetComponent<RectTransform>().localPosition;
 
-        parentTransform.Set(parentTransform.x - imageSize * currentStage, parentTransform.y, parentTransform.z);
-        stages[currentStage].GetComponentInParent<RectTransform>().localPosition = parentTransform;
+        if (isNext == false)
+            imageSize *= -1;
+        parentTransform.Set(parentTransform.x - imageSize, parentTransform.y, parentTransform.z);
+        Stages.GetComponent<RectTransform>().localPosition = parentTransform;
+        
     }
 
 	// Update is called once per frame

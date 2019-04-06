@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ViveUIController : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class ViveUIController : MonoBehaviour {
     private GameObject laser;
     private Transform laserTransform;
     private Vector3 hitPoint;
-
+    
     private SteamVR_Controller.Device Controller
     { get { return SteamVR_Controller.Input((int)(trackedObject.index)); } }
 
@@ -21,7 +22,7 @@ public class ViveUIController : MonoBehaviour {
     private void ShowLaser(RaycastHit hit)
     {
         laser.SetActive(true);
-        laserTransform.position = Vector3.Lerp(trackedObject.transform.position, hitPoint, 5f);
+        laserTransform.position = Vector3.Lerp(trackedObject.transform.position, hitPoint, 0.5f);
         laserTransform.LookAt(hitPoint);
 
         laserTransform.localScale = new Vector3(laserTransform.localScale.x,
@@ -37,7 +38,7 @@ public class ViveUIController : MonoBehaviour {
 		if(Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
         {
             RaycastHit hit;
-
+            
             if(Physics.Raycast(trackedObject.transform.position, transform.forward, out hit, 100))
             {
                 hitPoint = hit.point;

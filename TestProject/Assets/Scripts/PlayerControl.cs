@@ -191,56 +191,6 @@ public class PlayerControl : MonoBehaviour {
 				Debug.Log("후진 왼쪽");
 			}
 		}
-
-    //*/
-		/*
-		//Vector3 right = rightInitTransform.position + this.transform.TransformDirection(Vector3.forward * rightWheel.magnitude);
-		Vector3 right = rightInitTransform.position + (Vector3.forward * rightWheel.magnitude);
-		//if (rightDirection == false)
-		//right = rightInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * rightWheel.magnitude);
-		//Vector3 left = leftInitTransform.position + this.transform.TransformDirection(Vector3.forward * leftWheel.magnitude);
-		Vector3 left = leftInitTransform.position + (Vector3.forward * leftWheel.magnitude);
-		//if (leftDirection == false)
-		//left = leftInitTransform.position + this.transform.TransformDirection(-(Vector3.forward) * leftWheel.magnitude);
-
-		Debug.DrawRay(this.transform.position, right, Color.yellow);
-		Debug.DrawRay(this.transform.position, left, Color.green);
-
-		if (rightWheel.magnitude > leftWheel.magnitude)
-        {
-            forward = rightDirection;
-            result = left - right;
-        }
-        else
-        {
-            forward = leftDirection;
-            result = right - left;
-        }
-        result = this.transform.TransformVector(result);
-		Debug.DrawRay(this.transform.position, result, Color.blue);
-        if (forward)
-        {
-            if(rightWheel.magnitude > leftWheel.magnitude)
-            {
-                result = Quaternion.Euler(0, -90, 0) * result;
-            }
-            else
-            {
-                result = Quaternion.Euler(0, 90, 0) * result;
-            }
-        }
-        else
-        {
-            if(rightWheel.magnitude > leftWheel.magnitude)
-            {
-                result = Quaternion.Euler(0, 90, 0) * result;
-            }
-            else
-            {
-                result = Quaternion.Euler(0, -90, 0) * result;
-            }
-        }
-		*/
         isForward = forward;
 
 		if (result.magnitude < speedRate)
@@ -318,7 +268,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			enumerator = CalculateMove(speedValue);
 			StartCoroutine(enumerator);
-			RotationBody(result);
+			RotationBody(direction);
 			angleVariable += ((Mathf.PI / 2)/5) * Time.deltaTime;
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))

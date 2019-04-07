@@ -34,6 +34,7 @@ public class PlayerControl : MonoBehaviour {
 
 	private Vector3 result;
 	private bool isForward;
+	public float currentSpeed;
 
 	public float collisionRayLength;
 
@@ -115,17 +116,6 @@ public class PlayerControl : MonoBehaviour {
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
 		
         RotationBody(targetVector);
-
-		if(leftDirection)
-			wheelControl.RotationWheel(Wheel.LEFT, leftWheel.magnitude);
-		else
-			wheelControl.RotationWheel(Wheel.LEFT, -leftWheel.magnitude);
-
-		if (rightDirection)
-			wheelControl.RotationWheel(Wheel.RIGHT, rightWheel.magnitude);
-		else
-			wheelControl.RotationWheel(Wheel.RIGHT, -rightWheel.magnitude);
-
 		if (gripMovement != null)
 		{
 			StopCoroutine(gripMovement);
@@ -210,12 +200,17 @@ public class PlayerControl : MonoBehaviour {
 		{
 			if (isForward)
             {
-                this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-            }
-            else
+				//this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
+				wheelControl.MotorTorque(Wheel.LEFT, speedValue * 3);
+				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * 3);
+
+			}
+			else
             {
-                this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-            }
+				//this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
+				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * 3);
+				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * 3);
+			}
 			
 			yield return null;
 		}
@@ -235,22 +230,12 @@ public class PlayerControl : MonoBehaviour {
 				result = result * ((timeRate) / leftGripTime);
 			
 			mainMovement = SpeedControl(leftGripTime, result);
-
-			if(leftDirection)
-				wheelControl.RotationWheel(Wheel.LEFT, result.magnitude);
-			else
-				wheelControl.RotationWheel(Wheel.LEFT, -result.magnitude);
 		}
 		else
 		{
 			if (rightGripTime > 0.2f)
 				result = result * ((timeRate) / rightGripTime);
 			mainMovement = SpeedControl(rightGripTime, result);
-
-			if (rightDirection)
-				wheelControl.RotationWheel(Wheel.RIGHT, result.magnitude);
-			else
-				wheelControl.RotationWheel(Wheel.RIGHT, -result.magnitude);
 		}
 		StartCoroutine(mainMovement);
 		
@@ -461,6 +446,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void Update ()
     {
+		currentSpeed = GetComponent<Rigidbody>().velocity.magnitude;
 		currentTime += Time.deltaTime;
 		if (roadSaveTime < currentTime)
 		{

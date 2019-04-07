@@ -25,6 +25,18 @@ public class WheelControl : MonoBehaviour {
 
 	}
 
+	public void MotorTorque(Wheel wheel, float speed)
+	{
+		if(wheel == Wheel.LEFT)
+		{
+			leftWheelCollider.motorTorque = speed;
+		}
+		else
+		{
+			rightWheelCollider.motorTorque = speed;
+		}
+	}
+
 	public void RotationWheel(Wheel wheel, float speed)
 	{
         if(wheel == Wheel.LEFT)
@@ -92,13 +104,21 @@ public class WheelControl : MonoBehaviour {
 
 		wheelCollider.brakeTorque = 0.0f;
 	}
-	void Update () {
-		
+	void Update ()
+	{
+		leftWheel.transform.Rotate(0.0f, leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
+		rightWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 	}
 
     public bool LeftWheelIsGround()
-    { return leftWheelCollider.isGrounded; }
+    {
+		Debug.Log("Left: "+leftWheelCollider.isGrounded);
+		return leftWheelCollider.isGrounded;
+	}
     public bool RightWheelIsGround()
-    { return rightWheelCollider.isGrounded; }
+    {
+		Debug.Log("Right: " + rightWheelCollider.isGrounded);
+		return rightWheelCollider.isGrounded;
+	}
 
 }

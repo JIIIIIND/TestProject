@@ -95,4 +95,10 @@ public class WheelControl : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public bool LeftWheelIsGround()
+    { return leftWheelCollider.isGrounded; }
+    public bool RightWheelIsGround()
+    { return rightWheelCollider.isGrounded; }
+
 }

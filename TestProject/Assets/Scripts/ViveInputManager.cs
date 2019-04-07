@@ -35,44 +35,47 @@ public class ViveInputManager : MonoBehaviour
                     //playerControl.StopCoroutine(playerControl.GetMainMovement());
                 }
 
-                isControllerGrip = true;
-                if (playerControl.IsFlip() != true)
+                
+
+                if(playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    isControllerGrip = true;
                     playerControl.RightPositionInitiate();
                     playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
 
                     playerControl.StartTimeCoroutine(false);
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.RightPositionInitiate();
                 }
             }
             if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
             {
-                isControllerGrip = true;
-                if (playerControl.IsFlip() != true)
+                
+                if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    isControllerGrip = true;
                     playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
                     Debug.Log("Griping");
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.RightPositionInitiate();
                 }
             }
             if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
-                isControllerGrip = false;
-                if (playerControl.IsFlip() != true)
+                
+                if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    isControllerGrip = false;
                     playerControl.StartMoving(false);
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.RightPositionInitiate();
                 }
-
                 Debug.Log("Grip Up");
             }
         }
@@ -91,45 +94,43 @@ public class ViveInputManager : MonoBehaviour
                     //playerControl.StopCoroutine(playerControl.GetEnumerator());
                     //playerControl.StopCoroutine(playerControl.GetMainMovement());
                 }
-
-
-                isControllerGrip = true;
-                if (playerControl.IsFlip() != true)
+                if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    isControllerGrip = true;
                     playerControl.LeftPositionInitiate();
                     playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
 
                     playerControl.StartTimeCoroutine(true);
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.LeftPositionInitiate();
                 }
-
             }
             if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
             {
-                isControllerGrip = true;
-                if (playerControl.IsFlip() != true)
+                
+                if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    isControllerGrip = true;
                     playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
                     Debug.Log("Griping");
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.LeftPositionInitiate();
                 }
             }
             if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
-                isControllerGrip = false;
-                if (playerControl.IsFlip() != true)
+                
+                if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    isControllerGrip = false;
                     playerControl.StartMoving(true);
-
                     Debug.Log("Grip Up");
                 }
-                else
+                else if (playerControl.IsFlip() == true)
                 {
                     playerControl.LeftPositionInitiate();
                 }

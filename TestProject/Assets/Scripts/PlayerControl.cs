@@ -522,4 +522,9 @@ public class PlayerControl : MonoBehaviour {
         return rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
 
+    public WheelControl GetWheelControl()
+    {
+        return wheelControl;
+    }
+
 }

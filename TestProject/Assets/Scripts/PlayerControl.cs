@@ -19,7 +19,9 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private Vector3 leftInitPosition;
 	[SerializeField] private Vector3 leftMovingPosition;
 	[SerializeField] private bool leftDirection;
-    
+
+    [SerializeField] private Transform rayPosition;
+
 	[SerializeField] private float timeRate;
 	[SerializeField] private float speedRate;
 
@@ -71,11 +73,11 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
-		if (Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(1, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1>>0))
 		{
 			return true;
 		}
-		if (Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(-1, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1>>0))
 		{
 			return true;
 		}

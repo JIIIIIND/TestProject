@@ -6,9 +6,41 @@ public class GameManager : MonoBehaviour {
 
     //각종 옵션 값을 저장하고 관리
     //씬 관리 등등 전반적인 게임의 운영 관련한 것들 모음
+    private static GameManager instance;
     private bool isSave = false;
-    private float count = 0;
 
+    [SerializeField] private GameObject fadeCanvas;
+    [SerializeField] private GameObject fadeObject;
+    private UnityEngine.UI.Image fadeImage;
+    [SerializeField] private float fadePlayTime;
+    private bool fadeIsPlaying;
+    private float fadeStartValue = 0.0f;
+    private float fadeEndValue = 1.0f;
+    private float fadeTime = 0.0f;
+    //
+    private int storyModeCurrentStage;
+    //startStage 이후의 Index에 대해서 실행 할 수 없도록
+    private int startStage;
+
+    [SerializeField] private SoundEffectManager soundEffectManager;
+    [SerializeField] private UIController uiController;
+    
+    private GameManager()
+    {}
+    
+    public static GameManager Instance()
+    {
+        if (instance == null)
+        {
+            instance = new GameManager();
+        }
+        return instance;
+    }
+    private void Awake()
+    {
+        fadeImage = fadeObject.GetComponent<UnityEngine.UI.Image>();
+        fadeCanvas.SetActive(false);
+    }
     void Start () {
         
 	}
@@ -35,12 +67,66 @@ public class GameManager : MonoBehaviour {
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
+    public void SelectScene(GameObject stage)
+    {
+        int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1)/500;
+
+        LoadScene(uiController.GetStageName(selectStage));
+    }
+
     public void LoadScene(string name)
     {
-        //화면 전환용 효과 좀 넣어주고(Fade Out)
-        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
-        //여기서도 효과 좀 넣어주고(Fade In)
+        if (fadeIsPlaying == true)
+            return;
+        else
+        {
+            fadeCanvas.SetActive(true);
+        }
+        StartCoroutine(FadeOut(name));
     }
+
+    IEnumerator FadeOut(string name)
+    {
+        fadeIsPlaying = true;
+        Color color = fadeImage.color;
+        fadeTime = 0;
+        color.a = Mathf.Lerp(fadeStartValue, fadeEndValue, fadeTime);
+
+        while(color.a < 1f)
+        {
+            fadeTime += Time.deltaTime / fadePlayTime;
+            color.a = Mathf.Lerp(fadeStartValue, fadeEndValue, fadeTime);
+            fadeImage.color = color;
+
+            yield return null;
+        }
+        fadeIsPlaying = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+        StartCoroutine(FadeIn());
+    }
+
+    IEnumerator FadeIn()
+    {
+        fadeIsPlaying = true;
+        Color color = fadeImage.color;
+        fadeTime = 0;
+        color.a = Mathf.Lerp(fadeEndValue, fadeStartValue, fadeTime);
+
+        while(color.a > 0.0f)
+        {
+            Debug.Log("Fade iN");
+            fadeTime -= Time.deltaTime / fadePlayTime;
+            color.a = Mathf.Lerp(fadeEndValue, fadeStartValue, fadeTime);
+            fadeImage.color = color;
+
+            yield return null;
+        }
+        fadeIsPlaying = false;
+        fadeCanvas.SetActive(false);
+    }
+
+    public SoundEffectManager SoundEffectManager() { return soundEffectManager; }
+    public UIController UIController() { return uiController; }
 	void Update () {
 		
 	}

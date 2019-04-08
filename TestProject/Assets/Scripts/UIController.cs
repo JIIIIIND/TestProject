@@ -32,14 +32,16 @@ public class UIController : MonoBehaviour {
 
     public void MenuAppear()
     {
+        //게임 일시정지
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainMenu")
         {
             GameMenu.SetActive(true);
         }
     }
-    public void MenuExit(GameObject gameObject)
+    public void MenuExit()
     {
-        gameObject.SetActive(false);
+        GameMenu.SetActive(false);
+        //일시정지 해제
     }
 
     public void NextStage()
@@ -72,6 +74,7 @@ public class UIController : MonoBehaviour {
 
     private void UpdateStageImage(bool isNext)
     {
+        Debug.Log("stages: " + stages[currentStage]);
         float imageSize = stages[currentStage].GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
         Vector3 parentTransform = Stages.GetComponent<RectTransform>().localPosition;
 
@@ -79,11 +82,13 @@ public class UIController : MonoBehaviour {
             imageSize *= -1;
         parentTransform.Set(parentTransform.x - imageSize, parentTransform.y, parentTransform.z);
         Stages.GetComponent<RectTransform>().localPosition = parentTransform;
-        
     }
 
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public string GetStageName(int index) { return stages[index].name; }
+    public bool GameMenuActive() { return GameMenu.activeInHierarchy; }
 }

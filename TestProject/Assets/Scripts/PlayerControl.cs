@@ -463,40 +463,6 @@ public class PlayerControl : MonoBehaviour {
 			currentTime = 0;
 		}
 		
-		if(Input.GetKey(KeyCode.LeftArrow))
-		{
-			wheelControl.BrakeWheel(Wheel.LEFT);
-		}
-		if(Input.GetKey(KeyCode.RightArrow))
-		{
-			wheelControl.BrakeWheel(Wheel.RIGHT);
-		}
-		if (Input.GetKeyUp(KeyCode.LeftArrow))
-		{
-			wheelControl.InitBrakeTorque(Wheel.LEFT);
-		}
-		if (Input.GetKeyUp(KeyCode.RightArrow))
-		{
-			wheelControl.InitBrakeTorque(Wheel.RIGHT);
-		}
-		/*
-		if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            MoveToward(this.transform.TransformDirection(Vector3.forward * 0.1f), Vector3.zero);
-        }
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            MoveToward(Vector3.zero, this.transform.TransformDirection(Vector3.forward * 0.1f));
-        }
-        if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
-        {
-            MoveToward(this.transform.TransformDirection(Vector3.forward * 0.1f), this.transform.TransformDirection(Vector3.forward * 0.1f));
-        }
-        if(!(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow)))
-        {
-            StopCoroutine(gripMovement);
-        }
-		*/
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
     {

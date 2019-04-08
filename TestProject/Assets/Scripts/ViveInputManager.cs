@@ -19,7 +19,6 @@ public class ViveInputManager : MonoBehaviour
 
     void Update()
     {
-
         if ((int)rightTrackedObject.index != -1)
         {
             mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
@@ -28,17 +27,14 @@ public class ViveInputManager : MonoBehaviour
             if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
                 Debug.Log("Grip Down");
-                if (playerControl.GetMainMovement() != null)
-                {
-                    Debug.Log("breaking");
-                    //playerControl.StopCoroutine(playerControl.GetEnumerator());
-                    //playerControl.StopCoroutine(playerControl.GetMainMovement());
-                }
-
-                
-
                 if(playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking Right");
+                        playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
+                    }
+
                     isControllerGrip = true;
                     playerControl.RightPositionInitiate();
                     playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
@@ -52,9 +48,18 @@ public class ViveInputManager : MonoBehaviour
             }
             if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
             {
-                
                 if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    if (GameManager.Instance().SoundEffectManager().GetVibration() == true)
+                    {
+                        mDevice.TriggerHapticPulse(1000);
+                    }
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking Right");
+                        playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
+                    }
+
                     isControllerGrip = true;
                     playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
                     Debug.Log("Griping");
@@ -66,9 +71,9 @@ public class ViveInputManager : MonoBehaviour
             }
             if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
-                
                 if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
+                    playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
                     isControllerGrip = false;
                     playerControl.StartMoving(false);
                 }
@@ -77,6 +82,21 @@ public class ViveInputManager : MonoBehaviour
                     playerControl.RightPositionInitiate();
                 }
                 Debug.Log("Grip Up");
+            }
+            if(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
+            {
+                if(GameManager.Instance().UIController().GameMenuActive() == true)
+                {
+                    GameManager.Instance().UIController().MenuExit();
+                }
+                else
+                {
+                    GameManager.Instance().UIController().MenuAppear();
+                }
+
+                //게임 메뉴가 실행 중이라면
+                //게임메뉴 비활성화
+                //일시정지 해제
             }
         }
 
@@ -87,15 +107,15 @@ public class ViveInputManager : MonoBehaviour
             if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
                 Debug.Log("Grip Down");
-
-                if (playerControl.GetMainMovement() != null)
-                {
-                    Debug.Log("breaking");
-                    //playerControl.StopCoroutine(playerControl.GetEnumerator());
-                    //playerControl.StopCoroutine(playerControl.GetMainMovement());
-                }
+                
                 if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking left");
+                        playerControl.GetWheelControl().BrakeWheel(Wheel.LEFT);
+                    }
+
                     isControllerGrip = true;
                     playerControl.LeftPositionInitiate();
                     playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
@@ -112,6 +132,15 @@ public class ViveInputManager : MonoBehaviour
                 
                 if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    if (GameManager.Instance().SoundEffectManager().GetVibration() == true)
+                    {
+                        mDevice.TriggerHapticPulse(1000);
+                    }
+                    if (playerControl.GetMainMovement() != null)
+                    {
+                        Debug.Log("breaking left");
+                        playerControl.GetWheelControl().BrakeWheel(Wheel.LEFT);
+                    }
                     isControllerGrip = true;
                     playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
                     Debug.Log("Griping");
@@ -126,6 +155,7 @@ public class ViveInputManager : MonoBehaviour
                 
                 if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
+                    playerControl.GetWheelControl().InitBrakeTorque(Wheel.LEFT);
                     isControllerGrip = false;
                     playerControl.StartMoving(true);
                     Debug.Log("Grip Up");
@@ -170,7 +200,6 @@ public class ViveInputManager : MonoBehaviour
             playerControl.RightPositionInitiate();
             playerControl.TransformInit();
         }
-
     }
     private void InitPlayerController()
     {
@@ -185,5 +214,13 @@ public class ViveInputManager : MonoBehaviour
         {
             Debug.Log("player is missing");
         }
+    }
+
+    public SteamVR_TrackedObject GetController(Wheel wheel)
+    {
+        if (wheel == Wheel.LEFT)
+            return leftTrackedObject;
+        else
+            return rightTrackedObject;
     }
 }

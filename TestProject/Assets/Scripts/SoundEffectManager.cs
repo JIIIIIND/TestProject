@@ -7,9 +7,9 @@ public class SoundEffectManager : MonoBehaviour {
     [SerializeField] private float musicVolume;
     [SerializeField] private float effectVolume;
     [SerializeField] private bool isVibration;
-
-	// Use this for initialization
-	void Start () {
+    
+    // Use this for initialization
+    void Start () {
 		
 	}
 	

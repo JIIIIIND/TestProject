@@ -7,7 +7,7 @@ public class WheelControl : MonoBehaviour {
 	
 	private float rotationAngle;
 
-	[SerializeField] private float brakeRate;
+	[SerializeField] private float brakeValue;
 
     [SerializeField] private GameObject leftWheel;
     [SerializeField] private GameObject rightWheel;
@@ -90,7 +90,7 @@ public class WheelControl : MonoBehaviour {
 		else
 			wheelCollider = rightWheelCollider;
 
-		wheelCollider.brakeTorque = brakeRate;
+		wheelCollider.brakeTorque = brakeValue;
 	}
 
 	public void InitBrakeTorque(Wheel wheel)

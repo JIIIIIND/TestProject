@@ -7,11 +7,16 @@ public class WheelControl : MonoBehaviour {
 	
 	private float rotationAngle;
 
+	public float maxMotorTorque;
+	public float maxSteeringAngle;
+
 	[SerializeField] private float brakeValue;
 
     [SerializeField] private GameObject leftWheel;
     [SerializeField] private GameObject rightWheel;
 
+	[SerializeField] private WheelCollider leftFrontWheelCollider;
+	[SerializeField] private WheelCollider rightFrontWheelCollider;
 	[SerializeField] private WheelCollider leftWheelCollider;
 	[SerializeField] private WheelCollider rightWheelCollider;
 
@@ -37,6 +42,22 @@ public class WheelControl : MonoBehaviour {
 		}
 	}
 
+	public void SteeringWheel(Vector3 direction)
+	{
+		float angle = maxSteeringAngle * (direction.x / direction.magnitude);
+		Debug.Log(angle);
+		leftFrontWheelCollider.steerAngle = angle;
+		rightFrontWheelCollider.steerAngle = angle;
+
+		//leftWheelCollider.steerAngle = angle;
+		//rightWheelCollider.steerAngle = angle;
+	}
+
+	public void InitSteeringAngle()
+	{
+		leftWheelCollider.steerAngle = 0;
+		rightWheelCollider.steerAngle = 0;
+	}
 	public void RotationWheel(Wheel wheel, float speed)
 	{
         if(wheel == Wheel.LEFT)

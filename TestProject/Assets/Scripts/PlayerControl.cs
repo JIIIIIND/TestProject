@@ -107,15 +107,16 @@ public class PlayerControl : MonoBehaviour {
 		//target이 향하는 방향으로 회전
 		//회전 속도는 target의 크기로 결정
 		this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
-
-    }
+		//target = this.transform.InverseTransformVector(target);
+		//wheelControl.SteeringWheel(target);
+	}
 
     private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
     {
         //컨트롤러 쥔 상태로 뒤에서 앞으로, 앞에서 뒤로
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
-		
-        RotationBody(targetVector);
+
+		RotationBody(targetVector);
 		if (gripMovement != null)
 		{
 			StopCoroutine(gripMovement);
@@ -201,15 +202,15 @@ public class PlayerControl : MonoBehaviour {
 			if (isForward)
             {
 				//this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, speedValue * 3);
-				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * 3);
+				wheelControl.MotorTorque(Wheel.LEFT, speedValue * 50);
+				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * 50);
 
 			}
 			else
             {
 				//this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * 3);
-				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * 3);
+				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * 50);
+				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * 50);
 			}
 			
 			yield return null;
@@ -245,8 +246,8 @@ public class PlayerControl : MonoBehaviour {
 	{
 		float speedValue = direction.magnitude;
 		float angleVariable = 0.0f;
-		
-		while(speedValue > 0)
+		RotationBody(direction);
+		while (speedValue > 0)
 		{
 			if(enumerator != null)
 				StopCoroutine(enumerator);
@@ -254,8 +255,8 @@ public class PlayerControl : MonoBehaviour {
 			speedValue *= Mathf.Cos(angleVariable);
 			
 			enumerator = CalculateMove(speedValue);
+			
 			StartCoroutine(enumerator);
-			RotationBody(direction);
 			angleVariable += ((Mathf.PI / 2)/5) * Time.deltaTime;
 			//값 수정 필요함. time과 속도 간에 비율 수정 필요
 			if (angleVariable > (Mathf.PI / 2))
@@ -425,6 +426,7 @@ public class PlayerControl : MonoBehaviour {
 	{
 		rightInitPosition = rightInitTransform.localPosition;
 		rightMovingPosition = rightInitTransform.localPosition;
+		//wheelControl.InitSteeringAngle();
 
 		if(rightGripCounter != null)
 			StopCoroutine(rightGripCounter);
@@ -433,8 +435,9 @@ public class PlayerControl : MonoBehaviour {
 	{
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition;
+		//wheelControl.InitSteeringAngle();
 
-		if(leftGripCounter != null)
+		if (leftGripCounter != null)
 			StopCoroutine(leftGripCounter);
 	}
 

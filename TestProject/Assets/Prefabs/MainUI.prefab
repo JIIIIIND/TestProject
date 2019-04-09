@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224599002579332470}
   - component: {fileID: 222485792102127838}
   - component: {fileID: 114196951273099356}
+  - component: {fileID: 114014179465887434}
   m_Layer: 5
   m_Name: Stage4
   m_TagString: Untagged
@@ -55,6 +56,7 @@ GameObject:
   - component: {fileID: 224252969962424914}
   - component: {fileID: 222589106726123882}
   - component: {fileID: 114427908666114084}
+  - component: {fileID: 114177730043653438}
   m_Layer: 5
   m_Name: Stage5
   m_TagString: Untagged
@@ -87,6 +89,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224133232008006004}
+  - component: {fileID: 114943067968564570}
   m_Layer: 5
   m_Name: Stages
   m_TagString: Untagged
@@ -104,6 +107,7 @@ GameObject:
   - component: {fileID: 224362761316915576}
   - component: {fileID: 222556010849206756}
   - component: {fileID: 114805085731046540}
+  - component: {fileID: 114527077330895020}
   m_Layer: 5
   m_Name: Stage1
   m_TagString: Untagged
@@ -138,6 +142,7 @@ GameObject:
   - component: {fileID: 224866167132566014}
   - component: {fileID: 222557929579713872}
   - component: {fileID: 114379595012263226}
+  - component: {fileID: 114820027902515088}
   m_Layer: 5
   m_Name: Stage2
   m_TagString: Untagged
@@ -156,6 +161,7 @@ GameObject:
   - component: {fileID: 222639795670764588}
   - component: {fileID: 114606564308524094}
   - component: {fileID: 114865161098553880}
+  - component: {fileID: 114216607160984718}
   m_Layer: 5
   m_Name: NewGameButton
   m_TagString: Untagged
@@ -174,6 +180,7 @@ GameObject:
   - component: {fileID: 222241799917857020}
   - component: {fileID: 114497791069689492}
   - component: {fileID: 114084024299577920}
+  - component: {fileID: 114798119008130134}
   m_Layer: 5
   m_Name: Treatment
   m_TagString: Untagged
@@ -194,6 +201,7 @@ GameObject:
   - component: {fileID: 114928012780742678}
   - component: {fileID: 114546095306405852}
   - component: {fileID: 114134561481933420}
+  - component: {fileID: 114577196564141180}
   m_Layer: 5
   m_Name: ScrollBackground
   m_TagString: Untagged
@@ -249,6 +257,7 @@ GameObject:
   - component: {fileID: 222995592704837974}
   - component: {fileID: 114677464950163374}
   - component: {fileID: 114773320056596598}
+  - component: {fileID: 114444192952469352}
   m_Layer: 5
   m_Name: PreviousButton
   m_TagString: Untagged
@@ -267,6 +276,7 @@ GameObject:
   - component: {fileID: 222296236596016602}
   - component: {fileID: 114816271301459206}
   - component: {fileID: 114420930517089720}
+  - component: {fileID: 114181881340300362}
   m_Layer: 5
   m_Name: StoryButton
   m_TagString: Untagged
@@ -302,6 +312,7 @@ GameObject:
   - component: {fileID: 222816501522635928}
   - component: {fileID: 114499877663187648}
   - component: {fileID: 114346564681153976}
+  - component: {fileID: 114624988225975640}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -354,6 +365,7 @@ GameObject:
   - component: {fileID: 222030171426646298}
   - component: {fileID: 114506300256744932}
   - component: {fileID: 114603532223867256}
+  - component: {fileID: 114358581680457400}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -389,6 +401,7 @@ GameObject:
   - component: {fileID: 222488334468994102}
   - component: {fileID: 114935492658708988}
   - component: {fileID: 114783913882530416}
+  - component: {fileID: 114398198363355888}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -457,6 +470,7 @@ GameObject:
   - component: {fileID: 224942911588739358}
   - component: {fileID: 222400163144339368}
   - component: {fileID: 114560297067367804}
+  - component: {fileID: 114504213464172384}
   m_Layer: 5
   m_Name: Stage3
   m_TagString: Untagged
@@ -472,13 +486,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224253108016440394}
+  - component: {fileID: 114117932268636142}
   m_Layer: 5
   m_Name: StoryMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1884483768998608
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +502,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224620150954332574}
+  - component: {fileID: 114684121840659504}
   m_Layer: 5
   m_Name: TreatmentMenu
   m_TagString: Untagged
@@ -505,6 +521,7 @@ GameObject:
   - component: {fileID: 222260628237504324}
   - component: {fileID: 114249604842115172}
   - component: {fileID: 114602277886801550}
+  - component: {fileID: 114453317049167552}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -520,14 +537,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224495753879039606}
-  - component: {fileID: 114222448026302160}
+  - component: {fileID: 114878879509914508}
   m_Layer: 5
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1952725617569646
 GameObject:
   m_ObjectHideFlags: 1
@@ -573,6 +590,7 @@ GameObject:
   - component: {fileID: 222485127968266398}
   - component: {fileID: 114865273619717758}
   - component: {fileID: 114817533054860178}
+  - component: {fileID: 114439225848927004}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -580,6 +598,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114014179465887434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1012288404688386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114084024299577920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -618,20 +650,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114497791069689492}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PushUIButton
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1884483768998608}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114117932268636142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883727593324282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114134561481933420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -670,20 +705,37 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114618855877706182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectScene
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1071682590882124}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114177730043653438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1063213433381182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
+--- !u!114 &114181881340300362
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1595942539925788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: StoryButton
+  eventParameterObject: {fileID: 1883727593324282}
 --- !u!114 &114184528527100076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -744,20 +796,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114222448026302160
+--- !u!114 &114216607160984718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1919473317029382}
+  m_GameObject: {fileID: 1259761872887130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26e379aa9e1a4e4489872c97253af153, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicVolume: 0
-  effectVolume: 0
-  isVibration: 0
+  isButton: 1
+  eventName: NewGameButton
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114249604842115172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -869,20 +921,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114499877663187648}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PushBackButton
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1884483768998608}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114358581680457400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1713531106759222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: BackButton
+  eventParameterObject: {fileID: 1883727593324282}
 --- !u!114 &114371397655247380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -943,6 +998,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114398198363355888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733494794585978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: ContinueGameButton
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114420422596082184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1014,18 +1083,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114816271301459206}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PushUIButton
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1883727593324282}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114427908666114084
@@ -1088,6 +1146,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uC2A4\uD1A0\uB9AC"
+--- !u!114 &114439225848927004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965134626660172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: Exit
+  eventParameterObject: {fileID: 0}
+--- !u!114 &114444192952469352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586060860425464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: PreviousStage
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114451420982643058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1121,6 +1207,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uC0C8\uB85C\uD558\uAE30"
+--- !u!114 &114453317049167552
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1918423080721962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: NextStage
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114473085888537272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1208,6 +1308,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114504213464172384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883588185253540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114506300256744932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1235,6 +1349,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114527077330895020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1199274437498814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114546095306405852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1274,6 +1402,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114577196564141180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1377735393705600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: SelectScene
+  eventParameterObject: {fileID: 1071682590882124}
 --- !u!114 &114602277886801550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1312,18 +1454,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114249604842115172}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: NextStage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114603532223867256
@@ -1364,18 +1495,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114506300256744932}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PushBackButton
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1883727593324282}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114606564308524094
@@ -1432,6 +1552,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114624988225975640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1626079572869766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: BackButton
+  eventParameterObject: {fileID: 1884483768998608}
 --- !u!114 &114625176202368490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1601,6 +1735,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114684121840659504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1884483768998608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114736889448191010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1693,18 +1841,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114677464950163374}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: PreviousStage
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114783913882530416
@@ -1748,6 +1885,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114798119008130134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1294731565610572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 1
+  eventName: TreatmentButton
+  eventParameterObject: {fileID: 1884483768998608}
 --- !u!114 &114805085731046540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1840,20 +1991,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114865273619717758}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Exit
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114820027902515088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253709131882092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114827784410752932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1935,6 +2089,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114878879509914508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1919473317029382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!114 &114884164791678840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2026,6 +2194,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114943067968564570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1071682590882124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a6c99a2bc53d0843bfe7ff9cb35b8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isButton: 0
+  eventName: 
+  eventParameterObject: {fileID: 0}
 --- !u!222 &222030171426646298
 CanvasRenderer:
   m_ObjectHideFlags: 1

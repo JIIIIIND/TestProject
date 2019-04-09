@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour {
 
     public void PushUIButton(GameObject gameObject)
     {
+        currentStage = 0;
         gameObject.SetActive(true);
         MainUI.SetActive(false);
     }
@@ -71,6 +72,14 @@ public class UIController : MonoBehaviour {
             Debug.Log("this is first stage");
         }
     }
+    public void UpdateImage()
+    {
+        float imageSize = stages[currentStage].GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
+        Vector3 parentTransform = Stages.GetComponent<RectTransform>().localPosition;
+
+        parentTransform.Set(parentTransform.x - imageSize * currentStage, parentTransform.y, parentTransform.z);
+        Stages.GetComponent<RectTransform>().localPosition = parentTransform;
+    }
 
     private void UpdateStageImage(bool isNext)
     {
@@ -84,6 +93,69 @@ public class UIController : MonoBehaviour {
         Stages.GetComponent<RectTransform>().localPosition = parentTransform;
     }
 
+    public void SetUI(GameObject gameObject)
+    {
+        string uiName = gameObject.name;
+        switch(uiName)
+        {
+            case "Main":
+                {
+                    MainUI = gameObject;
+                    break;
+                }
+            case "StoryMenu":
+                {
+                    StoryUI = gameObject;
+                    StoryUI.SetActive(false);
+                    break;
+                }
+            case "TreatmentMenu":
+                {
+                    TreatmentUI = gameObject;
+                    TreatmentUI.SetActive(false);
+                    break;
+                }
+            case "Stages":
+                {
+                    Stages = gameObject;
+                    break;
+                }
+            case "Stage1":
+                {
+                    stages[0] = gameObject;
+                    break;
+                }
+            case "Stage2":
+                {
+                    stages[1] = gameObject;
+                    break;
+                }
+            case "Stage3":
+                {
+                    stages[2] = gameObject;
+                    break;
+                }
+            case "Stage4":
+                {
+                    stages[3] = gameObject;
+                    break;
+                }
+            case "Stage5":
+                {
+                    stages[4] = gameObject;
+                    break;
+                }
+            default:
+                break;
+        }
+        
+    }
+
+    public void CurrentUIInit()
+    {
+        StoryUI.SetActive(false);
+        TreatmentUI.SetActive(false);
+    }
 	// Update is called once per frame
 	void Update () {
 		

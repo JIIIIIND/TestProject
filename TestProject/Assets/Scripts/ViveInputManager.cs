@@ -50,7 +50,7 @@ public class ViveInputManager : MonoBehaviour
             {
                 if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
-                    if (GameManager.Instance().SoundEffectManager().GetVibration() == true)
+                    if (GameManager.instance.SoundEffectManager().GetVibration() == true)
                     {
                         mDevice.TriggerHapticPulse(1000);
                     }
@@ -85,13 +85,13 @@ public class ViveInputManager : MonoBehaviour
             }
             if(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
             {
-                if(GameManager.Instance().UIController().GameMenuActive() == true)
+                if(GameManager.instance.UIController().GameMenuActive() == true)
                 {
-                    GameManager.Instance().UIController().MenuExit();
+                    GameManager.instance.UIController().MenuExit();
                 }
                 else
                 {
-                    GameManager.Instance().UIController().MenuAppear();
+                    GameManager.instance.UIController().MenuAppear();
                 }
 
                 //게임 메뉴가 실행 중이라면
@@ -132,7 +132,7 @@ public class ViveInputManager : MonoBehaviour
                 
                 if(playerControl.GetWheelControl().LeftWheelIsGround())
                 {
-                    if (GameManager.Instance().SoundEffectManager().GetVibration() == true)
+                    if (GameManager.instance.SoundEffectManager().GetVibration() == true)
                     {
                         mDevice.TriggerHapticPulse(1000);
                     }

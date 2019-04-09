@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 
     //각종 옵션 값을 저장하고 관리
     //씬 관리 등등 전반적인 게임의 운영 관련한 것들 모음
-    private static GameManager instance;
+    public static GameManager instance;
     private bool isSave = false;
 
     [SerializeField] private GameObject fadeCanvas;
@@ -27,17 +27,18 @@ public class GameManager : MonoBehaviour {
     
     private GameManager()
     {}
-    
-    public static GameManager Instance()
-    {
-        if (instance == null)
-        {
-            instance = new GameManager();
-        }
-        return instance;
-    }
     private void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(transform.gameObject);
+
         fadeImage = fadeObject.GetComponent<UnityEngine.UI.Image>();
         fadeCanvas.SetActive(false);
     }
@@ -83,6 +84,7 @@ public class GameManager : MonoBehaviour {
             fadeCanvas.SetActive(true);
         }
         StartCoroutine(FadeOut(name));
+        
     }
 
     IEnumerator FadeOut(string name)
@@ -101,6 +103,7 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         fadeIsPlaying = false;
+        uiController.MenuExit();
         UnityEngine.SceneManagement.SceneManager.LoadScene(name);
         StartCoroutine(FadeIn());
     }
@@ -115,7 +118,7 @@ public class GameManager : MonoBehaviour {
         while(color.a > 0.0f)
         {
             Debug.Log("Fade iN");
-            fadeTime -= Time.deltaTime / fadePlayTime;
+            fadeTime += Time.deltaTime / fadePlayTime;
             color.a = Mathf.Lerp(fadeEndValue, fadeStartValue, fadeTime);
             fadeImage.color = color;
 
@@ -128,6 +131,13 @@ public class GameManager : MonoBehaviour {
     public SoundEffectManager SoundEffectManager() { return soundEffectManager; }
     public UIController UIController() { return uiController; }
 	void Update () {
-		
+		if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("ESC Key Down");
+            if (uiController.GameMenuActive() == false)
+                uiController.MenuAppear();
+            else
+                uiController.MenuExit();
+        }
 	}
 }

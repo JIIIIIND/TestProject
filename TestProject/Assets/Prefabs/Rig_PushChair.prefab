@@ -155,7 +155,6 @@ GameObject:
   - component: {fileID: 95948869363647604}
   - component: {fileID: 54069991225791384}
   - component: {fileID: 114531883725134016}
-  - component: {fileID: 81679488045401170}
   m_Layer: 0
   m_Name: Rig_PushChair
   m_TagString: Player
@@ -844,7 +843,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357448875825448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 57.04, z: -815.23}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children:
   - {fileID: 4827901020954156}
@@ -1003,13 +1002,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1469487160648016}
   m_Enabled: 1
---- !u!81 &81679488045401170
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1357448875825448}
-  m_Enabled: 1
 --- !u!92 &92689791018763494
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1085,9 +1077,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6a0e4b1467ec347945867598e4f453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brakeRate: 0.1
+  maxMotorTorque: 0
+  maxSteeringAngle: 30
+  player: {fileID: 1357448875825448}
+  brakeValue: 20
   leftWheel: {fileID: 1663583100153950}
   rightWheel: {fileID: 1583786061048736}
+  leftFrontWheelCollider: {fileID: 146620509455747928}
+  rightFrontWheelCollider: {fileID: 146948945136099928}
   leftWheelCollider: {fileID: 146479375864260838}
   rightWheelCollider: {fileID: 146205836516920904}
 --- !u!114 &114360383794189840
@@ -1323,7 +1320,7 @@ WheelCollider:
     damper: 0.1
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.32
   m_Mass: 2
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1352,7 +1349,7 @@ WheelCollider:
     damper: 0.1
     targetPosition: 0
   m_SuspensionDistance: 0.02
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.32
   m_Mass: 2
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1381,7 +1378,7 @@ WheelCollider:
     damper: 0
     targetPosition: 0
   m_SuspensionDistance: 0
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.0567
   m_Mass: 1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
@@ -1410,7 +1407,7 @@ WheelCollider:
     damper: 0
     targetPosition: 0
   m_SuspensionDistance: 0
-  m_ForceAppPointDistance: 0
+  m_ForceAppPointDistance: 0.0567
   m_Mass: 1
   m_WheelDampingRate: 0.25
   m_ForwardFriction:

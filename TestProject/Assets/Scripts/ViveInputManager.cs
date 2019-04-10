@@ -75,7 +75,7 @@ public class ViveInputManager : MonoBehaviour
                 {
                     playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
                     isControllerGrip = false;
-                    playerControl.StartMoving(false);
+                    //playerControl.StartMoving(false);
                 }
                 else if (playerControl.IsFlip() == true)
                 {
@@ -157,7 +157,7 @@ public class ViveInputManager : MonoBehaviour
                 {
                     playerControl.GetWheelControl().InitBrakeTorque(Wheel.LEFT);
                     isControllerGrip = false;
-                    playerControl.StartMoving(true);
+                    //playerControl.StartMoving(true);
                     Debug.Log("Grip Up");
                 }
                 else if (playerControl.IsFlip() == true)
@@ -168,8 +168,10 @@ public class ViveInputManager : MonoBehaviour
         }
 
         if (isControllerGrip == true)
-            playerControl.MakeMoveVector();
-        else
+		{
+			playerControl.MakeMoveVector();
+		}
+		else
         {
             if (playerControl.GetGripMovement() != null)
                 playerControl.StopCoroutine(playerControl.GetGripMovement());

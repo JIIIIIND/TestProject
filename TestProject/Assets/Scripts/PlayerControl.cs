@@ -107,7 +107,7 @@ public class PlayerControl : MonoBehaviour {
         //target이 향하는 방향으로 회전
         //회전 속도는 target의 크기로 결정
         Vector3 localDirection = this.transform.InverseTransformDirection(target);
-        wheelControl.SteeringWheel(localDirection);
+        wheelControl.SteeringWheel(target);
 
         //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
 		//target = this.transform.InverseTransformVector(target);
@@ -124,7 +124,7 @@ public class PlayerControl : MonoBehaviour {
 		{
 			StopCoroutine(gripMovement);
 		}
-		gripMovement = CalculateMove(targetVector.magnitude);
+		gripMovement = CalculateMove(targetVector.y/targetVector.magnitude);
 		StartCoroutine(gripMovement);
 		
         //targetVector의 크기가 속도 결정
@@ -189,10 +189,12 @@ public class PlayerControl : MonoBehaviour {
 		}
         isForward = forward;
 
-		if (result.magnitude < speedRate)
+		float maxLength = (rightInitTransform.position - leftInitTransform.position).magnitude;
+
+		if(result.magnitude > maxLength)
 		{
-			result *= 3;
-			Debug.Log(result.magnitude);
+			result.Normalize();
+			result *= maxLength;
 		}
 
 		return result;
@@ -200,20 +202,21 @@ public class PlayerControl : MonoBehaviour {
 
     IEnumerator CalculateMove(float speedValue)
     {
+		Debug.Log("speedValue: " + speedValue);
 		while (true)
 		{
 			if (isForward)
             {
 				//this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, speedValue * 50);
-				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * 50);
+				wheelControl.MotorTorque(Wheel.LEFT, speedValue * wheelControl.maxMotorTorque);
+				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * wheelControl.maxMotorTorque);
 
 			}
 			else
             {
 				//this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * 50);
-				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * 50);
+				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * wheelControl.maxMotorTorque);
+				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * wheelControl.maxMotorTorque);
 			}
 			
 			yield return null;
@@ -225,9 +228,10 @@ public class PlayerControl : MonoBehaviour {
 		if (mainMovement != null)
 		{
 			Debug.Log("breaking_inside");
-			StopCoroutine(enumerator);
 			StopCoroutine(mainMovement);
 		}
+		if(enumerator != null)
+			StopCoroutine(enumerator);
 		if (isLeft)
 		{
 			if(leftGripTime > 0.2f)

@@ -44,8 +44,11 @@ public class WheelControl : MonoBehaviour {
 
 	public void SteeringWheel(Vector3 direction)
 	{
-		float angle = maxSteeringAngle * (direction.x / direction.magnitude);
-		Debug.Log(angle);
+        float angle;
+        direction.Normalize();
+        Vector3 lerpVector = Vector3.Lerp(this.transform.forward, direction, Time.deltaTime * 2);
+        angle = lerpVector.x / lerpVector.magnitude;
+
 		leftFrontWheelCollider.steerAngle = angle;
 		rightFrontWheelCollider.steerAngle = angle;
 

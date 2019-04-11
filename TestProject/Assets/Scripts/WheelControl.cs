@@ -33,83 +33,22 @@ public class WheelControl : MonoBehaviour {
     void Start() {
 
 	}
-
-	public void MotorTorque(Wheel wheel, Vector3 direction)
-	{
-        float speed = 0;
-        if(direction.magnitude >= 1)
-        {
-            direction.Normalize();
-        }
-		Debug.Log("direction X value: "+direction.x+"direction Z value: "+direction.z);
-		speed = direction.z / direction.magnitude;
-        if(speed > 1.0f)
-        {
-            Debug.Log("speedValue is over 1.0f");
-			speed = 1.0f;
-        }
-		StartCoroutine(SetMotorTorque(wheel, direction));
-		/*
-		if (wheel == Wheel.LEFT)
-		{
-			leftWheelCollider.motorTorque = speed * maxMotorTorque;
-		}
-		else
-		{
-			rightWheelCollider.motorTorque = speed * maxMotorTorque;
-		}
-		*/
-	}
-
-	public void SteeringWheel(Vector3 direction)
-	{
-        direction.Normalize();
-		float angle = 0;
-		angle = (direction.x / direction.magnitude) * maxSteeringAngle;
-		Debug.Log("direction X value: " + direction.x + "direction Z value: " + direction.z);
-		//Debug.Log("steering: "+(direction.x / direction.magnitude) * maxSteeringAngle);
-		if (leftWheelCollider.steerAngle > maxSteeringAngle)
-		{
-			leftWheelCollider.steerAngle = angle;
-			rightWheelCollider.steerAngle = angle;
-		}
-		
-		//leftWheelCollider.steerAngle = angle;
-		//rightWheelCollider.steerAngle = angle;
-	}
-	
+    
 	public void InitSteeringAngle()
 	{
 		leftWheelCollider.steerAngle = 0;
 		rightWheelCollider.steerAngle = 0;
 	}
 	
-    IEnumerator SetMotorTorque(Wheel wheel, Vector3 direction)
-    {
-        float curTime = Time.deltaTime;
-        float curSpeed = 0;
-
-        while(curTime < 1)
-        {
-            Vector3 currenDirection = Vector3.Lerp(player.transform.forward, direction, curTime);
-            curSpeed = (currenDirection.z / currenDirection.magnitude) * maxMotorTorque;
-            if (wheel == Wheel.LEFT)
-            {
-                leftWheelCollider.motorTorque = curSpeed;
-            }
-            else
-            {
-                rightWheelCollider.motorTorque = curSpeed;
-            }
-            curTime += Time.deltaTime * 2;
-            yield return null;
-        }
-		Debug.Log("MotorTorque End");
-    }
 	private void brakeEffectPlay()
 	{
 
 	}
+
+    public void DustEffectSetting()
+    {
+
+    }
 
 	public void BrakeWheel(Wheel wheel)
 	{

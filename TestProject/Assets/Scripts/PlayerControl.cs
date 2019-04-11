@@ -100,18 +100,6 @@ public class PlayerControl : MonoBehaviour {
 		*/
 	}
 
-	private void RotationBody(Vector3 target)
-    {
-        //target이 향하는 방향으로 회전
-        //회전 속도는 target의 크기로 결정
-        //Vector3 localDirection = this.transform.InverseTransformDirection(target);
-        wheelControl.SteeringWheel(target);
-
-        //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
-		//target = this.transform.InverseTransformVector(target);
-		//
-	}
-
     private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
     {
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);

@@ -210,8 +210,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 0, y: -49.87}
+  m_SizeDelta: {x: 300, y: 199.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &989931351
 MonoBehaviour:
@@ -245,7 +245,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Stage 3
+  m_Text: "Stage 3\n\uC624\uB974\uB9C9\uAE38"
 --- !u!222 &989931352
 CanvasRenderer:
   m_ObjectHideFlags: 0

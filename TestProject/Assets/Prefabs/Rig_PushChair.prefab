@@ -1090,12 +1090,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6a0e4b1467ec347945867598e4f453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMotorTorque: 15
+  maxMotorTorque: 30
   maxSteeringAngle: 20
   player: {fileID: 1357448875825448}
-  brakeValue: 20
+  brakeValue: 0
   leftWheel: {fileID: 1663583100153950}
   rightWheel: {fileID: 1583786061048736}
+  leftFrontWheel: {fileID: 1147936378035918}
+  rightFrontWheel: {fileID: 1749818128321660}
   leftFrontWheelCollider: {fileID: 146620509455747928}
   rightFrontWheelCollider: {fileID: 146948945136099928}
   leftWheelCollider: {fileID: 146479375864260838}
@@ -1162,7 +1164,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357448875825448}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e91c892f75636645aade3ec9da38d50, type: 3}
   m_Name: 
@@ -1172,17 +1174,15 @@ MonoBehaviour:
   rightInitTransform: {fileID: 4577907424069512}
   leftInitTransform: {fileID: 4724174251472750}
   rotationSpeed: 1
-  rightInitPosition: {x: 0, y: 0, z: 0}
-  rightMovingPosition: {x: 0, y: 0, z: 0}
   rightDirection: 0
-  leftInitPosition: {x: 0, y: 0, z: 0}
-  leftMovingPosition: {x: 0, y: 0, z: 0}
   leftDirection: 0
   rayPosition: {fileID: 4562771589145572}
   timeRate: 0.4
   speedRate: 1.2
   wheelControl: {fileID: 114328667483082114}
   roadSaveTime: 1
+  priviousAngle: 0
+  priviousSpeed: 0
   currentSpeed: 0
   collisionRayLength: 2
 --- !u!114 &114593144483200676

@@ -156,14 +156,14 @@ public class WheelControl : MonoBehaviour {
     public bool LeftWheelIsGround()
     {
 		Debug.Log("Left: "+leftWheelCollider.isGrounded);
-		return leftWheelCollider.isGrounded;
-		//return true;
+		//return leftWheelCollider.isGrounded;
+		return true;
 	}
     public bool RightWheelIsGround()
     {
 		Debug.Log("Right: " + rightWheelCollider.isGrounded);
-		return rightWheelCollider.isGrounded;
-		//return true;
+		//return rightWheelCollider.isGrounded;
+		return true;
 	}
 
 	public void SetLeftWheelMotorTorque(float value) { leftWheelCollider.motorTorque = value; }

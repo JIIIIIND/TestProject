@@ -284,6 +284,7 @@ public class PlayerControl : MonoBehaviour {
 		*/
 		float avgGripTime = (leftGripTime + rightGripTime)/2;
 		gripMovement = CalculateMove(result, avgGripTime);
+		StartCoroutine(gripMovement);
 	}
 	/*
 	IEnumerator SpeedControl(float timeValue, Vector3 direction)

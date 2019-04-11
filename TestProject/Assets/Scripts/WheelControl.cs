@@ -113,17 +113,17 @@ public class WheelControl : MonoBehaviour {
 	}
 	void Update ()
 	{
-		leftWheel.transform.Rotate(0.0f, leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
+		leftWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 
 		float speed = Input.GetAxis("Vertical") * maxMotorTorque;
 		float angle = Input.GetAxis("Horizontal") * maxSteeringAngle;
-		/*
+		
 		leftWheelCollider.motorTorque = speed;
 		rightWheelCollider.motorTorque = speed;
 		leftWheelCollider.steerAngle = angle;
 		rightWheelCollider.steerAngle = angle;
-		*/
+        Debug.Log("speed: " + speed + "angle: " + angle);
 	}
 
     public bool LeftWheelIsGround()

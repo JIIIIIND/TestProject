@@ -32,18 +32,19 @@ public class WheelControl : MonoBehaviour {
 
 	}
 
-	public void MotorTorque(Wheel wheel, float speed)
+	public void MotorTorque(Wheel wheel, Vector3 direction)
 	{
-		if (speed > maxMotorTorque)
-			speed = maxMotorTorque;
-		if(wheel == Wheel.LEFT)
-		{
-			leftWheelCollider.motorTorque = speed;
-		}
-		else
-		{
-			rightWheelCollider.motorTorque = speed;
-		}
+        float speed = 0;
+        if(direction.magnitude >= 1)
+        {
+            direction.Normalize();
+        }
+        speed = direction.z / direction.magnitude;
+        if(speed > 1.0f)
+        {
+            Debug.Log("speedValue is over 1.0f");
+        }
+        StartCoroutine(SetMotorTorque(wheel, direction));
 	}
 
 	public void SteeringWheel(Vector3 direction)
@@ -83,6 +84,27 @@ public class WheelControl : MonoBehaviour {
         }
     }
 	
+    IEnumerator SetMotorTorque(Wheel wheel, Vector3 direction)
+    {
+        float curTime = Time.deltaTime;
+        float curSpeed = 0;
+
+        while(curTime < 1)
+        {
+            Vector3 currenDirection = Vector3.Lerp(player.transform.forward, direction, curTime);
+            curSpeed = (currenDirection.z / currenDirection.magnitude) * maxMotorTorque;
+            if (wheel == Wheel.LEFT)
+            {
+                leftWheelCollider.motorTorque = curSpeed;
+            }
+            else
+            {
+                rightWheelCollider.motorTorque = curSpeed;
+            }
+            curTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 	private void brakeEffectPlay()
 	{
 

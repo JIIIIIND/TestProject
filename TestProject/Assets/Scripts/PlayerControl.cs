@@ -124,7 +124,7 @@ public class PlayerControl : MonoBehaviour {
 		{
 			StopCoroutine(gripMovement);
 		}
-		gripMovement = CalculateMove(targetVector.y/targetVector.magnitude);
+		gripMovement = CalculateMove(targetVector);
 		StartCoroutine(gripMovement);
 		
         //targetVector의 크기가 속도 결정
@@ -200,23 +200,22 @@ public class PlayerControl : MonoBehaviour {
 		return result;
     }
 
-    IEnumerator CalculateMove(float speedValue)
+    IEnumerator CalculateMove(Vector3 direction)
     {
-		Debug.Log("speedValue: " + speedValue);
 		while (true)
 		{
 			if (isForward)
             {
 				//this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, speedValue * wheelControl.maxMotorTorque);
-				wheelControl.MotorTorque(Wheel.RIGHT, speedValue * wheelControl.maxMotorTorque);
+				wheelControl.MotorTorque(Wheel.LEFT, direction);
+				wheelControl.MotorTorque(Wheel.RIGHT, direction);
 
 			}
 			else
             {
 				//this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, -speedValue * wheelControl.maxMotorTorque);
-				wheelControl.MotorTorque(Wheel.RIGHT, -speedValue * wheelControl.maxMotorTorque);
+				wheelControl.MotorTorque(Wheel.LEFT, direction);
+				wheelControl.MotorTorque(Wheel.RIGHT, direction);
 			}
 			
 			yield return null;
@@ -261,7 +260,7 @@ public class PlayerControl : MonoBehaviour {
 
 			speedValue *= Mathf.Cos(angleVariable);
 			
-			enumerator = CalculateMove(speedValue);
+			enumerator = CalculateMove(direction * speedValue);
 			
 			StartCoroutine(enumerator);
 			angleVariable += ((Mathf.PI / 2)/5) * Time.deltaTime;

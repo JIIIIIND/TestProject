@@ -83,7 +83,7 @@ public class WheelControl : MonoBehaviour {
 		float speed = Input.GetAxis("Vertical");
 		float angle = Input.GetAxis("Horizontal");
 
-		Debug.Log("speed: " + speed + "angle : " + angle);
+		//Debug.Log("speed: " + speed + "angle : " + angle);
 
 		leftWheelCollider.motorTorque = speed * maxMotorTorque;
 		rightWheelCollider.motorTorque = speed * maxMotorTorque;
@@ -94,13 +94,11 @@ public class WheelControl : MonoBehaviour {
 
     public bool LeftWheelIsGround()
     {
-		Debug.Log("Left: "+leftWheelCollider.isGrounded);
 		//return leftWheelCollider.isGrounded;
 		return true;
 	}
     public bool RightWheelIsGround()
     {
-		Debug.Log("Right: " + rightWheelCollider.isGrounded);
 		//return rightWheelCollider.isGrounded;
 		return true;
 	}

@@ -8,7 +8,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 	public bool isAutomatic = false;
 	public bool AutoClose = false;
 	public bool DoubleSidesOpen = false;
-	public string PlayerHeadTag = "MainCamera";
+	public string PlayerControllerTag = "GameController";
 	public string OpenForwardAnimName = "Door_anim";
 	public string OpenBackwardAnimName = "DoorBack_anim";
 	private string _animName;
@@ -52,7 +52,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if(other.GetComponent<Collider>().tag == PlayerHeadTag){
+		if(other.GetComponent<Collider>().tag == PlayerControllerTag){
 			if(DoubleSidesOpen){
 				relativePos = gameObject.transform.InverseTransformPoint (other.transform.position);
 				if (relativePos.z > 0) {
@@ -69,7 +69,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 		}
 	}
 	void OnTriggerExit(Collider other){
-		if(other.GetComponent<Collider>().tag == PlayerHeadTag){
+		if(other.GetComponent<Collider>().tag == PlayerControllerTag){
 			if (isAutomatic) {
 				CloseDoor ();
 			} else {

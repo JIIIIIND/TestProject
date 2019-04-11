@@ -74,7 +74,6 @@ public class ViveInputManager : MonoBehaviour
 				if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
                     playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
-                    
                     playerControl.StartMoving(false);
                 }
                 else if (playerControl.IsFlip() == true)

@@ -156,12 +156,10 @@ public class PlayerControl : MonoBehaviour {
 			if(rightWheel.magnitude > leftWheel.magnitude)
 			{
 				result = Quaternion.Euler(0, 90, 0) * result;
-				Debug.Log("전진 오른쪽");
 			}
 			else
 			{
 				result = Quaternion.Euler(0, -90, 0) * result;
-				Debug.Log("전진 왼쪽");
 			}
 		}
 		else
@@ -170,12 +168,10 @@ public class PlayerControl : MonoBehaviour {
 			if(rightWheel.magnitude > leftWheel.magnitude)
 			{
 				result = Quaternion.Euler(0, 90, 0) * result;
-				Debug.Log("후진 오른쪽");
 			}
 			else
 			{
 				result = Quaternion.Euler(0, -90, 0) * result;
-				Debug.Log("후진 왼쪽");
 			}
 		}
         isForward = forward;
@@ -239,7 +235,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 			
 
-			Debug.Log("Coroutine is Run!");
+			//Debug.Log("Coroutine is Run!");
 			yield return null;
 		}
 		
@@ -382,7 +378,7 @@ public class PlayerControl : MonoBehaviour {
     {
         Vector3 rightWheel;
         Vector3 leftWheel;
-		Debug.Log("MakeMoveVector()");
+		//Debug.Log("MakeMoveVector()");
 		float initYPosition = rightInitPosition.y;
 
 		rightMovingPosition.y = initYPosition;
@@ -491,7 +487,7 @@ public class PlayerControl : MonoBehaviour {
 			{
 				if(hit.collider.tag == "Road")
 				{
-					Debug.Log("Save road position");
+					//Debug.Log("Save road position");
 					lastRoadPosition = hit.point + new Vector3(0,5,0);
 					lastRoadRotation = this.transform.rotation;
 				}
@@ -499,7 +495,7 @@ public class PlayerControl : MonoBehaviour {
 			currentTime = 0;
 		}
 		
-		Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
+		//Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
     {

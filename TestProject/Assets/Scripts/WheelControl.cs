@@ -16,6 +16,8 @@ public class WheelControl : MonoBehaviour {
 
     [SerializeField] private GameObject leftWheel;
     [SerializeField] private GameObject rightWheel;
+	[SerializeField] private GameObject leftFrontWheel;
+	[SerializeField] private GameObject rightFrontWheel;
 
 	[SerializeField] private WheelCollider leftFrontWheelCollider;
 	[SerializeField] private WheelCollider rightFrontWheelCollider;
@@ -39,12 +41,24 @@ public class WheelControl : MonoBehaviour {
         {
             direction.Normalize();
         }
-        speed = direction.z / direction.magnitude;
+		Debug.Log("direction X value: "+direction.x+"direction Z value: "+direction.z);
+		speed = direction.z / direction.magnitude;
         if(speed > 1.0f)
         {
             Debug.Log("speedValue is over 1.0f");
+			speed = 1.0f;
         }
-        StartCoroutine(SetMotorTorque(wheel, direction));
+		StartCoroutine(SetMotorTorque(wheel, direction));
+		/*
+		if (wheel == Wheel.LEFT)
+		{
+			leftWheelCollider.motorTorque = speed * maxMotorTorque;
+		}
+		else
+		{
+			rightWheelCollider.motorTorque = speed * maxMotorTorque;
+		}
+		*/
 	}
 
 	public void SteeringWheel(Vector3 direction)
@@ -52,9 +66,14 @@ public class WheelControl : MonoBehaviour {
         direction.Normalize();
 		float angle = 0;
 		angle = (direction.x / direction.magnitude) * maxSteeringAngle;
-		Debug.Log(direction.x / direction.magnitude);
-		leftWheelCollider.steerAngle = angle;
-		rightWheelCollider.steerAngle = angle;
+		Debug.Log("direction X value: " + direction.x + "direction Z value: " + direction.z);
+		//Debug.Log("steering: "+(direction.x / direction.magnitude) * maxSteeringAngle);
+		if (leftWheelCollider.steerAngle > maxSteeringAngle)
+		{
+			leftWheelCollider.steerAngle = angle;
+			rightWheelCollider.steerAngle = angle;
+		}
+		
 		//leftWheelCollider.steerAngle = angle;
 		//rightWheelCollider.steerAngle = angle;
 	}
@@ -64,25 +83,6 @@ public class WheelControl : MonoBehaviour {
 		leftWheelCollider.steerAngle = 0;
 		rightWheelCollider.steerAngle = 0;
 	}
-
-    IEnumerator RotateWheel(GameObject wheel, float rotateSpeed)
-    {
-        float angle = 0.0f;
-        
-        while(rotateSpeed != 0)
-        {
-            angle += Mathf.Cos(Mathf.PI / 10) * Time.deltaTime;
-			//rotateSpeed *= Mathf.Sin(angle);
-			if (angle > (Mathf.PI / 2))
-			{
-				angle = Mathf.PI / 2;
-				rotateSpeed = 0;
-			}
-			
-            wheel.transform.rotation *= Quaternion.Euler(new Vector3(0, rotateSpeed * Mathf.Cos(angle), 0));
-            yield return null;
-        }
-    }
 	
     IEnumerator SetMotorTorque(Wheel wheel, Vector3 direction)
     {
@@ -101,9 +101,10 @@ public class WheelControl : MonoBehaviour {
             {
                 rightWheelCollider.motorTorque = curSpeed;
             }
-            curTime += Time.deltaTime;
+            curTime += Time.deltaTime * 2;
             yield return null;
         }
+		Debug.Log("MotorTorque End");
     }
 	private void brakeEffectPlay()
 	{
@@ -137,15 +138,19 @@ public class WheelControl : MonoBehaviour {
 	{
 		leftWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
+		leftFrontWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
+		rightFrontWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 
-		float speed = Input.GetAxis("Vertical") * maxMotorTorque;
-		float angle = Input.GetAxis("Horizontal") * maxSteeringAngle;
+		float speed = Input.GetAxis("Vertical");
+		float angle = Input.GetAxis("Horizontal");
+
+		Debug.Log("speed: " + speed + "angle : " + angle);
+
+		leftWheelCollider.motorTorque = speed * maxMotorTorque;
+		rightWheelCollider.motorTorque = speed * maxMotorTorque;
+		leftFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
+		rightFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
 		
-		leftWheelCollider.motorTorque = speed;
-		rightWheelCollider.motorTorque = speed;
-		leftWheelCollider.steerAngle = angle;
-		rightWheelCollider.steerAngle = angle;
-        Debug.Log("speed: " + speed + "angle: " + angle);
 	}
 
     public bool LeftWheelIsGround()
@@ -161,4 +166,9 @@ public class WheelControl : MonoBehaviour {
 		//return true;
 	}
 
+	public void SetLeftWheelMotorTorque(float value) { leftWheelCollider.motorTorque = value; }
+	public void SetRightWheelMotorTorque(float value) { rightWheelCollider.motorTorque = value; }
+
+	public void SetLeftWheelSteering(float value) { leftFrontWheelCollider.steerAngle = value; }
+	public void SetRightWheelSteering(float value) { rightFrontWheelCollider.steerAngle = value; }
 }

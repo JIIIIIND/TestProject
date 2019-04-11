@@ -26,16 +26,16 @@ public class ViveInputManager : MonoBehaviour
             //Debug.Log(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip));
             if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
-                Debug.Log("Grip Down");
+				
+				Debug.Log("Grip Down");
                 if(playerControl.GetWheelControl().RightWheelIsGround())
                 {
-                    if (playerControl.GetMainMovement() != null)
+					isControllerGrip = true;
+					if (playerControl.GetMainMovement() != null)
                     {
                         Debug.Log("breaking Right");
                         playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
                     }
-
-                    isControllerGrip = true;
                     playerControl.RightPositionInitiate();
                     playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
 
@@ -50,7 +50,8 @@ public class ViveInputManager : MonoBehaviour
             {
                 if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
-                    if (GameManager.instance.SoundEffectManager().GetVibration() == true)
+					isControllerGrip = true;
+					if (GameManager.instance.SoundEffectManager().GetVibration() == true)
                     {
                         mDevice.TriggerHapticPulse(1000);
                     }
@@ -59,8 +60,6 @@ public class ViveInputManager : MonoBehaviour
                         Debug.Log("breaking Right");
                         playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
                     }
-
-                    isControllerGrip = true;
                     playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
                     Debug.Log("Griping");
                 }
@@ -71,11 +70,12 @@ public class ViveInputManager : MonoBehaviour
             }
             if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
-                if (playerControl.GetWheelControl().RightWheelIsGround())
+				isControllerGrip = false;
+				if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
                     playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
-                    isControllerGrip = false;
-                    //playerControl.StartMoving(false);
+                    
+                    playerControl.StartMoving(false);
                 }
                 else if (playerControl.IsFlip() == true)
                 {
@@ -107,16 +107,15 @@ public class ViveInputManager : MonoBehaviour
             if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
             {
                 Debug.Log("Grip Down");
-                
-                if(playerControl.GetWheelControl().LeftWheelIsGround())
+				
+				if (playerControl.GetWheelControl().LeftWheelIsGround())
                 {
-                    if (playerControl.GetMainMovement() != null)
+					isControllerGrip = true;
+					if (playerControl.GetMainMovement() != null)
                     {
                         Debug.Log("breaking left");
                         playerControl.GetWheelControl().BrakeWheel(Wheel.LEFT);
                     }
-
-                    isControllerGrip = true;
                     playerControl.LeftPositionInitiate();
                     playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
 
@@ -152,12 +151,11 @@ public class ViveInputManager : MonoBehaviour
             }
             if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
             {
-                
-                if(playerControl.GetWheelControl().LeftWheelIsGround())
+				isControllerGrip = false;
+				if (playerControl.GetWheelControl().LeftWheelIsGround())
                 {
                     playerControl.GetWheelControl().InitBrakeTorque(Wheel.LEFT);
-                    isControllerGrip = false;
-                    //playerControl.StartMoving(true);
+                    playerControl.StartMoving(true);
                     Debug.Log("Grip Up");
                 }
                 else if (playerControl.IsFlip() == true)
@@ -173,9 +171,12 @@ public class ViveInputManager : MonoBehaviour
 		}
 		else
         {
-            if (playerControl.GetGripMovement() != null)
-                playerControl.StopCoroutine(playerControl.GetGripMovement());
-        }
+			if (playerControl.GetGripMovement() != null)
+			{
+				//playerControl.StopCoroutine(playerControl.GetGripMovement());
+			}
+
+		}
 
 
         if ((int)rightTrackedObject.index != -1)
@@ -194,7 +195,6 @@ public class ViveInputManager : MonoBehaviour
                 playerControl.LeftPositionInitiate();
             }
         }
-        //playerControl.MakeMoveVector();
         isControllerGrip = false;
         if (playerControl.IsFlip() == true)
         {

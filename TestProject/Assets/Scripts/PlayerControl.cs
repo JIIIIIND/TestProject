@@ -12,12 +12,12 @@ public class PlayerControl : MonoBehaviour {
 
 	[SerializeField] private float rotationSpeed;
 
-	[SerializeField] private Vector3 rightInitPosition;
-	[SerializeField] private Vector3 rightMovingPosition;
+	private Vector3 rightInitPosition;
+	private Vector3 rightMovingPosition;
 	[SerializeField] private bool rightDirection;
 
-	[SerializeField] private Vector3 leftInitPosition;
-	[SerializeField] private Vector3 leftMovingPosition;
+	private Vector3 leftInitPosition;
+	private Vector3 leftMovingPosition;
 	[SerializeField] private bool leftDirection;
 
     [SerializeField] private Transform rayPosition;
@@ -28,6 +28,10 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private WheelControl wheelControl;
 	
 	[SerializeField] private float roadSaveTime;
+
+	[SerializeField] private float priviousAngle = 0;
+	[SerializeField] private float priviousSpeed = 0;
+
 	private Vector3 lastRoadPosition;
 	private Quaternion lastRoadRotation;
 	private float currentTime;
@@ -63,12 +67,6 @@ public class PlayerControl : MonoBehaviour {
 		Gizmos.color = Color.cyan;
 
 		Gizmos.DrawRay(this.transform.position, result);
-
-		Gizmos.DrawRay(leftInitTransform.TransformPoint(leftInitPosition), leftMovingPosition - leftInitPosition);
-		Gizmos.DrawRay(rightInitTransform.TransformPoint(rightInitPosition), rightMovingPosition - rightInitPosition);
-
-		Ray ray = new Ray(this.transform.position, this.transform.TransformVector(new Vector3(1, 1, 0)) * collisionRayLength);
-		Gizmos.DrawRay(ray);
 		
 	}
 
@@ -106,7 +104,7 @@ public class PlayerControl : MonoBehaviour {
     {
         //target이 향하는 방향으로 회전
         //회전 속도는 target의 크기로 결정
-        Vector3 localDirection = this.transform.InverseTransformDirection(target);
+        //Vector3 localDirection = this.transform.InverseTransformDirection(target);
         wheelControl.SteeringWheel(target);
 
         //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(target), rotationSpeed * Time.deltaTime);
@@ -116,21 +114,26 @@ public class PlayerControl : MonoBehaviour {
 
     private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
     {
-        //컨트롤러 쥔 상태로 뒤에서 앞으로, 앞에서 뒤로
         Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
 
-		RotationBody(targetVector);
+		if(gripMovement != null)
+		{
+			StopCoroutine(gripMovement);
+		}
+		gripMovement = CalculateMove(targetVector, 1);
+
+		StartCoroutine(gripMovement);
+		/*
+		//RotationBody(targetVector);
 		if (gripMovement != null)
 		{
 			StopCoroutine(gripMovement);
 		}
 		gripMovement = CalculateMove(targetVector);
-		StartCoroutine(gripMovement);
-		
-        //targetVector의 크기가 속도 결정
-        //
-        //이동은 Coroutine으로 지속적으로 속도가 감소하면서 이동함
-        //새로운 Coroutine이 호출되기 전에 이전 Coroutine은 제거하고 호출
+		//StartCoroutine(gripMovement);
+		*/
+
+
     }
 
     private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
@@ -158,7 +161,7 @@ public class PlayerControl : MonoBehaviour {
 			forward = leftDirection;
 			result = rightMovingPosition - leftModifiedMovingPoint;
         }
-		result = this.transform.TransformVector(result);
+		//result = this.transform.TransformVector(result);
 		if (forward)
 		{
 			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
@@ -189,41 +192,74 @@ public class PlayerControl : MonoBehaviour {
 		}
         isForward = forward;
 
-		float maxLength = (rightInitTransform.position - leftInitTransform.position).magnitude;
-
-		if(result.magnitude > maxLength)
-		{
-			result.Normalize();
-			result *= maxLength;
-		}
-
 		return result;
     }
 
-    IEnumerator CalculateMove(Vector3 direction)
+    IEnumerator CalculateMove(Vector3 direction, float timeValue)
     {
-		while (true)
-		{
-			if (isForward)
-            {
-				//this.transform.position += this.transform.TransformDirection(Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, direction);
-				wheelControl.MotorTorque(Wheel.RIGHT, direction);
+		float angleTime = 0;
+		float speedTime = 0;
 
+		priviousAngle = Mathf.Lerp(priviousAngle, direction.x / direction.magnitude, angleTime);
+		priviousSpeed = Mathf.Lerp(direction.z / direction.magnitude, 0, speedTime);
+
+		while (priviousSpeed != 0)
+		{
+			if (timeValue != 0)
+				speedTime += (Time.deltaTime * timeValue)*timeRate;
+			else if (timeValue == 1)
+				speedTime += Time.deltaTime;
+			else
+				speedTime += Time.deltaTime;
+			if(speedTime > 1)
+			{
+				speedTime = 1;
+			}
+
+			angleTime += Time.deltaTime * 2;
+			if (angleTime > 1)
+				angleTime = 1;
+
+			priviousAngle = Mathf.Lerp(priviousAngle, direction.x / direction.magnitude, angleTime);
+			priviousSpeed = Mathf.Lerp(direction.z / direction.magnitude, 0, speedTime);
+
+			if(isForward)
+			{
+				/*
+				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
+				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
+				*/
+				wheelControl.SetLeftWheelMotorTorque(wheelControl.maxMotorTorque);
+				wheelControl.SetRightWheelMotorTorque(wheelControl.maxMotorTorque);
+				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
+				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
 			}
 			else
-            {
-				//this.transform.position += this.transform.TransformDirection(-Vector3.forward) * speedValue * Time.deltaTime;
-				wheelControl.MotorTorque(Wheel.LEFT, direction);
-				wheelControl.MotorTorque(Wheel.RIGHT, direction);
+			{
+				/*
+				wheelControl.SetLeftWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetRightWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
+				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
+				*/
+				wheelControl.SetLeftWheelMotorTorque(-wheelControl.maxMotorTorque);
+				wheelControl.SetRightWheelMotorTorque(-wheelControl.maxMotorTorque);
+				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
+				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
 			}
 			
+
+			Debug.Log("Coroutine is Run!");
 			yield return null;
 		}
+		
     }
 
 	public void StartMoving(bool isLeft)
 	{
+		/*
 		if (mainMovement != null)
 		{
 			Debug.Log("breaking_inside");
@@ -245,9 +281,11 @@ public class PlayerControl : MonoBehaviour {
 			mainMovement = SpeedControl(rightGripTime, result);
 		}
 		StartCoroutine(mainMovement);
-		
+		*/
+		float avgGripTime = (leftGripTime + rightGripTime)/2;
+		gripMovement = CalculateMove(result, avgGripTime);
 	}
-
+	/*
 	IEnumerator SpeedControl(float timeValue, Vector3 direction)
 	{
 		float speedValue = direction.magnitude;
@@ -270,7 +308,7 @@ public class PlayerControl : MonoBehaviour {
 			yield return null;
 		}
 	}
-
+	*/
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.z - rightMovingPosition.z;
@@ -355,7 +393,7 @@ public class PlayerControl : MonoBehaviour {
     {
         Vector3 rightWheel;
         Vector3 leftWheel;
-
+		Debug.Log("MakeMoveVector()");
 		float initYPosition = rightInitPosition.y;
 
 		rightMovingPosition.y = initYPosition;
@@ -472,6 +510,7 @@ public class PlayerControl : MonoBehaviour {
 			currentTime = 0;
 		}
 		
+		Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
     {

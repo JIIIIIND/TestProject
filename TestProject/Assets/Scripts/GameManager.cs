@@ -83,11 +83,22 @@ public class GameManager : MonoBehaviour {
         {
             fadeCanvas.SetActive(true);
         }
-        StartCoroutine(FadeOut(name));
+        StartCoroutine(FadeOut(name, true));
         
     }
-
-    IEnumerator FadeOut(string name)
+    public void FadeOutStart()
+    {
+        if (fadeIsPlaying == true)
+            return;
+        else
+            fadeCanvas.SetActive(true);
+        StartCoroutine(FadeOut("", false));
+    }
+    public void FadeInStart()
+    {
+        StartCoroutine(FadeIn());
+    }
+    IEnumerator FadeOut(string name, bool isLoad)
     {
         fadeIsPlaying = true;
         Color color = fadeImage.color;
@@ -103,9 +114,12 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         fadeIsPlaying = false;
-        uiController.MenuExit();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(name);
-        StartCoroutine(FadeIn());
+        if(isLoad)
+        {
+            uiController.MenuExit();
+            UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+            StartCoroutine(FadeIn());
+        }
     }
 
     IEnumerator FadeIn()

@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour {
     [SerializeField] private GameObject[] checkPoint;
     [SerializeField] private GameObject endPoint;
     private Vector3 lastPlayerPoint;
-    private Quaternion lastPlayerRotation;
+    private Quaternion setPlayerRotation;
     private int currentCollisionCounter;
     private int saveCollisionCounter = 0;
 
@@ -25,23 +25,25 @@ public class StageManager : MonoBehaviour {
 
     [SerializeField] private int collisionLimit;
     [SerializeField] private float timeLimit;
-    
+    private float currentTime;
+     
 	void Start ()
     {
+        GameManager.instance.FadeOutStart();
         player = Instantiate(player, startPoint, Quaternion.identity);
         player.transform.localScale = playerScale;
         player.GetComponent<PlayerControl>().GetWheelControl().maxMotorTorque = modifiedMaxTorque;
         //기타 플레이어 설정 건드릴껀 여기서
-
+        GameManager.instance.FadeInStart();
         lastPlayerPoint = player.transform.position;
-        lastPlayerRotation = player.transform.rotation;
+        CanvasOn(manualPanel);
 	}
 	
     private void CanvasOn(GameObject item)
     {
         sceneCanvas.SetActive(true);
         item.SetActive(true);
-        CanvasItemAppearTime(10f, item);
+        StartCoroutine(CanvasItemAppearTime(5f, item));
     }
     IEnumerator CanvasItemAppearTime(float time, GameObject item)
     {
@@ -59,33 +61,40 @@ public class StageManager : MonoBehaviour {
         currentCollisionCounter++;
         if(currentCollisionCounter >= collisionLimit)
         {
-            //게임실패 함수 호출
+            currentCollisionCounter = 0;
+            CanvasOn(gameOverText);
+            ReturnToCheckPoint();
         }
     }
     
     private void ReturnToCheckPoint()
     {
-        //페이드아웃
+        GameManager.instance.FadeOutStart();
         CanvasOn(gameOverText);
         player.transform.position = lastPlayerPoint;
-        player.transform.rotation = lastPlayerRotation;
+        player.transform.rotation = setPlayerRotation;
         currentCollisionCounter = saveCollisionCounter;
-        //페이드인
+        GameManager.instance.FadeInStart();
     }
 
-    public void CheckPointEntry(GameObject checkpoint, Transform playerTransform)
+    public void CheckPointEntry(GameObject checkpoint, Vector3 playerPosition, Quaternion playerRotation)
     {
-        lastPlayerPoint = playerTransform.position;
-        lastPlayerRotation = playerTransform.rotation;
+        lastPlayerPoint = playerPosition;
+        setPlayerRotation = playerRotation;
         saveCollisionCounter = currentCollisionCounter;
     }
 
+    
+
     public void EndPointEntry()
     {
+        Debug.Log("EndPointEntry");
         GameManager.instance.LoadScene(nextSceneName);
     }
     // Update is called once per frame
-    void Update () {
-		
+    void Update ()
+    {
+        currentTime += Time.deltaTime;
+
 	}
 }

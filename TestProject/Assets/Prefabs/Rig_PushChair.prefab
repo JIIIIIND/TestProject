@@ -237,9 +237,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4093654541987368}
   - component: {fileID: 114880921536177292}
+  - component: {fileID: 65392770878706214}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -253,9 +254,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4595355104469548}
   - component: {fileID: 114910809437305876}
+  - component: {fileID: 65375341526322678}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -439,6 +441,7 @@ GameObject:
   - component: {fileID: 137938268999674158}
   - component: {fileID: 65384293294592896}
   - component: {fileID: 65770293218847590}
+  - component: {fileID: 65748066429050830}
   m_Layer: 0
   m_Name: Rig_PushChair
   m_TagString: Untagged
@@ -457,7 +460,6 @@ GameObject:
   - component: {fileID: 20132961274448988}
   - component: {fileID: 114389952973288448}
   - component: {fileID: 92689791018763494}
-  - component: {fileID: 65899926402364072}
   m_Layer: 0
   m_Name: Camera (head)
   m_TagString: MainCamera
@@ -845,7 +847,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1357448875825448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.93, y: 0, z: 2.09}
+  m_LocalPosition: {x: -1.5, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4827901020954156}
@@ -985,6 +987,18 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!65 &65375341526322678
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1580271052815662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65384293294592896
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -997,6 +1011,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.41241398, y: 0.7203041, z: 0.33492014}
   m_Center: {x: 0.0114464285, y: -0.16793783, z: 0.35311544}
+--- !u!65 &65392770878706214
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1568749947720142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65748066429050830
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1899494699809552}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6143433, y: 0.21583202, z: 0.5982802}
+  m_Center: {x: -0.0032138228, y: -0.6363468, z: 0.49011624}
 --- !u!65 &65770293218847590
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1009,18 +1047,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4479645, y: 0.13835919, z: 0.2835546}
   m_Center: {x: 0.004447937, y: -0.4574965, z: 0.044645883}
---- !u!65 &65899926402364072
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1905526305019284}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.8593858, z: 1.2705481}
-  m_Center: {x: 0, y: 0.047743842, z: 1.8699604}
 --- !u!81 &81324419209539720
 AudioListener:
   m_ObjectHideFlags: 1

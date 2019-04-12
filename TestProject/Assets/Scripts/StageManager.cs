@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour {
 
+    [SerializeField] private GameObject player;
+
     [SerializeField] private GameObject sceneCanvas;
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private GameObject manualPanel;
+
     [SerializeField] private Vector3 startPoint;
     [SerializeField] private GameObject[] checkPoint;
     [SerializeField] private GameObject endPoint;
-    [SerializeField] private string nextSceneName;
-    [SerializeField] private Vector3 playerScale;
-    [SerializeField] private int collisionCounter;
-    [SerializeField] private float timeLimit;
-    private Transform lastYourPoint;
-    [SerializeField] private GameObject player;
-    [SerializeField] private float modifiedMaxTorque;
+    private Vector3 lastPlayerPoint;
+    private Quaternion lastPlayerRotation;
     private int currentCollisionCounter;
+    private int saveCollisionCounter = 0;
 
+    [SerializeField] private string nextSceneName;
+
+    [SerializeField] private Vector3 playerScale;
+    [SerializeField] private float modifiedMaxTorque;
+
+    [SerializeField] private int collisionLimit;
+    [SerializeField] private float timeLimit;
+    
 	void Start ()
     {
         player = Instantiate(player, startPoint, Quaternion.identity);
         player.transform.localScale = playerScale;
         player.GetComponent<PlayerControl>().GetWheelControl().maxMotorTorque = modifiedMaxTorque;
         //기타 플레이어 설정 건드릴껀 여기서
+
+        lastPlayerPoint = player.transform.position;
+        lastPlayerRotation = player.transform.rotation;
 	}
 	
     private void CanvasOn(GameObject item)
@@ -44,23 +54,35 @@ public class StageManager : MonoBehaviour {
         sceneCanvas.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void CollisionDetect()
     {
-        if(collision.gameObject.tag == "Player")
+        currentCollisionCounter++;
+        if(currentCollisionCounter >= collisionLimit)
         {
-            currentCollisionCounter++;
-            if(currentCollisionCounter >= collisionCounter)
-            {
-
-            }
+            //게임실패 함수 호출
         }
     }
-    private void OnTriggerEnter(Collider other)
+    
+    private void ReturnToCheckPoint()
     {
-        if(other.tag == "Player")
-        {
+        //페이드아웃
+        CanvasOn(gameOverText);
+        player.transform.position = lastPlayerPoint;
+        player.transform.rotation = lastPlayerRotation;
+        currentCollisionCounter = saveCollisionCounter;
+        //페이드인
+    }
 
-        }
+    public void CheckPointEntry(GameObject checkpoint, Transform playerTransform)
+    {
+        lastPlayerPoint = playerTransform.position;
+        lastPlayerRotation = playerTransform.rotation;
+        saveCollisionCounter = currentCollisionCounter;
+    }
+
+    public void EndPointEntry()
+    {
+        GameManager.instance.LoadScene(nextSceneName);
     }
     // Update is called once per frame
     void Update () {

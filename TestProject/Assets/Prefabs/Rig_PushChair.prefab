@@ -780,7 +780,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1214666552577310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -1.34, z: -20}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4581052448930890}
@@ -1009,8 +1009,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6143433, y: 0.21583202, z: 0.5982802}
-  m_Center: {x: -0.0032138228, y: -0.6363468, z: 0.49011624}
+  m_Size: {x: 0.6143433, y: 0.6, z: 0.5982802}
+  m_Center: {x: 0, y: 0.7, z: 0.9}
 --- !u!65 &65774308550365892
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1160,7 +1160,7 @@ MonoBehaviour:
   rightDirection: 0
   leftDirection: 0
   rayPosition: {fileID: 4181271084705858}
-  timeRate: 0.4
+  timeRate: 0.08
   speedRate: 1.2
   wheelControl: {fileID: 114819239800766850}
   roadSaveTime: 1

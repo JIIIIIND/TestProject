@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour {
     public void PushUIButton(GameObject gameObject)
     {
         currentStage = 0;
+		Debug.Log("ui button is pushing: "+gameObject);
         gameObject.SetActive(true);
         MainUI.SetActive(false);
     }

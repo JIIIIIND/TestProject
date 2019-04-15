@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour {
 
-    [SerializeField] private GameObject player;
-
+	[SerializeField] private GameObject player;
     [SerializeField] private GameObject sceneCanvas;
     [SerializeField] private GameObject gameOverText;
     [SerializeField] private GameObject manualPanel;
@@ -15,7 +14,7 @@ public class StageManager : MonoBehaviour {
     [SerializeField] private GameObject endPoint;
     private Vector3 lastPlayerPoint;
     private Quaternion setPlayerRotation;
-    private int currentCollisionCounter;
+    [SerializeField] private int currentCollisionCounter;
     private int saveCollisionCounter = 0;
 
     [SerializeField] private string nextSceneName;
@@ -30,7 +29,6 @@ public class StageManager : MonoBehaviour {
 	void Start ()
     {
         GameManager.instance.FadeOutStart();
-        player = Instantiate(player, startPoint, Quaternion.identity);
         player.transform.localScale = playerScale;
         player.GetComponent<PlayerControl>().GetWheelControl().maxMotorTorque = modifiedMaxTorque;
         //기타 플레이어 설정 건드릴껀 여기서
@@ -61,8 +59,6 @@ public class StageManager : MonoBehaviour {
         currentCollisionCounter++;
         if(currentCollisionCounter >= collisionLimit)
         {
-            currentCollisionCounter = 0;
-            CanvasOn(gameOverText);
             ReturnToCheckPoint();
         }
     }

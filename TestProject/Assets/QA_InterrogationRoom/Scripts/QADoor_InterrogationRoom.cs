@@ -8,7 +8,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 	public bool isAutomatic = false;
 	public bool AutoClose = false;
 	public bool DoubleSidesOpen = false;
-	public string PlayerControllerTag = "GameController";
+	public string PlayerControllerTag = "Player";
 	public string OpenForwardAnimName = "Door_anim";
 	public string OpenBackwardAnimName = "DoorBack_anim";
 	private string _animName;

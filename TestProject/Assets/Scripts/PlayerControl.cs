@@ -72,11 +72,11 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1<<10))
 		{
 			return true;
 		}
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1<<10))
 		{
 			return true;
 		}

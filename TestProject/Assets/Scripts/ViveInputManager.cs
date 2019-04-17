@@ -84,13 +84,13 @@ public class ViveInputManager : MonoBehaviour
             }
             if(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
             {
-                if(GameManager.instance.UIController().GameMenuActive() == true)
+                if(GameManager.instance.GameMenuActive() == true)
                 {
-                    GameManager.instance.UIController().MenuExit();
+                    GameManager.instance.MenuExit();
                 }
                 else
                 {
-                    GameManager.instance.UIController().MenuAppear();
+                    GameManager.instance.MenuAppear();
                 }
 
                 //게임 메뉴가 실행 중이라면

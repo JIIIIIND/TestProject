@@ -72,11 +72,11 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1<<10))
 		{
 			return true;
 		}
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1>>0))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1<<10))
 		{
 			return true;
 		}
@@ -190,7 +190,7 @@ public class PlayerControl : MonoBehaviour {
 		while (priviousSpeed != 0)
 		{
 			if (timeValue != 0)
-				speedTime += (Time.deltaTime * timeValue)*timeRate;
+				speedTime += (Time.deltaTime / timeValue)*timeRate;
 			else if (timeValue == 1)
 				speedTime += Time.deltaTime;
 			else
@@ -209,31 +209,33 @@ public class PlayerControl : MonoBehaviour {
 
 			if(isForward)
 			{
-				/*
+				
 				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
 				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
 				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
 				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
-				*/
+				/*
 				wheelControl.SetLeftWheelMotorTorque(wheelControl.maxMotorTorque);
 				wheelControl.SetRightWheelMotorTorque(wheelControl.maxMotorTorque);
 				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
 				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
+				*/
 			}
 			else
 			{
-				/*
+				
 				wheelControl.SetLeftWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
 				wheelControl.SetRightWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
 				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
 				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
-				*/
+				/*
 				wheelControl.SetLeftWheelMotorTorque(-wheelControl.maxMotorTorque);
 				wheelControl.SetRightWheelMotorTorque(-wheelControl.maxMotorTorque);
 				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
 				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
+				*/
 			}
-			
+
 
 			//Debug.Log("Coroutine is Run!");
 			yield return null;

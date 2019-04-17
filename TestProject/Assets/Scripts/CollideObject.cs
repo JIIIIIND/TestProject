@@ -26,15 +26,17 @@ public class CollideObject : MonoBehaviour {
                 {
                     Debug.Log("endPoint");
                     stageManager.EndPointEntry();
-                }
+					isActived = true;
+				}
 
                 else if(type == ObjectType.CHECKPOINT)
                 {
                     Debug.Log("checkPoint");
                     stageManager.CheckPointEntry(this.transform.gameObject, this.gameObject.transform.position, playerRotation);
-                    //체크포인트 도달 이펙트 띄움
-                }
-                isActived = true;
+					isActived = true;
+					//체크포인트 도달 이펙트 띄움
+				}
+                
             }
         }
     }

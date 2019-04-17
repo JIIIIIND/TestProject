@@ -9,10 +9,13 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
     private bool isSave = false;
 
+	[SerializeField] private GameObject LaserBeam;
+
     [SerializeField] private GameObject fadeCanvas;
     [SerializeField] private GameObject fadeObject;
     private UnityEngine.UI.Image fadeImage;
     [SerializeField] private float fadePlayTime;
+
     private bool fadeIsPlaying;
     private float fadeStartValue = 0.0f;
     private float fadeEndValue = 1.0f;
@@ -119,6 +122,7 @@ public class GameManager : MonoBehaviour {
             uiController.MenuExit();
             UnityEngine.SceneManagement.SceneManager.LoadScene(name);
             StartCoroutine(FadeIn());
+
         }
     }
 

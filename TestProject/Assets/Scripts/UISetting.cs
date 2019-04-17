@@ -8,11 +8,9 @@ public class UISetting : MonoBehaviour {
     public string eventName;
 
     [SerializeField] GameObject eventParameterObject;
-    private GameObject manager;
 
 	void Start ()
     {
-        manager = GameObject.Find("GameManager");
         GameManager.instance.UIController().SetUI(gameObject);
         if(isButton)
         {
@@ -26,6 +24,7 @@ public class UISetting : MonoBehaviour {
         if(gameObject.GetComponent<UnityEngine.UI.Button>() != null)
         {
             button = gameObject.GetComponent<UnityEngine.UI.Button>();
+			Debug.Log(button);
         }
         if(button != null)
         {
@@ -69,6 +68,7 @@ public class UISetting : MonoBehaviour {
                 case "TreatmentButton":
                     {
                         button.onClick.AddListener(() => GameManager.instance.UIController().PushUIButton(eventParameterObject));
+					Debug.Log("add complete");
                         break;
                     }
                 case "StoryButton":

@@ -46,7 +46,6 @@ public class PlayerControl : MonoBehaviour {
 	private IEnumerator mainMovement;
 	private IEnumerator leftGripCounter;
 	private IEnumerator rightGripCounter;
-	private IEnumerator enumerator;
 
 	private void Awake()
 	{
@@ -72,22 +71,28 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1<<10))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return true;
 		}
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1<<10))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(-0.3f, 1, 0)), collisionRayLength, 1<< LayerMask.NameToLayer("Floor")))
 		{
 			return true;
 		}
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, 0.3f)), collisionRayLength, 1 << 10))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, 0.3f)), collisionRayLength, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return true;
 		}
-		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, -0.3f)), collisionRayLength, 1 << 10))
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, -0.3f)), collisionRayLength, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return true;
 		}
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, -1, 0)), collisionRayLength * 3, 1 << LayerMask.NameToLayer("Floor")))
+		{
+			return false;
+		}
+		else
+			return true;
 		return false;
 	}
 	
@@ -484,7 +489,6 @@ public class PlayerControl : MonoBehaviour {
 	public IEnumerator GetLeftGripCounter() { return leftGripCounter; }
 	public IEnumerator GetRightGripCounter() { return rightGripCounter; }
 	public IEnumerator GetMainMovement() { return mainMovement; }
-	public IEnumerator GetEnumerator() { return enumerator; }
 
 	void Update ()
     {
@@ -493,14 +497,10 @@ public class PlayerControl : MonoBehaviour {
 		if (roadSaveTime < currentTime)
 		{
 			RaycastHit hit;
-			if(Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(0,-1.5f,0)),out hit))
+			if(Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(0,-1.5f,0)),out hit, 1.5f, 1<<LayerMask.NameToLayer("Floor")))
 			{
-				if(hit.collider.tag == "Road")
-				{
-					//Debug.Log("Save road position");
-					lastRoadPosition = hit.point + new Vector3(0,5,0);
-					lastRoadRotation = this.transform.rotation;
-				}
+				lastRoadPosition = hit.point + new Vector3(0, 5, 0);
+				lastRoadRotation = this.transform.rotation;
 			}
 			currentTime = 0;
 		}

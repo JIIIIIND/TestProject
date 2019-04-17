@@ -80,6 +80,14 @@ public class PlayerControl : MonoBehaviour {
 		{
 			return true;
 		}
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, 0.3f)), collisionRayLength, 1 << 10))
+		{
+			return true;
+		}
+		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, 1, -0.3f)), collisionRayLength, 1 << 10))
+		{
+			return true;
+		}
 		return false;
 	}
 	

@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     private int startStage;
 
     [SerializeField] private SoundEffectManager soundEffectManager;
-    [SerializeField] private UIController uiController;
+    [SerializeField] private GameObject gameMenu;
     
     private GameManager()
     {}
@@ -48,11 +48,6 @@ public class GameManager : MonoBehaviour {
     void Start () {
         
 	}
-	public void Exit()
-    {
-        StartCoroutine("SaveAndExit");
-        Debug.Log("Exit");
-    }
     public void Save()
     {
         //플레이어 진행 상황 저장
@@ -71,12 +66,7 @@ public class GameManager : MonoBehaviour {
         UnityEditor.EditorApplication.isPlaying = false;
     }
 
-    public void SelectScene(GameObject stage)
-    {
-        int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1)/500;
 
-        LoadScene(uiController.GetStageName(selectStage));
-    }
 
     public void LoadScene(string name)
     {
@@ -119,14 +109,26 @@ public class GameManager : MonoBehaviour {
         fadeIsPlaying = false;
         if(isLoad)
         {
-            uiController.MenuExit();
+            MenuExit();
             UnityEngine.SceneManagement.SceneManager.LoadScene(name);
             StartCoroutine(FadeIn());
 
         }
     }
-
-    IEnumerator FadeIn()
+	public void MenuAppear()
+	{
+		//게임 일시정지
+		if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainMenu")
+		{
+			gameMenu.SetActive(true);
+		}
+	}
+	public void MenuExit()
+	{
+		gameMenu.SetActive(false);
+		//일시정지 해제
+	}
+	IEnumerator FadeIn()
     {
         fadeIsPlaying = true;
         Color color = fadeImage.color;
@@ -147,15 +149,15 @@ public class GameManager : MonoBehaviour {
     }
 
     public SoundEffectManager SoundEffectManager() { return soundEffectManager; }
-    public UIController UIController() { return uiController; }
+	public bool GameMenuActive() { return gameMenu.activeInHierarchy; }
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("ESC Key Down");
-            if (uiController.GameMenuActive() == false)
-                uiController.MenuAppear();
+            if (gameMenu.activeInHierarchy == false)
+                MenuAppear();
             else
-                uiController.MenuExit();
+                MenuExit();
         }
 	}
 }

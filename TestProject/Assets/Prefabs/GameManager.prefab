@@ -139,7 +139,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4992682215001434}
   - component: {fileID: 114786698466859744}
-  - component: {fileID: 114255905961933264}
   - component: {fileID: 114708660868577468}
   m_Layer: 0
   m_Name: GameManager
@@ -936,28 +935,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114255905961933264
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1171402954289372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d1468224988aa46a7733abb4581588, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MainUI: {fileID: 0}
-  GameMenu: {fileID: 1783260997016784}
-  StoryUI: {fileID: 0}
-  TreatmentUI: {fileID: 0}
-  Stages: {fileID: 0}
-  stages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &114298580906747764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1084,7 +1061,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114255905961933264}
+      - m_Target: {fileID: 0}
         m_MethodName: MenuExit
         m_Mode: 2
         m_Arguments:
@@ -1640,11 +1617,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd34f61f89b67a34594ebb6aa9ee81b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LaserBeam: {fileID: 1767736181399190, guid: bcd9d94a56f575340a261fb992072904, type: 2}
   fadeCanvas: {fileID: 1813609150815044}
   fadeObject: {fileID: 1707317128103608}
   fadePlayTime: 1
   soundEffectManager: {fileID: 114708660868577468}
-  uiController: {fileID: 114255905961933264}
+  gameMenu: {fileID: 1783260997016784}
 --- !u!114 &114791026568802692
 MonoBehaviour:
   m_ObjectHideFlags: 1

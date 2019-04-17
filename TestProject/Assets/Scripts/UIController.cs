@@ -5,7 +5,6 @@ using UnityEngine;
 public class UIController : MonoBehaviour {
 
     [SerializeField] private GameObject MainUI;
-    [SerializeField] private GameObject GameMenu;
     [SerializeField] private GameObject StoryUI;
     [SerializeField] private GameObject TreatmentUI;
     [SerializeField] private GameObject Stages;
@@ -17,8 +16,13 @@ public class UIController : MonoBehaviour {
     void Start () {
         currentStage = 0;
 	}
-	
-    public void PushBackButton(GameObject gameObject)
+
+	public void Exit()
+	{
+		StartCoroutine("SaveAndExit");
+		Debug.Log("Exit");
+	}
+	public void PushBackButton(GameObject gameObject)
     {
         gameObject.SetActive(false);
         MainUI.SetActive(true);
@@ -32,19 +36,14 @@ public class UIController : MonoBehaviour {
         MainUI.SetActive(false);
     }
 
-    public void MenuAppear()
-    {
-        //게임 일시정지
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainMenu")
-        {
-            GameMenu.SetActive(true);
-        }
-    }
-    public void MenuExit()
-    {
-        GameMenu.SetActive(false);
-        //일시정지 해제
-    }
+	public void SelectScene(GameObject stage)
+	{
+		int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1) / 500;
+
+		GameManager.instance.LoadScene(GetStageName(selectStage));
+	}
+
+
 
     public void NextStage()
     {
@@ -93,65 +92,7 @@ public class UIController : MonoBehaviour {
         parentTransform.Set(parentTransform.x - imageSize, parentTransform.y, parentTransform.z);
         Stages.GetComponent<RectTransform>().localPosition = parentTransform;
     }
-
-    public void SetUI(GameObject gameObject)
-    {
-        string uiName = gameObject.name;
-        switch(uiName)
-        {
-            case "Main":
-                {
-                    MainUI = gameObject;
-                    break;
-                }
-            case "StoryMenu":
-                {
-                    StoryUI = gameObject;
-                    StoryUI.SetActive(false);
-                    break;
-                }
-            case "TreatmentMenu":
-                {
-                    TreatmentUI = gameObject;
-                    TreatmentUI.SetActive(false);
-                    break;
-                }
-            case "Stages":
-                {
-                    Stages = gameObject;
-                    break;
-                }
-            case "Stage1":
-                {
-                    stages[0] = gameObject;
-                    break;
-                }
-            case "Stage2":
-                {
-                    stages[1] = gameObject;
-                    break;
-                }
-            case "Stage3":
-                {
-                    stages[2] = gameObject;
-                    break;
-                }
-            case "Stage4":
-                {
-                    stages[3] = gameObject;
-                    break;
-                }
-            case "Stage5":
-                {
-                    stages[4] = gameObject;
-                    break;
-                }
-            default:
-                break;
-        }
-        
-    }
-
+	
     public void CurrentUIInit()
     {
         StoryUI.SetActive(false);
@@ -163,5 +104,4 @@ public class UIController : MonoBehaviour {
 	}
 
     public string GetStageName(int index) { return stages[index].name; }
-    public bool GameMenuActive() { return GameMenu.activeInHierarchy; }
 }

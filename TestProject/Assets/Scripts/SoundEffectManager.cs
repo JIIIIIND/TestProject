@@ -7,26 +7,49 @@ public class SoundEffectManager : MonoBehaviour {
     [SerializeField] private float musicVolume;
     [SerializeField] private float effectVolume;
     [SerializeField] private bool isVibration;
-    
-    // Use this for initialization
-    void Start () {
+
+	private List<Observer> observers;
+
+	private void Awake()
+	{
+		observers = new List<Observer>();
+	}
+	void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
 
+	public void AddObserver(Observer observer)
+	{
+		Debug.Log(observer);
+		observers.Add(observer);
+	}
+	public void DeleteObserver(Observer observer) { observers.Remove(observer); }
+
     public float GetMusicVolume()
     { return musicVolume; }
     public void SetMusicVolume(UnityEngine.UI.Slider slider)
-    { musicVolume = slider.value; }
+    {
+		musicVolume = slider.value;
+		for (int i = 0; i < observers.Count; i++)
+		{
+			observers[i].onNotify(musicVolume, EVENTNAME.MUSIC);
+		}
+	}
 
     public float GetEffectVolume()
     { return effectVolume; }
     public void SetEffectVolume(UnityEngine.UI.Slider slider)
-    { effectVolume = slider.value; }
+    {
+		effectVolume = slider.value;
+		for (int i = 0; i < observers.Count; i++)
+		{
+			observers[i].onNotify(effectVolume, EVENTNAME.EFFECT);
+		}
+	}
 
     public bool GetVibration()
     { return isVibration; }

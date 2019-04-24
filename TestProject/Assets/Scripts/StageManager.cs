@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour {
 
+	public int stageNumber;
+
 	[SerializeField] private GameObject player;
     [SerializeField] private GameObject sceneCanvas;
     [SerializeField] private GameObject gameOverText;
@@ -85,6 +87,8 @@ public class StageManager : MonoBehaviour {
     public void EndPointEntry()
     {
         Debug.Log("EndPointEntry");
+		PlayerPrefs.SetInt("ClearStage" + stageNumber, 1);
+		PlayerPrefs.SetInt("Stage"+stageNumber, currentCollisionCounter);
         GameManager.instance.LoadScene(nextSceneName);
     }
     // Update is called once per frame

@@ -8,9 +8,7 @@ public class GameManager : MonoBehaviour {
     //씬 관리 등등 전반적인 게임의 운영 관련한 것들 모음
     public static GameManager instance;
     private bool isSave = false;
-
-	[SerializeField] private GameObject LaserBeam;
-
+	
     [SerializeField] private GameObject fadeCanvas;
     [SerializeField] private GameObject fadeObject;
     private UnityEngine.UI.Image fadeImage;
@@ -20,11 +18,7 @@ public class GameManager : MonoBehaviour {
     private float fadeStartValue = 0.0f;
     private float fadeEndValue = 1.0f;
     private float fadeTime = 0.0f;
-    //
-    private int storyModeCurrentStage;
-    //startStage 이후의 Index에 대해서 실행 할 수 없도록
-    private int startStage;
-
+    
     [SerializeField] private SoundEffectManager soundEffectManager;
     [SerializeField] private GameObject gameMenu;
     
@@ -150,6 +144,7 @@ public class GameManager : MonoBehaviour {
 
     public SoundEffectManager SoundEffectManager() { return soundEffectManager; }
 	public bool GameMenuActive() { return gameMenu.activeInHierarchy; }
+
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Escape))
         {

@@ -36,7 +36,12 @@ public class SoundSystem : MonoBehaviour, Observer {
 	{
 		GameManager.instance.SoundEffectManager().AddObserver(this);
 	}
-	
+
+	private void OnDestroy()
+	{
+		GameManager.instance.SoundEffectManager().DeleteObserver(this);
+	}
+
 	void Update () {
 		
 	}

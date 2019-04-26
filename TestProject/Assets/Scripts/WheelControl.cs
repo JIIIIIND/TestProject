@@ -91,7 +91,32 @@ public class WheelControl : MonoBehaviour {
 		leftFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
 		rightFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
 		*/
-	}
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            leftWheelCollider.motorTorque = maxMotorTorque;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            leftWheelCollider.motorTorque = 0;
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            rightWheelCollider.motorTorque = maxMotorTorque/2;
+        }
+        if(Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            rightWheelCollider.motorTorque = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+            leftWheelCollider.brakeTorque = brakeValue;
+        if (Input.GetKeyUp(KeyCode.A))
+            leftWheelCollider.brakeTorque = 0;
+        if (Input.GetKeyDown(KeyCode.D))
+            rightWheelCollider.brakeTorque = brakeValue;
+        if (Input.GetKeyUp(KeyCode.D))
+            rightWheelCollider.brakeTorque = 0;
+    }
 
     public bool LeftWheelIsGround()
     {

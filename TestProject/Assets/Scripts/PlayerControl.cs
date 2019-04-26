@@ -9,16 +9,14 @@ public class PlayerControl : MonoBehaviour {
 
 	[SerializeField] private Transform rightInitTransform;
 	[SerializeField] private Transform leftInitTransform;
-
-	[SerializeField] private float rotationSpeed;
-
+    
 	private Vector3 rightInitPosition;
 	private Vector3 rightMovingPosition;
-	[SerializeField] private bool rightDirection;
+	private bool rightDirection;
 
 	private Vector3 leftInitPosition;
 	private Vector3 leftMovingPosition;
-	[SerializeField] private bool leftDirection;
+	private bool leftDirection;
 
     [SerializeField] private Transform rayPosition;
 
@@ -37,15 +35,21 @@ public class PlayerControl : MonoBehaviour {
 	private float currentTime;
 
 	private Vector3 result;
+
+    private Vector3 leftWheelVector;
+    private Vector3 rightWheelVector;
 	private bool isForward;
 	public float currentSpeed;
 
 	public float collisionRayLength;
 
-	private IEnumerator gripMovement;
-	private IEnumerator mainMovement;
-	private IEnumerator leftGripCounter;
-	private IEnumerator rightGripCounter;
+	private IEnumerator leftGripMovement;
+    private IEnumerator leftMainMovement;
+    private IEnumerator leftGripCounter;
+
+    private IEnumerator rightGripMovement;
+    private IEnumerator rightMainMovement;
+    private IEnumerator rightGripCounter;
 
 	private void Awake()
 	{
@@ -54,8 +58,6 @@ public class PlayerControl : MonoBehaviour {
 
 		leftInitPosition = leftInitTransform.localPosition;
 		leftMovingPosition = leftInitTransform.localPosition + new Vector3(0, 0, 0.1f);
-
-
     }
 	void Start()
     {
@@ -93,7 +95,6 @@ public class PlayerControl : MonoBehaviour {
 		}
 		else
 			return true;
-		return false;
 	}
 	
 	public void TransformInit()
@@ -112,31 +113,7 @@ public class PlayerControl : MonoBehaviour {
 		this.transform.rotation = lastRoadPosition.rotation;
 		*/
 	}
-
-    private void MoveToward(Vector3 rightWheel, Vector3 leftWheel)
-    {
-        Vector3 targetVector = CalculateVector(rightWheel, leftWheel);
-
-		if(gripMovement != null)
-		{
-			StopCoroutine(gripMovement);
-		}
-		gripMovement = CalculateMove(targetVector, 1);
-
-		StartCoroutine(gripMovement);
-		/*
-		//RotationBody(targetVector);
-		if (gripMovement != null)
-		{
-			StopCoroutine(gripMovement);
-		}
-		gripMovement = CalculateMove(targetVector);
-		//StartCoroutine(gripMovement);
-		*/
-
-
-    }
-
+    
     private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
     {
 		//result에 오른쪽과 왼쪽 바퀴의 벡터를 연산하여 나온 값 할당
@@ -192,123 +169,70 @@ public class PlayerControl : MonoBehaviour {
 		return result;
     }
 
-    IEnumerator CalculateMove(Vector3 direction, float timeValue)
+    IEnumerator CalculateMove(Wheel wheel, Vector3 direction, float timeValue)
     {
-		float angleTime = 0;
 		float speedTime = 0;
-
-		priviousAngle = Mathf.Lerp(priviousAngle, direction.x / direction.magnitude, angleTime);
-		priviousSpeed = Mathf.Lerp(direction.z / direction.magnitude, 0, speedTime);
+        
+		priviousSpeed = Mathf.Lerp(direction.z / 0.797f, 0, speedTime);
 
 		while (priviousSpeed != 0)
 		{
 			if (timeValue != 0)
-				speedTime += (Time.deltaTime / timeValue)*timeRate;
-			else if (timeValue == 1)
-				speedTime += Time.deltaTime;
+				speedTime += (Time.deltaTime * timeValue);
 			else
 				speedTime += Time.deltaTime;
 			if(speedTime > 1)
 			{
 				speedTime = 1;
 			}
-
-			angleTime += Time.deltaTime * 2;
-			if (angleTime > 1)
-				angleTime = 1;
-
-			priviousAngle = Mathf.Lerp(priviousAngle, direction.x / direction.magnitude, angleTime);
-			priviousSpeed = Mathf.Lerp(direction.z / direction.magnitude, 0, speedTime);
-
+			priviousSpeed = Mathf.Lerp(direction.z / 0.797f, 0, speedTime);
+            //일정 길이 이상이면 최대 속도로 취급, 짧게 움직였다면 그만큼 짧게 동작
+            if (priviousSpeed > 1)
+                priviousSpeed = 1;
 			if(isForward)
 			{
-				
-				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
-				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
-				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
-				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
-				/*
-				wheelControl.SetLeftWheelMotorTorque(wheelControl.maxMotorTorque);
-				wheelControl.SetRightWheelMotorTorque(wheelControl.maxMotorTorque);
-				wheelControl.SetLeftWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
-				wheelControl.SetRightWheelSteering(priviousAngle * wheelControl.maxSteeringAngle);
-				*/
+				if(wheel == Wheel.LEFT)
+                {
+                    wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+                }
+                else
+                {
+                    wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+                }
 			}
 			else
 			{
-				
-				wheelControl.SetLeftWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
-				wheelControl.SetRightWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
-				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
-				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
-				/*
-				wheelControl.SetLeftWheelMotorTorque(-wheelControl.maxMotorTorque);
-				wheelControl.SetRightWheelMotorTorque(-wheelControl.maxMotorTorque);
-				wheelControl.SetLeftWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
-				wheelControl.SetRightWheelSteering(-priviousAngle * wheelControl.maxSteeringAngle);
-				*/
+                if(wheel == Wheel.LEFT)
+                {
+                    wheelControl.SetLeftWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
+                }
+                else
+                {
+                    wheelControl.SetRightWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
+                }
 			}
-
-
-			//Debug.Log("Coroutine is Run!");
+            
 			yield return null;
 		}
 		
     }
 
-	public void StartMoving(bool isLeft)
+	public void StartMoving(Wheel wheel)
 	{
-		/*
-		if (mainMovement != null)
-		{
-			Debug.Log("breaking_inside");
-			StopCoroutine(mainMovement);
-		}
-		if(enumerator != null)
-			StopCoroutine(enumerator);
-		if (isLeft)
-		{
-			if(leftGripTime > 0.2f)
-				result = result * ((timeRate) / leftGripTime);
-			
-			mainMovement = SpeedControl(leftGripTime, result);
-		}
-		else
-		{
-			if (rightGripTime > 0.2f)
-				result = result * ((timeRate) / rightGripTime);
-			mainMovement = SpeedControl(rightGripTime, result);
-		}
-		StartCoroutine(mainMovement);
-		*/
-		float avgGripTime = (leftGripTime + rightGripTime)/2;
-		gripMovement = CalculateMove(result, avgGripTime);
-		StartCoroutine(gripMovement);
+        if(wheel == Wheel.LEFT)
+        {
+            if (leftMainMovement != null)
+                StopCoroutine(leftMainMovement);
+            leftMainMovement = CalculateMove(wheel, leftWheelVector, leftGripTime);
+        }
+        else
+        {
+            if (rightMainMovement != null)
+                StopCoroutine(rightMainMovement);
+            rightMainMovement = CalculateMove(wheel, rightWheelVector, leftGripTime);
+        }
 	}
-	/*
-	IEnumerator SpeedControl(float timeValue, Vector3 direction)
-	{
-		float speedValue = direction.magnitude;
-		float angleVariable = 0.0f;
-		RotationBody(direction);
-		while (speedValue > 0)
-		{
-			if(enumerator != null)
-				StopCoroutine(enumerator);
 
-			speedValue *= Mathf.Cos(angleVariable);
-			
-			enumerator = CalculateMove(direction * speedValue);
-			
-			StartCoroutine(enumerator);
-			angleVariable += ((Mathf.PI / 2)/5) * Time.deltaTime;
-			//값 수정 필요함. time과 속도 간에 비율 수정 필요
-			if (angleVariable > (Mathf.PI / 2))
-				angleVariable = (Mathf.PI / 2);
-			yield return null;
-		}
-	}
-	*/
 	public void CalculateRightPoint(Vector3 currentPos)
 	{
 		float curDirection = currentPos.z - rightMovingPosition.z;
@@ -389,10 +313,8 @@ public class PlayerControl : MonoBehaviour {
         }
 	}
 
-    public void MakeMoveVector()
+    public void MakeMoveVector(Wheel wheel)
     {
-        Vector3 rightWheel;
-        Vector3 leftWheel;
 		//Debug.Log("MakeMoveVector()");
 		float initYPosition = rightInitPosition.y;
 
@@ -400,11 +322,25 @@ public class PlayerControl : MonoBehaviour {
 		leftInitPosition.y = initYPosition;
 		leftMovingPosition.y = initYPosition;
 
-		rightWheel = rightMovingPosition - rightInitPosition;
-		
-		leftWheel = leftMovingPosition - leftInitPosition;
+        if(wheel == Wheel.LEFT)
+        {
+            leftWheelVector = leftMovingPosition - leftInitPosition;
 
-		MoveToward(rightWheel, leftWheel);
+            if(leftGripMovement != null)
+                StopCoroutine(leftGripMovement);
+            leftGripMovement = CalculateMove(wheel, leftWheelVector, 0);
+            StartCoroutine(leftGripMovement);
+        }
+        else
+        {
+            rightWheelVector = rightMovingPosition - rightInitPosition;
+
+            if (rightGripMovement != null)
+                StopCoroutine(rightGripMovement);
+
+            rightGripMovement = CalculateMove(wheel, rightWheelVector, 0);
+            StartCoroutine(rightGripMovement);
+        }
 	}
 
 	private IEnumerator TimeCounter(bool isLeft)
@@ -484,12 +420,7 @@ public class PlayerControl : MonoBehaviour {
 		if (leftGripCounter != null)
 			StopCoroutine(leftGripCounter);
 	}
-
-	public IEnumerator GetGripMovement() { return gripMovement; }
-	public IEnumerator GetLeftGripCounter() { return leftGripCounter; }
-	public IEnumerator GetRightGripCounter() { return rightGripCounter; }
-	public IEnumerator GetMainMovement() { return mainMovement; }
-
+    
 	void Update ()
     {
 		currentSpeed = GetComponent<Rigidbody>().velocity.magnitude;
@@ -511,12 +442,10 @@ public class PlayerControl : MonoBehaviour {
     {
         return leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
-
     public SteamVR_TrackedObject GetRightTrackedObject()
     {
         return rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
-
     public WheelControl GetWheelControl()
     {
         return wheelControl;

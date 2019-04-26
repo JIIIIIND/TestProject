@@ -50,12 +50,8 @@ public class ViveInputManager : MonoBehaviour
                     {
                         mDevice.TriggerHapticPulse(1000);
                     }
-                    if (playerControl.GetMainMovement() != null)
-                    {
-                        Debug.Log("breaking Right");
-                        playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
-                    }
                     playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
+                    playerControl.MakeMoveVector(Wheel.RIGHT);
                     Debug.Log("Griping");
                 }
                 else if (playerControl.IsFlip() == true)
@@ -68,8 +64,7 @@ public class ViveInputManager : MonoBehaviour
 				isControllerGrip = false;
 				if (playerControl.GetWheelControl().RightWheelIsGround())
                 {
-                    playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
-                    playerControl.StartMoving(false);
+                    playerControl.StartMoving(Wheel.RIGHT);
                 }
                 else if (playerControl.IsFlip() == true)
                 {
@@ -146,6 +141,7 @@ public class ViveInputManager : MonoBehaviour
                     }
                     isControllerGrip = true;
                     playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
+                    playerControl.MakeMoveVector(Wheel.LEFT);
                     Debug.Log("Griping");
                 }
                 else if (playerControl.IsFlip() == true)
@@ -158,7 +154,7 @@ public class ViveInputManager : MonoBehaviour
 				isControllerGrip = false;
 				if (playerControl.GetWheelControl().LeftWheelIsGround())
                 {
-                    playerControl.StartMoving(true);
+                    playerControl.StartMoving(Wheel.LEFT);
                     Debug.Log("Grip Up");
                 }
                 else if (playerControl.IsFlip() == true)
@@ -197,12 +193,6 @@ public class ViveInputManager : MonoBehaviour
 				playerControl.GetWheelControl().SetLeftWheelMotorTorque(0);
 			}
 		}
-
-        if (isControllerGrip == true)
-		{
-			playerControl.MakeMoveVector();
-		}
-
         if ((int)rightTrackedObject.index != -1)
         {
             mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);

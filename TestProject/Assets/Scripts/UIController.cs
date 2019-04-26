@@ -15,7 +15,6 @@ public class UIController : MonoBehaviour {
 
     void Start () {
         currentStage = 0;
-		SetClearStageImage();
 	}
 
 	public void Exit()
@@ -82,7 +81,6 @@ public class UIController : MonoBehaviour {
 
     private void UpdateStageImage(bool isNext)
     {
-		SetClearStageImage();
         Debug.Log("stages: " + stages[currentStage]);
         float imageSize = stages[currentStage].GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
         Vector3 parentTransform = Stages.GetComponent<RectTransform>().localPosition;
@@ -98,19 +96,6 @@ public class UIController : MonoBehaviour {
         StoryUI.SetActive(false);
         TreatmentUI.SetActive(false);
     }
-	// Update is called once per frame
-	public void SetClearStageImage()
-	{
-		int lastClearStage = 0;
-		for(int i = 0; i <= stages.Length; i++)
-		{
-			if(PlayerPrefs.HasKey("ClearStage"+(i+1)))
-			{
-				lastClearStage = i;
-			}
-		}
-		Debug.Log("save Stage: " + lastClearStage);
-	}
 
 	void Update () {
 		

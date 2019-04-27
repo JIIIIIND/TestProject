@@ -209,7 +209,11 @@ public class ViveInputManager : MonoBehaviour
                 playerControl.LeftPositionInitiate();
             }
         }
-        isControllerGrip = false;
+        if(isControllerGrip == false)
+		{
+			playerControl.GetWheelControl().SetLeftWheelMotorTorque(0);
+			playerControl.GetWheelControl().SetRightWheelMotorTorque(0);
+		}
         if (playerControl.IsFlip() == true)
         {
             playerControl.LeftPositionInitiate();

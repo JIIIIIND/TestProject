@@ -12,11 +12,11 @@ public class PlayerControl : MonoBehaviour {
     
 	private Vector3 rightInitPosition;
 	private Vector3 rightMovingPosition;
-	private bool rightDirection;
+	[SerializeField] private bool rightDirection;
 
 	private Vector3 leftInitPosition;
 	private Vector3 leftMovingPosition;
-	private bool leftDirection;
+	[SerializeField] private bool leftDirection;
 
     [SerializeField] private Transform rayPosition;
 
@@ -113,61 +113,6 @@ public class PlayerControl : MonoBehaviour {
 		this.transform.rotation = lastRoadPosition.rotation;
 		*/
 	}
-    
-    private Vector3 CalculateVector(Vector3 rightWheel, Vector3 leftWheel)
-    {
-		//result에 오른쪽과 왼쪽 바퀴의 벡터를 연산하여 나온 값 할당
-		//매개변수 값이 나타내는 것은 컨트롤러를 쥐고 이동한 값이다.
-		//해당되는 값의 끝 점을 서로 이은 벡터와 수직인 벡터가 result가 된다.
-		//rightWheel과 leftWheel은 각각 최대 값이 정해져 있어야 한다.
-
-		bool forward;
-
-		///*
-		float initZPosition = rightInitPosition.z;
-
-		Vector3 leftModifiedInitPoint = new Vector3(leftInitPosition.x, leftInitPosition.y, initZPosition);
-		Vector3 leftModifiedMovingPoint = leftModifiedInitPoint + leftWheel;
-
-		if (rightWheel.magnitude > leftWheel.magnitude)
-		{
-			forward = rightDirection;
-			result = leftModifiedMovingPoint - rightMovingPosition;
-		}
-		else
-		{
-			forward = leftDirection;
-			result = rightMovingPosition - leftModifiedMovingPoint;
-        }
-		//result = this.transform.TransformVector(result);
-		if (forward)
-		{
-			//왼쪽이 크면 반시계, 오른쪽이 크면 시계
-			if(rightWheel.magnitude > leftWheel.magnitude)
-			{
-				result = Quaternion.Euler(0, 90, 0) * result;
-			}
-			else
-			{
-				result = Quaternion.Euler(0, -90, 0) * result;
-			}
-		}
-		else
-		{
-			//오른쪽이 크면 반시계, 왼쪽이 크면 시계
-			if(rightWheel.magnitude > leftWheel.magnitude)
-			{
-				result = Quaternion.Euler(0, 90, 0) * result;
-			}
-			else
-			{
-				result = Quaternion.Euler(0, -90, 0) * result;
-			}
-		}
-        isForward = forward;
-
-		return result;
-    }
 
     IEnumerator CalculateMove(Wheel wheel, Vector3 direction, float timeValue)
     {
@@ -189,32 +134,17 @@ public class PlayerControl : MonoBehaviour {
             //일정 길이 이상이면 최대 속도로 취급, 짧게 움직였다면 그만큼 짧게 동작
             if (priviousSpeed > 1)
                 priviousSpeed = 1;
-			if(isForward)
+			
+			if(wheel == Wheel.LEFT)
 			{
-				if(wheel == Wheel.LEFT)
-                {
-                    wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
-                }
-                else
-                {
-                    wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
-                }
+				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
 			}
 			else
 			{
-                if(wheel == Wheel.LEFT)
-                {
-                    wheelControl.SetLeftWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
-                }
-                else
-                {
-                    wheelControl.SetRightWheelMotorTorque(-priviousSpeed * wheelControl.maxMotorTorque);
-                }
+				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
 			}
-            
 			yield return null;
 		}
-		
     }
 
 	public void StartMoving(Wheel wheel)
@@ -222,13 +152,21 @@ public class PlayerControl : MonoBehaviour {
         if(wheel == Wheel.LEFT)
         {
             if (leftMainMovement != null)
-                StopCoroutine(leftMainMovement);
+			{
+				StopCoroutine(leftMainMovement);
+				wheelControl.SetLeftWheelMotorTorque(0);
+			}
+                
             leftMainMovement = CalculateMove(wheel, leftWheelVector, leftGripTime);
         }
         else
         {
             if (rightMainMovement != null)
-                StopCoroutine(rightMainMovement);
+			{
+				StopCoroutine(rightMainMovement);
+				wheelControl.SetRightWheelMotorTorque(0);
+			}
+                
             rightMainMovement = CalculateMove(wheel, rightWheelVector, leftGripTime);
         }
 	}
@@ -327,7 +265,11 @@ public class PlayerControl : MonoBehaviour {
             leftWheelVector = leftMovingPosition - leftInitPosition;
 
             if(leftGripMovement != null)
-                StopCoroutine(leftGripMovement);
+			{
+				StopCoroutine(leftGripMovement);
+				wheelControl.SetLeftWheelMotorTorque(0);
+			}
+                
             leftGripMovement = CalculateMove(wheel, leftWheelVector, 0);
             StartCoroutine(leftGripMovement);
         }
@@ -336,8 +278,11 @@ public class PlayerControl : MonoBehaviour {
             rightWheelVector = rightMovingPosition - rightInitPosition;
 
             if (rightGripMovement != null)
-                StopCoroutine(rightGripMovement);
-
+			{
+				StopCoroutine(rightGripMovement);
+				wheelControl.SetRightWheelMotorTorque(0);
+			}
+            
             rightGripMovement = CalculateMove(wheel, rightWheelVector, 0);
             StartCoroutine(rightGripMovement);
         }

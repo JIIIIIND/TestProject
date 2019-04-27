@@ -116,7 +116,9 @@ public class WheelControl : MonoBehaviour {
             rightWheelCollider.brakeTorque = brakeValue;
         if (Input.GetKeyUp(KeyCode.D))
             rightWheelCollider.brakeTorque = 0;
-    }
+
+		Debug.Log("left: " + leftWheelCollider.motorTorque + " right: " + rightWheelCollider.motorTorque);
+	}
 
     public bool LeftWheelIsGround()
     {

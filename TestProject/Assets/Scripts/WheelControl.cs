@@ -24,7 +24,8 @@ public class WheelControl : MonoBehaviour {
 	[SerializeField] private WheelCollider leftWheelCollider;
 	[SerializeField] private WheelCollider rightWheelCollider;
 
-    [SerializeField] private ParticleSystem brakeEffect;
+    [SerializeField] private ParticleSystem leftBrakeEffect;
+    [SerializeField] private ParticleSystem rightBrakeEffect;
 
     private IEnumerator wheelRotate;
 
@@ -42,14 +43,40 @@ public class WheelControl : MonoBehaviour {
 		rightWheelCollider.steerAngle = 0;
 	}
 	
-	public void brakeEffectPlay()
+	private void BrakeEffectPlay(Wheel wheel)
 	{
-        brakeEffect.Play();
+        //TRIGGER 눌릴때만 재생되도록
+        BrakeEffectSetting(wheel);
+        if (wheel == Wheel.LEFT)
+            leftBrakeEffect.Play();
+        else
+            rightBrakeEffect.Play();
 	}
 
-    public void brakeEffectSetting(float value)
+    private void BrakeEffectPause(Wheel wheel)
     {
-        //파티클 입자의 양 조절
+        //TRIGGER 눌릴때만 재생되도록
+        
+        if (wheel == Wheel.LEFT)
+            leftBrakeEffect.Stop();
+        else
+            rightBrakeEffect.Stop();
+    }
+
+    public void BrakeEffectSetting(Wheel wheel)
+    {
+        if(wheel == Wheel.LEFT)
+        {
+            var emission = leftBrakeEffect.emission;
+            leftBrakeEffect.Emit((int)leftWheelCollider.rpm / 10);
+            //emission.burstCount = (int)leftWheelCollider.rpm/10;
+        }
+        else
+        {
+            var emission = rightBrakeEffect.emission;
+            rightBrakeEffect.Emit((int)rightWheelCollider.rpm / 10);
+            //emission.burstCount = (int)rightWheelCollider.rpm/10;
+        }
     }
 
     public void DustEffectSetting()
@@ -62,10 +89,15 @@ public class WheelControl : MonoBehaviour {
 		WheelCollider wheelCollider;
 
 		if (wheel == Wheel.LEFT)
-			wheelCollider = leftWheelCollider;
+        {
+            wheelCollider = leftWheelCollider;
+            leftBrakeEffect.Play();
+        }
 		else
-			wheelCollider = rightWheelCollider;
-
+        {
+            wheelCollider = rightWheelCollider;
+            rightBrakeEffect.Play();
+        }
 		wheelCollider.brakeTorque = brakeValue;
 	}
 
@@ -74,10 +106,15 @@ public class WheelControl : MonoBehaviour {
 		WheelCollider wheelCollider;
 
 		if (wheel == Wheel.LEFT)
-			wheelCollider = leftWheelCollider;
+        {
+            wheelCollider = leftWheelCollider;
+            leftBrakeEffect.Stop();
+        }	
 		else
-			wheelCollider = rightWheelCollider;
-
+        {
+            wheelCollider = rightWheelCollider;
+            rightBrakeEffect.Stop();
+        }
 		wheelCollider.brakeTorque = 0.0f;
 	}
 	void Update ()
@@ -109,21 +146,41 @@ public class WheelControl : MonoBehaviour {
         }
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            rightWheelCollider.motorTorque = maxMotorTorque/2;
+            rightWheelCollider.motorTorque = maxMotorTorque;
         }
         if(Input.GetKeyUp(KeyCode.RightArrow))
         {
             rightWheelCollider.motorTorque = 0;
         }
         if (Input.GetKeyDown(KeyCode.A))
+        {
             leftWheelCollider.brakeTorque = brakeValue;
+            BrakeEffectPlay(Wheel.LEFT);
+        }
+        if(Input.GetKey(KeyCode.A))
+        {
+            BrakeEffectSetting(Wheel.LEFT);
+        }
         if (Input.GetKeyUp(KeyCode.A))
+        {
             leftWheelCollider.brakeTorque = 0;
+            BrakeEffectPause(Wheel.LEFT);
+        }
         if (Input.GetKeyDown(KeyCode.D))
+        {
             rightWheelCollider.brakeTorque = brakeValue;
+            BrakeEffectPlay(Wheel.RIGHT);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            BrakeEffectSetting(Wheel.RIGHT);
+        }
         if (Input.GetKeyUp(KeyCode.D))
+        {
             rightWheelCollider.brakeTorque = 0;
-
+            BrakeEffectPause(Wheel.RIGHT);
+        }
+        
 		Debug.Log("left: " + leftWheelCollider.motorTorque + " right: " + rightWheelCollider.motorTorque);
 	}
 

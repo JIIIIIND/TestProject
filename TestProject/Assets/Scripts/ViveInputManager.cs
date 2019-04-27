@@ -87,9 +87,13 @@ public class ViveInputManager : MonoBehaviour
                 //게임메뉴 비활성화
                 //일시정지 해제
             }
+            if(mDevice.GetHairTriggerDown())
+            {
+                playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
+            }
 			if(mDevice.GetHairTrigger())
 			{
-					playerControl.GetWheelControl().BrakeWheel(Wheel.RIGHT);
+                playerControl.GetWheelControl().BrakeEffectSetting(Wheel.RIGHT);
 			}
 			if(mDevice.GetHairTriggerUp())
 			{
@@ -173,11 +177,15 @@ public class ViveInputManager : MonoBehaviour
 					GameManager.instance.MenuAppear();
 				}
 			}
-			if (mDevice.GetHairTrigger())
+			if (mDevice.GetHairTriggerDown())
 			{
 				playerControl.GetWheelControl().BrakeWheel(Wheel.LEFT);
 			}
-			if (mDevice.GetHairTriggerUp())
+            if (mDevice.GetHairTrigger())
+            {
+                playerControl.GetWheelControl().BrakeEffectSetting(Wheel.LEFT);
+            }
+            if (mDevice.GetHairTriggerUp())
 			{
 				playerControl.GetWheelControl().InitBrakeTorque(Wheel.LEFT);
 			}

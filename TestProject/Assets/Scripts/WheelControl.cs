@@ -24,6 +24,8 @@ public class WheelControl : MonoBehaviour {
 	[SerializeField] private WheelCollider leftWheelCollider;
 	[SerializeField] private WheelCollider rightWheelCollider;
 
+    [SerializeField] private ParticleSystem brakeEffect;
+
     private IEnumerator wheelRotate;
 
 
@@ -40,10 +42,15 @@ public class WheelControl : MonoBehaviour {
 		rightWheelCollider.steerAngle = 0;
 	}
 	
-	private void brakeEffectPlay()
+	public void brakeEffectPlay()
 	{
-
+        brakeEffect.Play();
 	}
+
+    public void brakeEffectSetting(float value)
+    {
+        //파티클 입자의 양 조절
+    }
 
     public void DustEffectSetting()
     {

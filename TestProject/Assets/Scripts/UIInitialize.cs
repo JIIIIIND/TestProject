@@ -23,6 +23,8 @@ public class UIInitialize : MonoBehaviour {
         {
             Vector3 direction = this.transform.position - player.transform.position;
             //this.transform.LookAt(player.transform);
+            direction.y = 0;
+            
             Quaternion angle = Quaternion.LookRotation(direction.normalized);
             this.transform.rotation = angle;
 

@@ -26,8 +26,8 @@ public class WheelControl : MonoBehaviour {
 
     [SerializeField] private ParticleSystem leftBrakeEffect;
     [SerializeField] private ParticleSystem rightBrakeEffect;
-
-    private IEnumerator wheelRotate;
+    [SerializeField] private ParticleSystem leftDustEffect;
+    [SerializeField] private ParticleSystem rightDustEffect;
 
 
     //메인이 되는 함수의 회전/속도 관련 값에 접근하여 값에 따라 바퀴를 회전시킴
@@ -37,12 +37,6 @@ public class WheelControl : MonoBehaviour {
 
 	}
     
-	public void InitSteeringAngle()
-	{
-		leftWheelCollider.steerAngle = 0;
-		rightWheelCollider.steerAngle = 0;
-	}
-	
 	private void BrakeEffectPlay(Wheel wheel)
 	{
         //TRIGGER 눌릴때만 재생되도록
@@ -79,9 +73,22 @@ public class WheelControl : MonoBehaviour {
         }
     }
 
-    public void DustEffectSetting()
+    private void DustEffectSetting(Wheel wheel)
     {
-
+        if (wheel == Wheel.LEFT)
+        {
+            if(LeftWheelIsGround())
+            {
+                leftDustEffect.Emit((int)leftWheelCollider.rpm / 50);
+            }
+        }
+        else
+        {
+            if (RightWheelIsGround())
+            {
+                rightDustEffect.Emit((int)rightWheelCollider.rpm / 50);
+            }
+        }
     }
 
 	public void BrakeWheel(Wheel wheel)
@@ -124,17 +131,8 @@ public class WheelControl : MonoBehaviour {
 		leftFrontWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightFrontWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 
-		/*
-		float speed = Input.GetAxis("Vertical");
-		float angle = Input.GetAxis("Horizontal");
-
-		//Debug.Log("speed: " + speed + "angle : " + angle);
-
-		leftWheelCollider.motorTorque = speed * maxMotorTorque;
-		rightWheelCollider.motorTorque = speed * maxMotorTorque;
-		leftFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
-		rightFrontWheelCollider.steerAngle = angle * maxSteeringAngle;
-		*/
+        DustEffectSetting(Wheel.LEFT);
+        DustEffectSetting(Wheel.RIGHT);
 
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -186,13 +184,11 @@ public class WheelControl : MonoBehaviour {
 
     public bool LeftWheelIsGround()
     {
-		//return leftWheelCollider.isGrounded;
-		return true;
+		return leftWheelCollider.isGrounded;
 	}
     public bool RightWheelIsGround()
     {
-		//return rightWheelCollider.isGrounded;
-		return true;
+		return rightWheelCollider.isGrounded;
 	}
 
 	public void SetLeftWheelMotorTorque(float value) { leftWheelCollider.motorTorque = value; }

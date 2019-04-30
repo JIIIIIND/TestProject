@@ -717,7 +717,7 @@ MonoBehaviour:
   savedPos: {x: -243.70001, y: -113.19999, z: -0.0000071525574}
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 100, y: 100}
-  savedColor: {r: 0, g: 0, b: 0, a: 1}
+  savedColor: {r: 1, g: 1, b: 1, a: 1}
   savedTextUV0: {x: 0, y: 0}
   savedFill: 1
 --- !u!114 &114044569315089922
@@ -804,7 +804,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 300, y: 150}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.15234375, y: 0.2109375}
+  savedTextUV0: {x: 0.7441406, y: 0.27929688}
   savedFill: 0
 --- !u!114 &114084590673794024
 MonoBehaviour:
@@ -858,7 +858,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 246.78, y: 63.29}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.41796875, y: 0.359375}
+  savedTextUV0: {x: 0.3515625, y: 0.4873047}
   savedFill: 0
 --- !u!114 &114107210729727292
 MonoBehaviour:
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 167.93, y: 63}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.609375, y: 0.16015625}
+  savedTextUV0: {x: 0.19921875, y: 0.4375}
   savedFill: 0
 --- !u!114 &114328832993450738
 MonoBehaviour:
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 147.09, y: 63}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.15234375, y: 0.2109375}
+  savedTextUV0: {x: 0.7441406, y: 0.27929688}
   savedFill: 0
 --- !u!114 &114513897787304076
 MonoBehaviour:
@@ -1479,14 +1479,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 9e437affcd7a54609bf2cf705324a1de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a25f3e2a0ab78f34db2b1b6b4d95b5e6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

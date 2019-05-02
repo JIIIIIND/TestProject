@@ -375,12 +375,18 @@ public class PlayerControl : MonoBehaviour {
 			RaycastHit hit;
 			if(Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(0,-1.5f,0)),out hit, 1.5f, 1<<LayerMask.NameToLayer("Floor")))
 			{
-				lastRoadPosition = hit.point + new Vector3(0, 5, 0);
+				lastRoadPosition = hit.point + new Vector3(0, 0.5f, 0);
 				lastRoadRotation = this.transform.rotation;
+                Debug.Log("Save Road");
 			}
 			currentTime = 0;
 		}
-		
+        if (IsFlip())
+        {
+            LeftPositionInitiate();
+            RightPositionInitiate();
+            TransformInit();
+        }
 		//Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
@@ -395,5 +401,8 @@ public class PlayerControl : MonoBehaviour {
     {
         return wheelControl;
     }
-
+    public void SetLastRoadPosition(Vector3 value)
+    {
+        lastRoadPosition = value;
+    }
 }

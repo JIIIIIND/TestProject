@@ -222,12 +222,7 @@ public class ViveInputManager : MonoBehaviour
 			playerControl.GetWheelControl().SetLeftWheelMotorTorque(0);
 			playerControl.GetWheelControl().SetRightWheelMotorTorque(0);
 		}
-        if (playerControl.IsFlip() == true)
-        {
-            playerControl.LeftPositionInitiate();
-            playerControl.RightPositionInitiate();
-            playerControl.TransformInit();
-        }
+
     }
     private void InitPlayerController()
     {

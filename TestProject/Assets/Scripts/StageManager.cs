@@ -34,6 +34,7 @@ public class StageManager : MonoBehaviour {
         //기타 플레이어 설정 건드릴껀 여기서
         GameManager.instance.FadeInStart();
         lastPlayerPoint = player.transform.position;
+        player.GetComponent<PlayerControl>().SetLastRoadPosition(startPoint);
         CanvasOn(manualPanel);
 	}
 	

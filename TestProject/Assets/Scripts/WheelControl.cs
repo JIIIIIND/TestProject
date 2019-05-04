@@ -10,6 +10,8 @@ public class WheelControl : MonoBehaviour {
 	public float maxMotorTorque;
 	public float maxSteeringAngle;
 
+    private bool brakeSound;
+    [SerializeField] private WheelSound wheelSoundSystem;
 	[SerializeField] private GameObject player;
 
 	[SerializeField] private float brakeValue;
@@ -29,7 +31,7 @@ public class WheelControl : MonoBehaviour {
     [SerializeField] private ParticleSystem leftDustEffect;
     [SerializeField] private ParticleSystem rightDustEffect;
 
-
+    [SerializeField] private float brakeSoundEndValue;
     //메인이 되는 함수의 회전/속도 관련 값에 접근하여 값에 따라 바퀴를 회전시킴
     //속도나 회전 값이 0이라면 바퀴는 회전하지 않고 멈춰있는 상태 유지
 
@@ -106,6 +108,12 @@ public class WheelControl : MonoBehaviour {
             rightBrakeEffect.Play();
         }
 		wheelCollider.brakeTorque = brakeValue;
+        if((leftWheelCollider.rpm > 0) || (rightWheelCollider.rpm  > 0))
+        {
+            //start sound
+            brakeSound = true;
+            wheelSoundSystem.BrakeStart();
+        }
 	}
 
 	public void InitBrakeTorque(Wheel wheel)
@@ -123,6 +131,13 @@ public class WheelControl : MonoBehaviour {
             rightBrakeEffect.Stop();
         }
 		wheelCollider.brakeTorque = 0.0f;
+
+        if(brakeSound == true)
+        {
+            //EndSound 출력
+            Debug.Log("brake key is up");
+            wheelSoundSystem.BrakeEnd();
+        }
 	}
 	void Update ()
 	{
@@ -136,24 +151,23 @@ public class WheelControl : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            leftWheelCollider.motorTorque = maxMotorTorque;
+            SetLeftWheelMotorTorque(maxMotorTorque);
         }
         if(Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            leftWheelCollider.motorTorque = 0;
+            SetLeftWheelMotorTorque(0);
         }
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            rightWheelCollider.motorTorque = maxMotorTorque;
+            SetRightWheelMotorTorque(maxMotorTorque);
         }
         if(Input.GetKeyUp(KeyCode.RightArrow))
         {
-            rightWheelCollider.motorTorque = 0;
+            SetRightWheelMotorTorque(0);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            leftWheelCollider.brakeTorque = brakeValue;
-            BrakeEffectPlay(Wheel.LEFT);
+            BrakeWheel(Wheel.LEFT);
         }
         if(Input.GetKey(KeyCode.A))
         {
@@ -161,13 +175,11 @@ public class WheelControl : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
-            leftWheelCollider.brakeTorque = 0;
-            BrakeEffectPause(Wheel.LEFT);
+            InitBrakeTorque(Wheel.LEFT);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            rightWheelCollider.brakeTorque = brakeValue;
-            BrakeEffectPlay(Wheel.RIGHT);
+            BrakeWheel(Wheel.RIGHT);
         }
         if (Input.GetKey(KeyCode.D))
         {
@@ -175,11 +187,21 @@ public class WheelControl : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
-            rightWheelCollider.brakeTorque = 0;
-            BrakeEffectPause(Wheel.RIGHT);
+            InitBrakeTorque(Wheel.RIGHT);
         }
-        
-		Debug.Log("left: " + leftWheelCollider.motorTorque + " right: " + rightWheelCollider.motorTorque);
+
+        if(brakeSound)
+        {
+            if((leftWheelCollider.rpm < brakeSoundEndValue) || (rightWheelCollider.rpm < brakeSoundEndValue))
+            {
+                brakeSound = false;
+                //endSound 출력
+                Debug.Log("I'm Calling Brake End");
+                wheelSoundSystem.BrakeEnd();
+            }
+        }
+        //브레이크를 잡고 있지만 rpm이 일정 값 이하로 떨어지거나 특정 값 이상이지만 브레이크 키에서 손을 놓은 경우 brakeEnd 호출
+        Debug.Log("left: " + leftWheelCollider.motorTorque + " right: " + rightWheelCollider.motorTorque);
 	}
 
     public bool LeftWheelIsGround()
@@ -191,9 +213,27 @@ public class WheelControl : MonoBehaviour {
 		return rightWheelCollider.isGrounded;
 	}
 
-	public void SetLeftWheelMotorTorque(float value) { leftWheelCollider.motorTorque = value; }
-	public void SetRightWheelMotorTorque(float value) { rightWheelCollider.motorTorque = value; }
+	public void SetLeftWheelMotorTorque(float value)
+    {
+        leftWheelCollider.motorTorque = value;
+        if(value != 0)
+        {
+            wheelSoundSystem.WheelSoundStart();
+        }
+    }
+	public void SetRightWheelMotorTorque(float value)
+    {
+        rightWheelCollider.motorTorque = value;
+        if(value != 0)
+        {
+            wheelSoundSystem.WheelSoundStart();
+        }
+    }
 
-	public void SetLeftWheelSteering(float value) { leftFrontWheelCollider.steerAngle = value; }
+    public float GetLeftWheelMotorTorque() { return leftWheelCollider.motorTorque; }
+    public float GetRightWheelMotorTorque() { return rightWheelCollider.motorTorque; }
+
+    public void SetLeftWheelSteering(float value) { leftFrontWheelCollider.steerAngle = value; }
 	public void SetRightWheelSteering(float value) { rightFrontWheelCollider.steerAngle = value; }
+    public void SetBrakeSoundToggle(bool value) { brakeSound = value; }
 }

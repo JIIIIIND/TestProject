@@ -6,8 +6,10 @@ public class SoundSystem : MonoBehaviour, Observer {
 
 	[SerializeField] private AudioSource[] BGMArray;
 	[SerializeField] private AudioSource[] EffectSoundArray;
+    [SerializeField] private float BGMInitiateValue;
+    [SerializeField] private float EffectInitiateValue;
 
-	public void onNotify(float value, EVENTNAME eventName)
+    public void onNotify(float value, EVENTNAME eventName)
 	{
 		switch(eventName)
 		{
@@ -15,7 +17,7 @@ public class SoundSystem : MonoBehaviour, Observer {
 			{
 				for(int i = 0; i < BGMArray.Length; i++)
 				{
-					BGMArray[i].volume = value;
+					BGMArray[i].volume = Mathf.Lerp(0, BGMInitiateValue, value);
 				}
 				break;
 			}
@@ -23,7 +25,7 @@ public class SoundSystem : MonoBehaviour, Observer {
 			{
 				for (int i = 0; i < EffectSoundArray.Length; i++)
 				{
-					EffectSoundArray[i].volume = value;
+					EffectSoundArray[i].volume = Mathf.Lerp(0, EffectInitiateValue, value);
 				}
 				break;
 			}

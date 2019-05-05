@@ -373,10 +373,13 @@ public class PlayerControl : MonoBehaviour {
 		if (roadSaveTime < currentTime)
 		{
 			RaycastHit hit;
-			if(Physics.Raycast(this.transform.position, this.transform.TransformVector(new Vector3(0,-1.5f,0)),out hit, 1.5f, 1<<LayerMask.NameToLayer("Floor")))
+            Debug.Log("Save time");
+			if(Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0,-1,0)),out hit, 3.5f, 1<<LayerMask.NameToLayer("Floor")))
 			{
 				lastRoadPosition = hit.point + new Vector3(0, 0.5f, 0);
 				lastRoadRotation = this.transform.rotation;
+                lastRoadRotation.x = 0;
+                lastRoadRotation.z = 0;
                 Debug.Log("Save Road");
 			}
 			currentTime = 0;

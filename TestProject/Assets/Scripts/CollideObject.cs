@@ -10,6 +10,7 @@ public class CollideObject : MonoBehaviour {
     [SerializeField] private ObjectType type;
     private bool isActived = false;
     private Quaternion playerRotation;
+    [SerializeField] private AudioSource collisionSound;
 
 	void Start () {
         playerRotation = Quaternion.Euler(rotationVector.x, rotationVector.y, rotationVector.z);
@@ -27,6 +28,7 @@ public class CollideObject : MonoBehaviour {
                     Debug.Log("endPoint");
                     stageManager.EndPointEntry();
 					isActived = true;
+
 				}
 
                 else if(type == ObjectType.CHECKPOINT)
@@ -34,7 +36,6 @@ public class CollideObject : MonoBehaviour {
                     Debug.Log("checkPoint");
                     stageManager.CheckPointEntry(this.transform.gameObject, this.gameObject.transform.position, playerRotation);
 					isActived = true;
-					//체크포인트 도달 이펙트 띄움
 				}
                 
             }
@@ -50,6 +51,7 @@ public class CollideObject : MonoBehaviour {
                 //충돌 이펙트 띄워줌
                 Debug.Log("Collision");
                 stageManager.CollisionDetect();
+                collisionSound.Play();
             }
         }
     }

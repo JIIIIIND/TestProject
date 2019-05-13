@@ -30,6 +30,8 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float priviousAngle = 0;
 	[SerializeField] private float priviousSpeed = 0;
 
+    [SerializeField] private AudioSource flipSound;
+
 	private Vector3 lastRoadPosition;
 	private Quaternion lastRoadRotation;
 	private float currentTime;
@@ -51,6 +53,7 @@ public class PlayerControl : MonoBehaviour {
     private IEnumerator rightMainMovement;
     private IEnumerator rightGripCounter;
 
+    private IEnumerator flipSoundPlay;
 	private void Awake()
 	{
 		rightInitPosition = rightInitTransform.localPosition;
@@ -73,6 +76,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool IsFlip()
 	{
+        /*
 		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0.3f, 1, 0)), collisionRayLength, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return true;
@@ -89,29 +93,42 @@ public class PlayerControl : MonoBehaviour {
 		{
 			return true;
 		}
+        */
 		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, -1, 0)), collisionRayLength * 3, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return false;
 		}
 		else
-			return true;
+        {
+            return true;
+        }
 	}
-	
+	private IEnumerator SoundEnd(AudioSource source)
+    {
+        while (source.isPlaying)
+            yield return true;
+        this.GetComponent<Rigidbody>().Sleep();
+        this.GetComponent<Rigidbody>().isKinematic = true;
+        this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        this.transform.position = lastRoadPosition;
+        this.transform.rotation = lastRoadRotation;
+        this.GetComponent<Rigidbody>().WakeUp();
+        this.GetComponent<Rigidbody>().isKinematic = false;
+
+        flipSoundPlay = null;
+    }
 	public void TransformInit()
 	{
 		Debug.Log("Flip and relocated");
-		this.GetComponent<Rigidbody>().Sleep();
-		this.GetComponent<Rigidbody>().isKinematic = true;
-		this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-		this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-		this.transform.position = lastRoadPosition;
-		this.transform.rotation = lastRoadRotation;
-		this.GetComponent<Rigidbody>().WakeUp();
-		this.GetComponent<Rigidbody>().isKinematic = false;
-		/*
-		this.transform.position = lastRoadPosition.position;
-		this.transform.rotation = lastRoadPosition.rotation;
-		*/
+        if (flipSoundPlay != null)
+            return;
+        else
+        {
+            flipSound.Play();
+            flipSoundPlay = SoundEnd(flipSound);
+            StartCoroutine(flipSoundPlay);
+        }
 	}
 
     IEnumerator CalculateMove(Wheel wheel, Vector3 direction, float timeValue)

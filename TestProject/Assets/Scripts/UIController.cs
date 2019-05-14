@@ -36,6 +36,11 @@ public class UIController : MonoBehaviour {
         MainUI.SetActive(false);
     }
 
+    public void SelectScene(string stageName)
+    {
+        GameManager.instance.LoadScene(stageName);
+    }
+
 	public void SelectScene(GameObject stage)
 	{
 		int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1) / 500;

@@ -37,7 +37,6 @@ public class CollideObject : MonoBehaviour {
                     stageManager.CheckPointEntry(this.transform.gameObject, this.gameObject.transform.position, playerRotation);
 					isActived = true;
 				}
-                
             }
         }
     }

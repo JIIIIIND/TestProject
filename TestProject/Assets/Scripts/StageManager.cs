@@ -86,6 +86,7 @@ public class StageManager : MonoBehaviour {
     public void EndPointEntry()
     {
         Debug.Log("EndPointEntry");
+        //클리어 소리 출력 이후 LoadScene 되도록 수정 필요
         GameManager.instance.LoadScene(nextSceneName);
     }
     // Update is called once per frame

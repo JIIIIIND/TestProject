@@ -2310,7 +2310,7 @@ MonoBehaviour:
   LaserBeamTransform: {fileID: 4570250478232766}
   LaserBeamDot: {fileID: 4021471966028394}
   CollideWithMyLayerOnly: 0
-  hideWhenNotAimingAtCanvas: 1
+  hideWhenNotAimingAtCanvas: 0
 --- !u!114 &114239808241633338
 MonoBehaviour:
   m_ObjectHideFlags: 1

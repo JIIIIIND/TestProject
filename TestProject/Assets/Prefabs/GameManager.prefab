@@ -471,9 +471,11 @@ GameObject:
   - component: {fileID: 224782976806723748}
   - component: {fileID: 223210069888274764}
   - component: {fileID: 114513897787304076}
-  - component: {fileID: 114045110052167534}
   - component: {fileID: 114137243698823884}
   - component: {fileID: 114107210729727292}
+  - component: {fileID: 114512630822095690}
+  - component: {fileID: 33607650187798158}
+  - component: {fileID: 64163983176446970}
   m_Layer: 5
   m_Name: GameMenu
   m_TagString: Untagged
@@ -534,7 +536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1882172139028306
 GameObject:
   m_ObjectHideFlags: 1
@@ -586,6 +588,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &33607650187798158
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1783260997016784}
+  m_Mesh: {fileID: 0}
+--- !u!64 &64163983176446970
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1783260997016784}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}
 --- !u!114 &114030144387607556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -772,22 +795,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114045110052167534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1783260997016784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114082897209607200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -804,7 +811,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 300, y: 150}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.15234375, y: 0.2109375}
+  savedTextUV0: {x: 0.8261719, y: 0.44726562}
   savedFill: 0
 --- !u!114 &114084590673794024
 MonoBehaviour:
@@ -858,7 +865,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 246.78, y: 63.29}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.88671875, y: 0.19921875}
+  savedTextUV0: {x: 0.9980469, y: 0.4033203}
   savedFill: 0
 --- !u!114 &114107210729727292
 MonoBehaviour:
@@ -975,7 +982,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5de8929f76b15540af869433b1ddaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initializeVector: {x: 0, y: 1.6, z: 1.89}
+  initializeVector: {x: 0, y: 1.81, z: 1.67}
+  firstPlayerInit: {x: 0, y: 0.5, z: 0}
   player: {fileID: 0}
 --- !u!114 &114174026544936188
 MonoBehaviour:
@@ -1065,7 +1073,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 167.93, y: 63}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.265625, y: 0.16015625}
+  savedTextUV0: {x: 0.5488281, y: 0}
   savedFill: 0
 --- !u!114 &114328832993450738
 MonoBehaviour:
@@ -1133,12 +1141,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: MenuExit
-        m_Mode: 2
+      - m_Target: {fileID: 1783260997016784}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
-          m_ObjectArgument: {fileID: 1783260997016784}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1384,8 +1392,25 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 147.09, y: 63}
   savedColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  savedTextUV0: {x: 0.15234375, y: 0.2109375}
+  savedTextUV0: {x: 0.8261719, y: 0.44726562}
   savedFill: 0
+--- !u!114 &114512630822095690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1783260997016784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba045fa4943b5428da9ef8508c8ada33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  showDebug: 0
 --- !u!114 &114513897787304076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1592,7 +1617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2634,8 +2659,8 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1783260997016784}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.89}
+  m_LocalRotation: {x: -0, y: -0.0389193, z: -0, w: 0.99924237}
+  m_LocalPosition: {x: 0, y: 0, z: 8.726535}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_Children:
   - {fileID: 224446770540731370}
@@ -2644,8 +2669,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.33}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -1.7444818, y: 1.368051}
+  m_SizeDelta: {x: 900, y: 1280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224794672693130018
 RectTransform:

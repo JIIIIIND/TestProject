@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UIInitialize : MonoBehaviour {
 
-    public Vector3 initializeVector;
-    private Vector3 playerInitPos;
+    [SerializeField] private Vector3 initializeVector;
+	[SerializeField] private Vector3 firstPlayerInit;
     [SerializeField] private GameObject player = null;
 
     private Vector3 direction;
@@ -17,9 +17,8 @@ public class UIInitialize : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         if(player != null)
         {
-            playerInitPos = player.transform.position;
-            direction = this.transform.position - player.transform.position;
-            rotate = player.transform.rotation;
+			Debug.Log("Player Init Position!");
+            direction = initializeVector - firstPlayerInit;
         }
             
 	}
@@ -27,14 +26,14 @@ public class UIInitialize : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(player != null)
-        {
-            Vector3 rotateVector = ( player.transform.rotation ) * direction;
-            this.transform.position = player.transform.position + rotateVector;
-            rotateVector.y = 0;
-            Quaternion angle = Quaternion.LookRotation(rotateVector.normalized);
-            this.transform.rotation = angle;
-            /*
+		if (player != null)
+		{
+			Vector3 rotateVector = (player.transform.rotation) * direction;
+			this.transform.position = player.transform.position + rotateVector;
+			rotateVector.y = 0;
+			Quaternion angle = Quaternion.LookRotation(rotateVector.normalized);
+			this.transform.rotation = angle;
+			/*
             Vector3 direction = this.transform.position - player.transform.position;
             direction.y = 0;
             
@@ -46,6 +45,8 @@ public class UIInitialize : MonoBehaviour {
             GetComponent<RectTransform>().transform.position = player.transform.TransformVector(initializeVector);
             GetComponent<RectTransform>().transform.position += difference;
             */
-        }
+		}
+		else
+			player = GameObject.FindGameObjectWithTag("Player");
     }
 }

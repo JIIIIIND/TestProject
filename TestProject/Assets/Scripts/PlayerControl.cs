@@ -93,7 +93,7 @@ public class PlayerControl : MonoBehaviour {
 		{
 			return true;
 		}
-        */
+		*/
 		if (Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0, -1, 0)), collisionRayLength * 3, 1 << LayerMask.NameToLayer("Floor")))
 		{
 			return false;
@@ -390,14 +390,12 @@ public class PlayerControl : MonoBehaviour {
 		if (roadSaveTime < currentTime)
 		{
 			RaycastHit hit;
-            Debug.Log("Save time");
 			if(Physics.Raycast(rayPosition.position, this.transform.TransformVector(new Vector3(0,-1,0)),out hit, 3.5f, 1<<LayerMask.NameToLayer("Floor")))
 			{
 				lastRoadPosition = hit.point + new Vector3(0, 0.5f, 0);
 				lastRoadRotation = this.transform.rotation;
                 lastRoadRotation.x = 0;
                 lastRoadRotation.z = 0;
-                Debug.Log("Save Road");
 			}
 			currentTime = 0;
 		}

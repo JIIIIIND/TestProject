@@ -101,7 +101,6 @@ public class ViveInputManager : MonoBehaviour
 			}
 			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 			{
-				Debug.Log(mDevice.index + " " + mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
 				playerControl.GetWheelControl().SetRightWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
 				playerControl.GetWheelControl().SetLeftWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
 			}
@@ -191,7 +190,6 @@ public class ViveInputManager : MonoBehaviour
 			}
 			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 			{
-				Debug.Log(mDevice.index + " " + mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
 				playerControl.GetWheelControl().SetRightWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
 				playerControl.GetWheelControl().SetLeftWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
 			}

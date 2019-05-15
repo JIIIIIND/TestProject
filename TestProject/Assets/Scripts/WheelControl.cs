@@ -148,7 +148,7 @@ public class WheelControl : MonoBehaviour {
 
         DustEffectSetting(Wheel.LEFT);
         DustEffectSetting(Wheel.RIGHT);
-
+		/*
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             SetLeftWheelMotorTorque(maxMotorTorque);
@@ -189,7 +189,7 @@ public class WheelControl : MonoBehaviour {
         {
             InitBrakeTorque(Wheel.RIGHT);
         }
-
+		*/
         if(brakeSound)
         {
             if((leftWheelCollider.rpm < brakeSoundEndValue) || (rightWheelCollider.rpm < brakeSoundEndValue))
@@ -201,7 +201,6 @@ public class WheelControl : MonoBehaviour {
             }
         }
         //브레이크를 잡고 있지만 rpm이 일정 값 이하로 떨어지거나 특정 값 이상이지만 브레이크 키에서 손을 놓은 경우 brakeEnd 호출
-        Debug.Log("left: " + leftWheelCollider.motorTorque + " right: " + rightWheelCollider.motorTorque);
 	}
 
     public bool LeftWheelIsGround()
@@ -216,6 +215,7 @@ public class WheelControl : MonoBehaviour {
 	public void SetLeftWheelMotorTorque(float value)
     {
         leftWheelCollider.motorTorque = value;
+		rightWheelCollider.motorTorque = value * 0.8f;
         if(value != 0)
         {
             wheelSoundSystem.WheelSoundStart();
@@ -224,7 +224,8 @@ public class WheelControl : MonoBehaviour {
 	public void SetRightWheelMotorTorque(float value)
     {
         rightWheelCollider.motorTorque = value;
-        if(value != 0)
+		leftWheelCollider.motorTorque = value * 0.8f;
+		if (value != 0)
         {
             wheelSoundSystem.WheelSoundStart();
         }

@@ -12,18 +12,27 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c170319ef1386bb47ae49240f61c2e5c
   - enabled: 1
-    path: Assets/Scenes/Stage1.unity
+    path: Assets/Scenes/Flat.unity
     guid: 772499dd2dd986b40aca49ce4fe77a0a
   - enabled: 1
-    path: Assets/Scenes/Stage2.unity
+    path: Assets/Scenes/RotateUphill.unity
     guid: 29375ab00ee2323448cca8c9997810cd
   - enabled: 1
-    path: Assets/Scenes/Stage3.unity
+    path: Assets/Scenes/RotateDownhill.unity
     guid: ab510536793c69e4881f1b2a5e8b1f7a
   - enabled: 1
-    path: Assets/Scenes/Stage4.unity
+    path: Assets/Scenes/Bottleneck.unity
     guid: 834eba3cc7599164e97c7a523a14011f
   - enabled: 1
-    path: Assets/Scenes/Stage5.unity
+    path: Assets/Scenes/Downhill.unity
     guid: fd8e0d1d3107c4844bf4f4a1da652cff
+  - enabled: 1
+    path: Assets/Scenes/Uphill.unity
+    guid: ff72ead80e1fcbe4f89a235b91774a87
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: e7d83e2bfde413b4b8fe30a23f0bce97
+  - enabled: 1
+    path: Assets/Scenes/SpeedBump.unity
+    guid: f0bc94ef5ccb2804ebed411fcada6c6a
   m_configObjects: {}

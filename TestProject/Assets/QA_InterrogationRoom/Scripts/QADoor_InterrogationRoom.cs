@@ -11,7 +11,9 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 	public string PlayerControllerTag = "Player";
 	public string OpenForwardAnimName = "Door_anim";
 	public string OpenBackwardAnimName = "DoorBack_anim";
-	private string _animName;
+    [SerializeField] private AudioSource doorOpen;
+    [SerializeField] private AudioSource doorClose;
+    private string _animName;
 	private bool inTrigger = false;
 	private bool isOpen = false;
 	private Vector3 relativePos;
@@ -39,7 +41,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 		anim [_animName].speed = 1 * OpenSpeed;
 		anim [_animName].normalizedTime = 0;
 		anim.Play (_animName);
-
+        doorOpen.Play();
 	}
 	void CloseDoor(){
 		anim [_animName].speed = -1 * CloseSpeed;
@@ -49,6 +51,7 @@ public class QADoor_InterrogationRoom : MonoBehaviour {
 			anim [_animName].normalizedTime = 1;
 		}
 		anim.Play (_animName);
+        doorClose.Play();
 	}
 
 	void OnTriggerEnter(Collider other){

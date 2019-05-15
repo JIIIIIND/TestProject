@@ -28,7 +28,7 @@ public class CollideObject : MonoBehaviour {
                     Debug.Log("endPoint");
                     stageManager.EndPointEntry();
 					isActived = true;
-
+                    collisionSound.Play();
 				}
 
                 else if(type == ObjectType.CHECKPOINT)
@@ -36,10 +36,13 @@ public class CollideObject : MonoBehaviour {
                     Debug.Log("checkPoint");
                     stageManager.CheckPointEntry(this.transform.gameObject, this.gameObject.transform.position, playerRotation);
 					isActived = true;
-				}
+                    collisionSound.Play();
+                }
             }
         }
     }
+
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -47,7 +50,6 @@ public class CollideObject : MonoBehaviour {
         {
             if ((collision.gameObject.tag == "Player") || (collision.gameObject.tag == "GameController"))
             {
-                //충돌 이펙트 띄워줌
                 Debug.Log("Collision");
                 stageManager.CollisionDetect();
                 collisionSound.Play();

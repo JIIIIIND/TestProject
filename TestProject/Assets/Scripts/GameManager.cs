@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour {
     
     [SerializeField] private SoundEffectManager soundEffectManager;
     [SerializeField] private GameObject gameMenu;
+    [SerializeField] private AudioSource uiClick;
     
     private GameManager()
     {}
@@ -42,25 +44,11 @@ public class GameManager : MonoBehaviour {
     void Start () {
         
 	}
-    public void Save()
+    public void LoadMainMenu()
     {
-        //플레이어 진행 상황 저장
-        //기타 뭐 필요한 것들 저장
-        //시간 좀 흐름
-        Debug.Log("Save is complete");
-        isSave = true;
+        uiClick.Play();
+        LoadScene("MainMenu");
     }
-
-    IEnumerator SaveAndExit()
-    {
-        Save();
-        yield return new WaitUntil(() => isSave);
-        Application.Quit();
-
-        UnityEditor.EditorApplication.isPlaying = false;
-    }
-
-
 
     public void LoadScene(string name)
     {
@@ -104,23 +92,24 @@ public class GameManager : MonoBehaviour {
         if(isLoad)
         {
             MenuExit();
-            UnityEngine.SceneManagement.SceneManager.LoadScene(name);
+
+            LoadManager.LoadScene(name);
             StartCoroutine(FadeIn());
 
         }
     }
 	public void MenuAppear()
 	{
-		//게임 일시정지
-		if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "MainMenu")
+        uiClick.Play();
+		if (SceneManager.GetActiveScene().name != "MainMenu")
 		{
 			gameMenu.SetActive(true);
 		}
 	}
 	public void MenuExit()
 	{
+        uiClick.Play();
 		gameMenu.SetActive(false);
-		//일시정지 해제
 	}
 	IEnumerator FadeIn()
     {

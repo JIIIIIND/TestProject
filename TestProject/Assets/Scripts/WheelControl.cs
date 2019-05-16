@@ -148,8 +148,8 @@ public class WheelControl : MonoBehaviour {
 
         DustEffectSetting(Wheel.LEFT);
         DustEffectSetting(Wheel.RIGHT);
-		/*
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             SetLeftWheelMotorTorque(maxMotorTorque);
         }
@@ -161,7 +161,12 @@ public class WheelControl : MonoBehaviour {
         {
             SetRightWheelMotorTorque(maxMotorTorque);
         }
-        if(Input.GetKeyUp(KeyCode.RightArrow))
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            leftWheelCollider.motorTorque = -leftWheelCollider.motorTorque;
+            rightWheelCollider.motorTorque = -rightWheelCollider.motorTorque;
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             SetRightWheelMotorTorque(0);
         }
@@ -173,6 +178,7 @@ public class WheelControl : MonoBehaviour {
         {
             BrakeEffectSetting(Wheel.LEFT);
         }
+        //left brake
         if (Input.GetKeyUp(KeyCode.A))
         {
             InitBrakeTorque(Wheel.LEFT);
@@ -181,6 +187,7 @@ public class WheelControl : MonoBehaviour {
         {
             BrakeWheel(Wheel.RIGHT);
         }
+        //right brake
         if (Input.GetKey(KeyCode.D))
         {
             BrakeEffectSetting(Wheel.RIGHT);
@@ -189,7 +196,7 @@ public class WheelControl : MonoBehaviour {
         {
             InitBrakeTorque(Wheel.RIGHT);
         }
-		*/
+		
         if(brakeSound)
         {
             if((leftWheelCollider.rpm < brakeSoundEndValue) || (rightWheelCollider.rpm < brakeSoundEndValue))

@@ -13,23 +13,27 @@ public class UIController : MonoBehaviour {
     
     private int currentStage;
 
+    [SerializeField] private AudioSource uiClick;
+
     void Start () {
         currentStage = 0;
 	}
 
 	public void Exit()
 	{
-		StartCoroutine("SaveAndExit");
+        Application.Quit();
 		Debug.Log("Exit");
 	}
 	public void PushBackButton(GameObject gameObject)
     {
+        uiClick.Play();
         gameObject.SetActive(false);
         MainUI.SetActive(true);
     }
 
     public void PushUIButton(GameObject gameObject)
     {
+        uiClick.Play();
         currentStage = 0;
 		Debug.Log("ui button is pushing: "+gameObject);
         gameObject.SetActive(true);
@@ -38,18 +42,21 @@ public class UIController : MonoBehaviour {
 
     public void SelectScene(string stageName)
     {
+        uiClick.Play();
         GameManager.instance.LoadScene(stageName);
     }
 
 	public void SelectScene(GameObject stage)
 	{
-		int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1) / 500;
+        uiClick.Play();
+        int selectStage = ((int)stage.GetComponent<RectTransform>().localPosition.x * -1) / 500;
 
 		GameManager.instance.LoadScene(GetStageName(selectStage));
 	}
 	
     public void NextStage()
     {
+        uiClick.Play();
         if (currentStage < stages.Length-1)
         {
             currentStage++;
@@ -64,7 +71,8 @@ public class UIController : MonoBehaviour {
 
     public void PreviousStage()
     {
-        if(currentStage > 0)
+        uiClick.Play();
+        if (currentStage > 0)
         {
             currentStage--;
 

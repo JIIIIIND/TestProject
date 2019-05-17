@@ -5,12 +5,8 @@ using UnityEngine;
 public class StageManager : MonoBehaviour {
     
 	[SerializeField] private GameObject player;
-    [SerializeField] private GameObject sceneCanvas;
-    [SerializeField] private GameObject gameOverText;
-    [SerializeField] private GameObject manualPanel;
 
     [SerializeField] private Vector3 startPoint;
-    [SerializeField] private GameObject[] checkPoint;
     [SerializeField] private GameObject endPoint;
     private Vector3 lastPlayerPoint;
     private Quaternion setPlayerRotation;
@@ -23,8 +19,6 @@ public class StageManager : MonoBehaviour {
     [SerializeField] private float modifiedMaxTorque;
 
     [SerializeField] private int collisionLimit;
-    [SerializeField] private float timeLimit;
-    private float currentTime;
      
 	void Start ()
     {
@@ -35,25 +29,7 @@ public class StageManager : MonoBehaviour {
         GameManager.instance.FadeInStart();
         lastPlayerPoint = player.transform.position;
         player.GetComponent<PlayerControl>().SetLastRoadPosition(startPoint);
-        CanvasOn(manualPanel);
 	}
-	
-    private void CanvasOn(GameObject item)
-    {
-        sceneCanvas.SetActive(true);
-        item.SetActive(true);
-        StartCoroutine(CanvasItemAppearTime(5f, item));
-    }
-    IEnumerator CanvasItemAppearTime(float time, GameObject item)
-    {
-        yield return new WaitForSeconds(time);
-        CanvasOff(item);
-    }
-    private void CanvasOff(GameObject item)
-    {
-        item.SetActive(false);
-        sceneCanvas.SetActive(false);
-    }
 
     public void CollisionDetect()
     {
@@ -67,7 +43,6 @@ public class StageManager : MonoBehaviour {
     private void ReturnToCheckPoint()
     {
         GameManager.instance.FadeOutStart();
-        CanvasOn(gameOverText);
         player.transform.position = lastPlayerPoint;
         player.transform.rotation = setPlayerRotation;
         currentCollisionCounter = saveCollisionCounter;
@@ -80,9 +55,7 @@ public class StageManager : MonoBehaviour {
         setPlayerRotation = playerRotation;
         saveCollisionCounter = currentCollisionCounter;
     }
-
-    
-
+	
     public void EndPointEntry()
     {
         Debug.Log("EndPointEntry");
@@ -92,7 +65,5 @@ public class StageManager : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        currentTime += Time.deltaTime;
-
 	}
 }

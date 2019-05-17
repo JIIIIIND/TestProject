@@ -1033,7 +1033,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1359157344049504}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.775, z: 0}
+  m_LocalPosition: {x: 0, y: 0.713, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4831214576489206}
@@ -1516,8 +1516,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6143433, y: 0.6, z: 0.5982802}
-  m_Center: {x: 0, y: 0.7, z: 0.9}
+  m_Size: {x: 0.64226973, y: 0.12635279, z: 0.16473353}
+  m_Center: {x: -0.0139632225, y: 0.24115384, z: 0.7598533}
 --- !u!65 &65774308550365892
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2310,7 +2310,7 @@ MonoBehaviour:
   LaserBeamTransform: {fileID: 4570250478232766}
   LaserBeamDot: {fileID: 4021471966028394}
   CollideWithMyLayerOnly: 0
-  hideWhenNotAimingAtCanvas: 0
+  hideWhenNotAimingAtCanvas: 1
 --- !u!114 &114239808241633338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2439,7 +2439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6a0e4b1467ec347945867598e4f453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMotorTorque: 50
+  maxMotorTorque: 40
   maxSteeringAngle: 30
   wheelSoundSystem: {fileID: 114569018975945846}
   player: {fileID: 1214666552577310}

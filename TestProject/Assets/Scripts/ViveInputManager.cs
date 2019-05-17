@@ -101,6 +101,7 @@ public class ViveInputManager : MonoBehaviour
 			}
 			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 			{
+				Debug.Log("Pad Control:Right");
 				playerControl.GetWheelControl().SetRightWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
 				playerControl.GetWheelControl().SetLeftWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
 			}
@@ -190,13 +191,14 @@ public class ViveInputManager : MonoBehaviour
 			}
 			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 			{
-				playerControl.GetWheelControl().SetRightWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
-				playerControl.GetWheelControl().SetLeftWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+				Debug.Log("Pad Control:Left, "+ mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+				//playerControl.GetWheelControl().SetRightWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque, false);
+				//playerControl.GetWheelControl().SetLeftWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque, false);
+				playerControl.GetWheelControl().SetFrontWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
 			}
 			if (mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
 			{
-				playerControl.GetWheelControl().SetRightWheelMotorTorque(0);
-				playerControl.GetWheelControl().SetLeftWheelMotorTorque(0);
+				playerControl.GetWheelControl().SetFrontWheelColliderTorque(0);
 			}
 		}
         if ((int)rightTrackedObject.index != -1)
@@ -217,8 +219,8 @@ public class ViveInputManager : MonoBehaviour
         }
         if(isControllerGrip == false)
 		{
-			playerControl.GetWheelControl().SetLeftWheelMotorTorque(0);
-			playerControl.GetWheelControl().SetRightWheelMotorTorque(0);
+			playerControl.GetWheelControl().SetLeftWheelMotorTorque(0, false);
+			playerControl.GetWheelControl().SetRightWheelMotorTorque(0, false);
 		}
 
     }

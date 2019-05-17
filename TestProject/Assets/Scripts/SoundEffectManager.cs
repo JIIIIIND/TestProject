@@ -26,6 +26,11 @@ public class SoundEffectManager : MonoBehaviour {
 	{
 		Debug.Log(observer);
 		observers.Add(observer);
+		for (int i = 0; i < observers.Count; i++)
+		{
+			observers[i].onNotify(musicVolume, EVENTNAME.MUSIC);
+			observers[i].onNotify(effectVolume, EVENTNAME.EFFECT);
+		}
 	}
 	public void DeleteObserver(Observer observer) { observers.Remove(observer); }
 

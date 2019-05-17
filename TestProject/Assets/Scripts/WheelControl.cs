@@ -141,25 +141,31 @@ public class WheelControl : MonoBehaviour {
 	}
 	void Update ()
 	{
+		
 		leftWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		leftFrontWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightFrontWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
-
-        DustEffectSetting(Wheel.LEFT);
+		/*
+		leftWheel.transform.Rotate(leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
+		rightWheel.transform.Rotate(rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
+		leftFrontWheel.transform.Rotate(leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
+		rightFrontWheel.transform.Rotate(rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
+		*/
+		DustEffectSetting(Wheel.LEFT);
         DustEffectSetting(Wheel.RIGHT);
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            SetLeftWheelMotorTorque(maxMotorTorque);
+            SetLeftWheelMotorTorque(maxMotorTorque, true);
         }
         if(Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            SetLeftWheelMotorTorque(0);
+            SetLeftWheelMotorTorque(0, false);
         }
         if(Input.GetKeyDown(KeyCode.RightArrow))
         {
-            SetRightWheelMotorTorque(maxMotorTorque);
+            SetRightWheelMotorTorque(maxMotorTorque, true);
         }
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -168,7 +174,7 @@ public class WheelControl : MonoBehaviour {
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            SetRightWheelMotorTorque(0);
+            SetRightWheelMotorTorque(0, false);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -219,25 +225,31 @@ public class WheelControl : MonoBehaviour {
 		return rightWheelCollider.isGrounded;
 	}
 
-	public void SetLeftWheelMotorTorque(float value)
+	public void SetLeftWheelMotorTorque(float value, bool isFirst)
     {
         leftWheelCollider.motorTorque = value;
 		rightWheelCollider.motorTorque = value * 0.8f;
-        if(value != 0)
+        if((value != 0) && isFirst)
         {
+			Debug.Log("left sound");
             wheelSoundSystem.WheelSoundStart();
         }
     }
-	public void SetRightWheelMotorTorque(float value)
+	public void SetRightWheelMotorTorque(float value, bool isFirst)
     {
         rightWheelCollider.motorTorque = value;
 		leftWheelCollider.motorTorque = value * 0.8f;
-		if (value != 0)
+		if ((value != 0) && isFirst)
         {
-            wheelSoundSystem.WheelSoundStart();
+			Debug.Log("right sound");
+			wheelSoundSystem.WheelSoundStart();
         }
     }
-
+	public void SetFrontWheelColliderTorque(float value)
+	{
+		rightFrontWheelCollider.motorTorque = value;
+		leftFrontWheelCollider.motorTorque = value;
+	}
     public float GetLeftWheelMotorTorque() { return leftWheelCollider.motorTorque; }
     public float GetRightWheelMotorTorque() { return rightWheelCollider.motorTorque; }
 

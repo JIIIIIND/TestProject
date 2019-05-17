@@ -131,18 +131,18 @@ public class PlayerControl : MonoBehaviour {
         }
 	}
 
-    IEnumerator CalculateMove(Wheel wheel, Vector3 direction, float timeValue)
+    IEnumerator CalculateMove(Wheel wheel, Vector3 direction, float timeValue, bool soundTrigger)
     {
 		float speedTime = 0;
-        
+		bool isFirst = soundTrigger;
 		priviousSpeed = Mathf.Lerp(direction.z / 0.797f, 0, speedTime);
-
 		while (priviousSpeed != 0)
 		{
 			if (timeValue != 0)
 				speedTime += (Time.deltaTime * timeValue);
 			else
 				speedTime += Time.deltaTime;
+				
 			if(speedTime > 1)
 			{
 				speedTime = 1;
@@ -154,12 +154,13 @@ public class PlayerControl : MonoBehaviour {
 			
 			if(wheel == Wheel.LEFT)
 			{
-				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetLeftWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque, isFirst);
 			}
 			else
 			{
-				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque);
+				wheelControl.SetRightWheelMotorTorque(priviousSpeed * wheelControl.maxMotorTorque, isFirst);
 			}
+			isFirst = false;
 			yield return null;
 		}
     }
@@ -171,21 +172,23 @@ public class PlayerControl : MonoBehaviour {
             if (leftMainMovement != null)
 			{
 				StopCoroutine(leftMainMovement);
-				wheelControl.SetLeftWheelMotorTorque(0);
+				wheelControl.SetLeftWheelMotorTorque(0, false);
 			}
-                
-            leftMainMovement = CalculateMove(wheel, leftWheelVector, leftGripTime);
+			Debug.Log("left move start");
+			leftMainMovement = CalculateMove(wheel, leftWheelVector, leftGripTime, true);
+			StartCoroutine(leftMainMovement);
         }
         else
         {
             if (rightMainMovement != null)
 			{
 				StopCoroutine(rightMainMovement);
-				wheelControl.SetRightWheelMotorTorque(0);
+				wheelControl.SetRightWheelMotorTorque(0, false);
 			}
-                
-            rightMainMovement = CalculateMove(wheel, rightWheelVector, leftGripTime);
-        }
+			Debug.Log("right move start");
+            rightMainMovement = CalculateMove(wheel, rightWheelVector, leftGripTime, true);
+			StartCoroutine(rightMainMovement);
+		}
 	}
 
 	public void CalculateRightPoint(Vector3 currentPos)
@@ -284,10 +287,10 @@ public class PlayerControl : MonoBehaviour {
             if(leftGripMovement != null)
 			{
 				StopCoroutine(leftGripMovement);
-				wheelControl.SetLeftWheelMotorTorque(0);
+				wheelControl.SetLeftWheelMotorTorque(0, false);
 			}
                 
-            leftGripMovement = CalculateMove(wheel, leftWheelVector, 0);
+            leftGripMovement = CalculateMove(wheel, leftWheelVector, 0, false);
             StartCoroutine(leftGripMovement);
         }
         else
@@ -297,10 +300,10 @@ public class PlayerControl : MonoBehaviour {
             if (rightGripMovement != null)
 			{
 				StopCoroutine(rightGripMovement);
-				wheelControl.SetRightWheelMotorTorque(0);
+				wheelControl.SetRightWheelMotorTorque(0, false);
 			}
             
-            rightGripMovement = CalculateMove(wheel, rightWheelVector, 0);
+            rightGripMovement = CalculateMove(wheel, rightWheelVector, 0, false);
             StartCoroutine(rightGripMovement);
         }
 	}

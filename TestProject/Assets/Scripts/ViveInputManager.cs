@@ -192,14 +192,14 @@ public class ViveInputManager : MonoBehaviour
 			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
 			{
 				Debug.Log("Pad Control:Left, "+ mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
-				//playerControl.GetWheelControl().SetRightWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque, false);
-				//playerControl.GetWheelControl().SetLeftWheelMotorTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque, false);
 				playerControl.GetWheelControl().SetFrontWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+                playerControl.GetWheelControl().SetBackWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
 			}
 			if (mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
 			{
 				playerControl.GetWheelControl().SetFrontWheelColliderTorque(0);
-			}
+                playerControl.GetWheelControl().SetBackWheelColliderTorque(0);
+            }
 		}
         if ((int)rightTrackedObject.index != -1)
         {

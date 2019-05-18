@@ -250,6 +250,11 @@ public class WheelControl : MonoBehaviour {
 		rightFrontWheelCollider.motorTorque = value;
 		leftFrontWheelCollider.motorTorque = value;
 	}
+    public void SetBackWheelColliderTorque(float value)
+    {
+        rightWheelCollider.motorTorque = value;
+        leftWheelCollider.motorTorque = value;
+    }
     public float GetLeftWheelMotorTorque() { return leftWheelCollider.motorTorque; }
     public float GetRightWheelMotorTorque() { return rightWheelCollider.motorTorque; }
 

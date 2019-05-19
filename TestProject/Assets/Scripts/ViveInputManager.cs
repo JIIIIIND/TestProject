@@ -23,55 +23,58 @@ public class ViveInputManager : MonoBehaviour
         {
             mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
 			
-            if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
-            {
-				
-				Debug.Log("Grip Down");
-                if(playerControl.GetWheelControl().RightWheelIsGround())
-                {
-					isControllerGrip = true;
+			if(ModeChange.instance.getMode() == MODE.MANUAL)
+			{
+				if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+				{
 
-                    playerControl.RightPositionInitiate();
-                    playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
+					Debug.Log("Grip Down");
+					if (playerControl.GetWheelControl().RightWheelIsGround())
+					{
+						isControllerGrip = true;
 
-                    playerControl.StartTimeCoroutine(false);
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.RightPositionInitiate();
-                }
-            }
-            if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
-            {
-                if (playerControl.GetWheelControl().RightWheelIsGround())
-                {
-					isControllerGrip = true;
-					if (GameManager.instance.SoundEffectManager().GetVibration() == true)
-                    {
-                        mDevice.TriggerHapticPulse(1000);
-                    }
-                    playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
-                    playerControl.MakeMoveVector(Wheel.RIGHT);
-                    Debug.Log("Griping");
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.RightPositionInitiate();
-                }
-            }
-            if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-            {
-				isControllerGrip = false;
-				if (playerControl.GetWheelControl().RightWheelIsGround())
-                {
-                    playerControl.StartMoving(Wheel.RIGHT);
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.RightPositionInitiate();
-                }
-                Debug.Log("Grip Up");
-            }
+						playerControl.RightPositionInitiate();
+						playerControl.SetRightInitPosition(rightTrackedObject.transform.localPosition);
+
+						playerControl.StartTimeCoroutine(false);
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.RightPositionInitiate();
+					}
+				}
+				if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
+				{
+					if (playerControl.GetWheelControl().RightWheelIsGround())
+					{
+						isControllerGrip = true;
+						if (GameManager.instance.SoundEffectManager().GetVibration() == true)
+						{
+							mDevice.TriggerHapticPulse(1000);
+						}
+						playerControl.CalculateRightPoint(rightTrackedObject.transform.localPosition);
+						playerControl.MakeMoveVector(Wheel.RIGHT);
+						Debug.Log("Griping");
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.RightPositionInitiate();
+					}
+				}
+				if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+				{
+					isControllerGrip = false;
+					if (playerControl.GetWheelControl().RightWheelIsGround())
+					{
+						playerControl.StartMoving(Wheel.RIGHT);
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.RightPositionInitiate();
+					}
+					Debug.Log("Grip Up");
+				}
+			}
             if(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
             {
                 if(GameManager.instance.GameMenuActive() == true)
@@ -99,16 +102,19 @@ public class ViveInputManager : MonoBehaviour
 			{
 				playerControl.GetWheelControl().InitBrakeTorque(Wheel.RIGHT);
 			}
-			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+			if(ModeChange.instance.getMode() == MODE.ELECTRIC)
 			{
-				Debug.Log("Pad Control:Right");
-				playerControl.GetWheelControl().SetRightWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
-				playerControl.GetWheelControl().SetLeftWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
-			}
-			if(mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
-			{
-				playerControl.GetWheelControl().SetRightWheelSteering(0);
-				playerControl.GetWheelControl().SetLeftWheelSteering(0);
+				if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+				{
+					Debug.Log("Pad Control:Right");
+					playerControl.GetWheelControl().SetRightWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
+					playerControl.GetWheelControl().SetLeftWheelSteering(mDevice.GetAxis().x * playerControl.GetWheelControl().maxSteeringAngle);
+				}
+				if (mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
+				{
+					playerControl.GetWheelControl().SetRightWheelSteering(0);
+					playerControl.GetWheelControl().SetLeftWheelSteering(0);
+				}
 			}
         }
 
@@ -116,56 +122,59 @@ public class ViveInputManager : MonoBehaviour
         {
             mDevice = SteamVR_Controller.Input((int)leftTrackedObject.index);
 
-            if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
-            {
-                Debug.Log("Grip Down");
-				
-				if (playerControl.GetWheelControl().LeftWheelIsGround())
-                {
-					isControllerGrip = true;
-					
-                    playerControl.LeftPositionInitiate();
-                    playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
+			if(ModeChange.instance.getMode() == MODE.MANUAL)
+			{
+				if (mDevice.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+				{
+					Debug.Log("Grip Down");
 
-                    playerControl.StartTimeCoroutine(true);
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.LeftPositionInitiate();
-                }
-            }
-            if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
-            {
-                
-                if(playerControl.GetWheelControl().LeftWheelIsGround())
-                {
-                    if (GameManager.instance.SoundEffectManager().GetVibration() == true)
-                    {
-                        mDevice.TriggerHapticPulse(1000);
-                    }
-                    isControllerGrip = true;
-                    playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
-                    playerControl.MakeMoveVector(Wheel.LEFT);
-                    Debug.Log("Griping");
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.LeftPositionInitiate();
-                }
-            }
-            if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
-            {
-				isControllerGrip = false;
-				if (playerControl.GetWheelControl().LeftWheelIsGround())
-                {
-                    playerControl.StartMoving(Wheel.LEFT);
-                    Debug.Log("Grip Up");
-                }
-                else if (playerControl.IsFlip() == true)
-                {
-                    playerControl.LeftPositionInitiate();
-                }
-            }
+					if (playerControl.GetWheelControl().LeftWheelIsGround())
+					{
+						isControllerGrip = true;
+
+						playerControl.LeftPositionInitiate();
+						playerControl.SetLeftInitPosition(leftTrackedObject.transform.localPosition);
+
+						playerControl.StartTimeCoroutine(true);
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.LeftPositionInitiate();
+					}
+				}
+				if (mDevice.GetPress(SteamVR_Controller.ButtonMask.Grip))
+				{
+
+					if (playerControl.GetWheelControl().LeftWheelIsGround())
+					{
+						if (GameManager.instance.SoundEffectManager().GetVibration() == true)
+						{
+							mDevice.TriggerHapticPulse(1000);
+						}
+						isControllerGrip = true;
+						playerControl.CalculateLeftPoint(leftTrackedObject.transform.localPosition);
+						playerControl.MakeMoveVector(Wheel.LEFT);
+						Debug.Log("Griping");
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.LeftPositionInitiate();
+					}
+				}
+				if (mDevice.GetPressUp(SteamVR_Controller.ButtonMask.Grip))
+				{
+					isControllerGrip = false;
+					if (playerControl.GetWheelControl().LeftWheelIsGround())
+					{
+						playerControl.StartMoving(Wheel.LEFT);
+						Debug.Log("Grip Up");
+					}
+					else if (playerControl.IsFlip() == true)
+					{
+						playerControl.LeftPositionInitiate();
+					}
+				}
+			}
 			if(mDevice.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
 			{
 				if (GameManager.instance.GameMenuActive() == true)
@@ -189,17 +198,21 @@ public class ViveInputManager : MonoBehaviour
 			{
 				playerControl.GetWheelControl().InitBrakeTorque(Wheel.LEFT);
 			}
-			if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+			if(ModeChange.instance.getMode() == MODE.ELECTRIC)
 			{
-				Debug.Log("Pad Control:Left, "+ mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
-				playerControl.GetWheelControl().SetFrontWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
-                playerControl.GetWheelControl().SetBackWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+				if (mDevice.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+				{
+					Debug.Log("Pad Control:Left, " + mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+					playerControl.GetWheelControl().SetFrontWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+					playerControl.GetWheelControl().SetBackWheelColliderTorque(mDevice.GetAxis().y * playerControl.GetWheelControl().maxMotorTorque);
+				}
+				if (mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
+				{
+					playerControl.GetWheelControl().SetFrontWheelColliderTorque(0);
+					playerControl.GetWheelControl().SetBackWheelColliderTorque(0);
+				}
 			}
-			if (mDevice.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
-			{
-				playerControl.GetWheelControl().SetFrontWheelColliderTorque(0);
-                playerControl.GetWheelControl().SetBackWheelColliderTorque(0);
-            }
+			
 		}
         if ((int)rightTrackedObject.index != -1)
         {

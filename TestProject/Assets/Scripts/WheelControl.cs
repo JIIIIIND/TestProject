@@ -146,62 +146,9 @@ public class WheelControl : MonoBehaviour {
 		rightWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		leftFrontWheel.transform.Rotate(0.0f, -leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
 		rightFrontWheel.transform.Rotate(0.0f, rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f);
-		/*
-		leftWheel.transform.Rotate(leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
-		rightWheel.transform.Rotate(rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
-		leftFrontWheel.transform.Rotate(leftWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
-		rightFrontWheel.transform.Rotate(rightWheelCollider.rpm / 60 * 360 * Time.deltaTime, 0.0f, 0.0f);
-		*/
+
 		DustEffectSetting(Wheel.LEFT);
         DustEffectSetting(Wheel.RIGHT);
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            SetLeftWheelMotorTorque(maxMotorTorque, true);
-        }
-        if(Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            SetLeftWheelMotorTorque(0, false);
-        }
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            SetRightWheelMotorTorque(maxMotorTorque, true);
-        }
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            leftWheelCollider.motorTorque = -leftWheelCollider.motorTorque;
-            rightWheelCollider.motorTorque = -rightWheelCollider.motorTorque;
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            SetRightWheelMotorTorque(0, false);
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            BrakeWheel(Wheel.LEFT);
-        }
-        if(Input.GetKey(KeyCode.A))
-        {
-            BrakeEffectSetting(Wheel.LEFT);
-        }
-        //left brake
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            InitBrakeTorque(Wheel.LEFT);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            BrakeWheel(Wheel.RIGHT);
-        }
-        //right brake
-        if (Input.GetKey(KeyCode.D))
-        {
-            BrakeEffectSetting(Wheel.RIGHT);
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            InitBrakeTorque(Wheel.RIGHT);
-        }
 		
         if(brakeSound)
         {
@@ -247,13 +194,13 @@ public class WheelControl : MonoBehaviour {
     }
 	public void SetFrontWheelColliderTorque(float value)
 	{
-		rightFrontWheelCollider.motorTorque = value;
-		leftFrontWheelCollider.motorTorque = value;
+		rightFrontWheelCollider.motorTorque = value * 0.5f;
+		leftFrontWheelCollider.motorTorque = value * 0.5f;
 	}
     public void SetBackWheelColliderTorque(float value)
     {
-        rightWheelCollider.motorTorque = value;
-        leftWheelCollider.motorTorque = value;
+        rightWheelCollider.motorTorque = value * 0.5f;
+        leftWheelCollider.motorTorque = value * 0.5f;
     }
     public float GetLeftWheelMotorTorque() { return leftWheelCollider.motorTorque; }
     public float GetRightWheelMotorTorque() { return rightWheelCollider.motorTorque; }

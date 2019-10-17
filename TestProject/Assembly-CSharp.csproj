@@ -108,7 +108,6 @@
     <Compile Include="Assets\QA_Office\Scripts\Door.cs" />
     <Compile Include="Assets\QA_Office\Scripts\Elevator.cs" />
     <Compile Include="Assets\QA_Office\Scripts\ElevatorManager.cs" />
-    <Compile Include="Assets\race-track-lake\Standard Assets\Environment\Water (Basic)\Scripts\WaterBasic.cs" />
     <Compile Include="Assets\Scripts\CarAI.cs" />
     <Compile Include="Assets\Scripts\CollideObject.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -232,11 +231,9 @@
     <None Include="Assets\CurvedUI\Demo Scenes\Demo Scenes Content\OverlayBlend.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
-    <None Include="Assets\race-track-lake\readmore.txt" />
     <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
     <None Include="Assets\Simple UI\Fonts\OFL.txt" />
     <None Include="Assets\QA_Office\Shaders\QAtmo_3dText.shader" />
-    <None Include="Assets\race-track-lake\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
     <None Include="Assets\QA_InterrogationRoom\ReadMe.txt" />
     <None Include="Assets\QA_InterrogationRoom\Shaders\QA_LightBeam.shader" />
     <None Include="Assets\QA_Office\ReadMe.txt" />

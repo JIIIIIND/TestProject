@@ -412,10 +412,13 @@ public class PlayerControl : MonoBehaviour {
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
     {
+        SteamVR_TrackedObject controller = leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
+        Debug.Log(controller);
         return leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
     public SteamVR_TrackedObject GetRightTrackedObject()
     {
+        Debug.Log(rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>());
         return rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
     public WheelControl GetWheelControl()

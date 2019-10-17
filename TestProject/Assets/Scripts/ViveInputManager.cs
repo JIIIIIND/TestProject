@@ -15,10 +15,18 @@ public class ViveInputManager : MonoBehaviour
 
     void Start()
     {
+        InitPlayerController();
     }
 
     void Update()
     {
+        if ((rightTrackedObject == null) || (leftTrackedObject == null))
+        {
+            leftTrackedObject = playerControl.GetLeftTrackedObject();
+            rightTrackedObject = playerControl.GetRightTrackedObject();
+            return;
+        }
+            
         if ((int)rightTrackedObject.index != -1)
         {
             mDevice = SteamVR_Controller.Input((int)rightTrackedObject.index);
@@ -239,12 +247,14 @@ public class ViveInputManager : MonoBehaviour
     }
     private void InitPlayerController()
     {
+        UnityEngine.XR.InputTracking.disablePositionalTracking = true;
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             Debug.Log("init");
             playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControl>();
             leftTrackedObject = playerControl.GetLeftTrackedObject();
             rightTrackedObject = playerControl.GetRightTrackedObject();
+            
         }
         else
         {

@@ -65,7 +65,7 @@ public class WheelSound : MonoBehaviour {
             brakeLooping = null;
         }
         StartCoroutine(WaitForSoundClipEnd(brakeMidSound, brakeEndSound));
-        Debug.Log("EndSound is Playing... maybe");
+        //Debug.Log("EndSound is Playing... maybe");
     }
 
     private IEnumerator WaitForSoundClipEnd(AudioSource source, AudioSource nextSource)
@@ -75,7 +75,7 @@ public class WheelSound : MonoBehaviour {
         {
             yield return null;
         }
-        Debug.Log(source);
+        ////Debug.Log(source);
         source.Stop();
         nextSource.Play();
     }

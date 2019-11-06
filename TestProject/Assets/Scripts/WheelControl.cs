@@ -135,7 +135,7 @@ public class WheelControl : MonoBehaviour {
         if(brakeSound == true)
         {
             //EndSound 출력
-            Debug.Log("brake key is up");
+            ////Debug.Log("brake key is up");
             wheelSoundSystem.BrakeEnd();
         }
 	}
@@ -156,7 +156,7 @@ public class WheelControl : MonoBehaviour {
             {
                 brakeSound = false;
                 //endSound 출력
-                Debug.Log("I'm Calling Brake End");
+                ////Debug.Log("I'm Calling Brake End");
                 wheelSoundSystem.BrakeEnd();
             }
         }
@@ -178,7 +178,7 @@ public class WheelControl : MonoBehaviour {
 		rightWheelCollider.motorTorque = value * 0.8f;
         if((value != 0) && isFirst)
         {
-			Debug.Log("left sound");
+			////Debug.Log("left sound");
             wheelSoundSystem.WheelSoundStart();
         }
     }
@@ -188,7 +188,7 @@ public class WheelControl : MonoBehaviour {
 		leftWheelCollider.motorTorque = value * 0.8f;
 		if ((value != 0) && isFirst)
         {
-			Debug.Log("right sound");
+			////Debug.Log("right sound");
 			wheelSoundSystem.WheelSoundStart();
         }
     }

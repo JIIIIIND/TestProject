@@ -143,7 +143,7 @@ public class Elevator : MonoBehaviour {
 				isPlayer = true;
 			}
 		} else {
-			Debug.LogWarning ("Elevator: Can't find Player. Please, check that your Player object has 'Player' tag.");
+			//Debug.LogWarning ("Elevator: Can't find Player. Please, check that your Player object has 'Player' tag.");
 			this.enabled = false;
 			isPlayer = false;
 		}
@@ -152,7 +152,7 @@ public class Elevator : MonoBehaviour {
 			if (Player.GetComponentInChildren<Camera>().transform) {
 				PlayerCam = Player.GetComponentInChildren<Camera>().transform;
 			} else {
-				Debug.LogWarning ("Elevator: Can't find Player's camera. Please, check that your Player have a camera parented to it.");
+				//Debug.LogWarning ("Elevator: Can't find Player's camera. Please, check that your Player have a camera parented to it.");
 				this.enabled = false;
 			}
 		}
@@ -170,7 +170,7 @@ public class Elevator : MonoBehaviour {
 		if (_elevatorManager) {
 			_elevatorManager.WasStarted += RandomInit;
 		} else {
-			Debug.LogWarning ("Elevator: To use more than one elevator shaft, please create an empty gameobject in your scene, add the ElevatorManager.cs script on it and make elevators of one elevator shaft as child to this object. Repeate this for every different elevators shafts.");
+			//Debug.LogWarning ("Elevator: To use more than one elevator shaft, please create an empty gameobject in your scene, add the ElevatorManager.cs script on it and make elevators of one elevator shaft as child to this object. Repeate this for every different elevators shafts.");
 		}
 
 	}
@@ -180,7 +180,7 @@ public class Elevator : MonoBehaviour {
 			ElevatorFloor = _elevatorManager.InitialFloor;
 		} else {
 			ElevatorFloor = 1;
-			//Debug.LogWarning ("No ElevatorManager has been found for '" + gameObject.name + "'. Initial floor will be set to 1. If you want to set your own floor or make it random, please make this object child to object with ElevatorManager script.");
+			////Debug.LogWarning ("No ElevatorManager has been found for '" + gameObject.name + "'. Initial floor will be set to 1. If you want to set your own floor or make it random, please make this object child to object with ElevatorManager script.");
 		}
 		TextOutside.text = ElevatorFloor.ToString();
 		TextInside.text = ElevatorFloor.ToString();

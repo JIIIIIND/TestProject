@@ -23,7 +23,7 @@ public class UnityToUE4Coordinates : Editor {
 		go = Selection.activeGameObject;
 		Pos = "(" + "X=" + go.transform.position.x * -100 + ",Y=" + go.transform.position.z * 100 + ",Z=" + go.transform.position.y * 100 + ")";
 		GUIUtility.systemCopyBuffer = Pos;
-		Debug.Log (go + " converted position = " + Pos);
+		//Debug.Log (go + " converted position = " + Pos);
 	}
 	/*
 	[MenuItem ("NOT_Lonely/Copy Rotation in UE4 type %#_x")]
@@ -31,7 +31,7 @@ public class UnityToUE4Coordinates : Editor {
 		go = Selection.activeGameObject;
 		Rot = "(" + "Pitch=" + "0" + ",Yaw=" + go.transform.eulerAngles.y + ",Roll=" + "0" + ")";
 		GUIUtility.systemCopyBuffer = Rot;
-		Debug.Log (go + " converted rotation = " + Rot);
+		//Debug.Log (go + " converted rotation = " + Rot);
 	}
 	*/
 
@@ -45,7 +45,7 @@ public class UnityToUE4Coordinates : Editor {
 		}
 
 		GUIUtility.systemCopyBuffer = Rot;
-		Debug.Log (go + " converted rotation = " + Rot);
+		//Debug.Log (go + " converted rotation = " + Rot);
 	}
 	[MenuItem ("NOT_Lonely/Copy Rotation (X = forward) in UE4 type %#_q")]
 
@@ -61,7 +61,7 @@ public class UnityToUE4Coordinates : Editor {
 		}
 
 		GUIUtility.systemCopyBuffer = Rot;
-		Debug.Log (go + " converted rotation = " + Rot);
+		//Debug.Log (go + " converted rotation = " + Rot);
 	}
 
 	[MenuItem ("NOT_Lonely/Copy Scale in UE4 type %#_e")]
@@ -69,7 +69,7 @@ public class UnityToUE4Coordinates : Editor {
 		go = Selection.activeGameObject;
 		Scale = "(" + "X=" +go.transform.localScale.x + ",Y=" + go.transform.localScale.z + ",Z=" + go.transform.localScale.y + ")";
 		GUIUtility.systemCopyBuffer = Scale;
-		Debug.Log (go + " converted scale = " + Scale);
+		//Debug.Log (go + " converted scale = " + Scale);
 	}
 }
 #endif

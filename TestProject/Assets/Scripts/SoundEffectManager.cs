@@ -24,7 +24,7 @@ public class SoundEffectManager : MonoBehaviour {
 
 	public void AddObserver(Observer observer)
 	{
-		Debug.Log(observer);
+		//Debug.Log(observer);
 		observers.Add(observer);
 		for (int i = 0; i < observers.Count; i++)
 		{

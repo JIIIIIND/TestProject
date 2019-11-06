@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour {
 
         while(color.a > 0.0f)
         {
-            Debug.Log("Fade iN");
+            ////Debug.Log("Fade iN");
             fadeTime += Time.deltaTime / fadePlayTime;
             color.a = Mathf.Lerp(fadeEndValue, fadeStartValue, fadeTime);
             fadeImage.color = color;
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("ESC Key Down");
+            ////Debug.Log("ESC Key Down");
             if (gameMenu.activeInHierarchy == false)
                 MenuAppear();
             else

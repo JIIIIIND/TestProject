@@ -18,14 +18,14 @@ public class CollideObject : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger");
+        //Debug.Log("Trigger");
         if(isActived == false)
         {
             if ((other.gameObject.tag == "Player") || (other.gameObject.tag == "GameController"))
             {
                 if (type == ObjectType.ENDPOINT)
                 {
-                    Debug.Log("endPoint");
+                    //Debug.Log("endPoint");
                     stageManager.EndPointEntry();
 					isActived = true;
                     collisionSound.Play();
@@ -33,7 +33,7 @@ public class CollideObject : MonoBehaviour {
 
                 else if(type == ObjectType.CHECKPOINT)
                 {
-                    Debug.Log("checkPoint");
+                    //Debug.Log("checkPoint");
                     stageManager.CheckPointEntry(this.transform.gameObject, this.gameObject.transform.position, playerRotation);
 					isActived = true;
                     collisionSound.Play();
@@ -50,7 +50,7 @@ public class CollideObject : MonoBehaviour {
         {
             if ((collision.gameObject.tag == "Player") || (collision.gameObject.tag == "GameController"))
             {
-                Debug.Log("Collision");
+                //Debug.Log("Collision");
                 stageManager.CollisionDetect();
                 collisionSound.Play();
             }

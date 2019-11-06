@@ -22,7 +22,7 @@ public class UIController : MonoBehaviour {
 	public void Exit()
 	{
         Application.Quit();
-		Debug.Log("Exit");
+		////Debug.Log("Exit");
 	}
 	public void PushBackButton(GameObject gameObject)
     {
@@ -35,7 +35,7 @@ public class UIController : MonoBehaviour {
     {
         uiClick.Play();
         currentStage = 0;
-		Debug.Log("ui button is pushing: "+gameObject);
+		////Debug.Log("ui button is pushing: "+gameObject);
         gameObject.SetActive(true);
         MainUI.SetActive(false);
     }
@@ -65,7 +65,7 @@ public class UIController : MonoBehaviour {
         }
         else
         {
-            Debug.Log("this is last stage");
+            ////Debug.Log("this is last stage");
         }
     }
 
@@ -80,7 +80,7 @@ public class UIController : MonoBehaviour {
         }
         else
         {
-            Debug.Log("this is first stage");
+            ////Debug.Log("this is first stage");
         }
     }
     public void UpdateImage()
@@ -94,7 +94,7 @@ public class UIController : MonoBehaviour {
 
     private void UpdateStageImage(bool isNext)
     {
-        Debug.Log("stages: " + stages[currentStage]);
+        ////Debug.Log("stages: " + stages[currentStage]);
         float imageSize = stages[currentStage].GetComponent<UnityEngine.UI.Image>().rectTransform.rect.width;
         Vector3 parentTransform = Stages.GetComponent<RectTransform>().localPosition;
 

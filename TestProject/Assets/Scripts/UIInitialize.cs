@@ -17,7 +17,7 @@ public class UIInitialize : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         if(player != null)
         {
-			Debug.Log("Player Init Position!");
+			////Debug.Log("Player Init Position!");
             direction = initializeVector - firstPlayerInit;
         }
             

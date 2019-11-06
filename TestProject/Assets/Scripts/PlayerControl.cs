@@ -120,7 +120,7 @@ public class PlayerControl : MonoBehaviour {
     }
 	public void TransformInit()
 	{
-		Debug.Log("Flip and relocated");
+		////Debug.Log("Flip and relocated");
         if (flipSoundPlay != null)
             return;
         else
@@ -174,7 +174,7 @@ public class PlayerControl : MonoBehaviour {
 				StopCoroutine(leftMainMovement);
 				wheelControl.SetLeftWheelMotorTorque(0, false);
 			}
-			Debug.Log("left move start");
+			////Debug.Log("left move start");
 			leftMainMovement = CalculateMove(wheel, leftWheelVector, leftGripTime, true);
 			StartCoroutine(leftMainMovement);
         }
@@ -185,7 +185,7 @@ public class PlayerControl : MonoBehaviour {
 				StopCoroutine(rightMainMovement);
 				wheelControl.SetRightWheelMotorTorque(0, false);
 			}
-			Debug.Log("right move start");
+			////Debug.Log("right move start");
             rightMainMovement = CalculateMove(wheel, rightWheelVector, leftGripTime, true);
 			StartCoroutine(rightMainMovement);
 		}
@@ -199,12 +199,12 @@ public class PlayerControl : MonoBehaviour {
         {
             if (rightDirection)
             {
-                //Debug.Log("curDirection > 0");
+                ////Debug.Log("curDirection > 0");
                 SetRightMovingPosition(currentPos);
             }
             else
             {
-                //Debug.Log("curDirection > 0 && Direction Change");
+                ////Debug.Log("curDirection > 0 && Direction Change");
                 SetRightInitPosition(rightMovingPosition);
                 SetRightMovingPosition(currentPos);
                 rightDirection = true;
@@ -214,20 +214,20 @@ public class PlayerControl : MonoBehaviour {
         {
             if (rightDirection)
             {
-                //Debug.Log("curDirection < 0 && Direction Change");
+                ////Debug.Log("curDirection < 0 && Direction Change");
                 SetRightInitPosition(rightMovingPosition);
                 SetRightMovingPosition(currentPos);
                 rightDirection = false;
             }
             else
             {
-                //Debug.Log("curDirection < 0");
+                ////Debug.Log("curDirection < 0");
                 SetRightMovingPosition(currentPos);
             }
         }
         else
         {
-            //Debug.Log("curDirection = 0");
+            ////Debug.Log("curDirection = 0");
             SetRightInitPosition(rightMovingPosition);
         }
 	}
@@ -238,12 +238,12 @@ public class PlayerControl : MonoBehaviour {
         {
             if (leftDirection)
             {
-                //Debug.Log("Left: curDirection > 0");
+                ////Debug.Log("Left: curDirection > 0");
                 SetLeftMovingPosition(currentPos);
             }
             else
             {
-                //Debug.Log("Left: curDirection > 0 && Direction Change");
+                ////Debug.Log("Left: curDirection > 0 && Direction Change");
                 SetLeftInitPosition(leftMovingPosition);
                 SetLeftMovingPosition(currentPos);
                 leftDirection = true;
@@ -253,27 +253,27 @@ public class PlayerControl : MonoBehaviour {
         {
             if (leftDirection)
             {
-                //Debug.Log("Left: curDirection < 0 && Direction Change");
+                ////Debug.Log("Left: curDirection < 0 && Direction Change");
                 SetLeftInitPosition(leftMovingPosition);
                 SetLeftMovingPosition(currentPos);
                 leftDirection = false;
             }
             else
             {
-                //Debug.Log("Left: curDirection < 0");
+                ////Debug.Log("Left: curDirection < 0");
                 SetLeftMovingPosition(currentPos);
             }
         }
         else
         {
-            //Debug.Log("Left: curDirection = 0");
+            ////Debug.Log("Left: curDirection = 0");
             SetLeftInitPosition(leftMovingPosition);
         }
 	}
 
     public void MakeMoveVector(Wheel wheel)
     {
-		//Debug.Log("MakeMoveVector()");
+		////Debug.Log("MakeMoveVector()");
 		float initYPosition = rightInitPosition.y;
 
 		rightMovingPosition.y = initYPosition;
@@ -408,14 +408,17 @@ public class PlayerControl : MonoBehaviour {
             RightPositionInitiate();
             TransformInit();
         }
-		//Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
+		////Debug.Log("direction X value: " + result.x/result.magnitude + "direction Z value: " + result.z/result.magnitude);
 	}
     public SteamVR_TrackedObject GetLeftTrackedObject()
     {
+        SteamVR_TrackedObject controller = leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
+        ////Debug.Log(controller);
         return leftInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
     public SteamVR_TrackedObject GetRightTrackedObject()
     {
+        ////Debug.Log(rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>());
         return rightInitTransform.gameObject.GetComponentInParent<SteamVR_TrackedObject>();
     }
     public WheelControl GetWheelControl()
